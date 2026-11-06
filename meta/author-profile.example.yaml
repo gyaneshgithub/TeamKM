@@ -1,0 +1,17 @@
+# Copy to meta/author-profile.local.yaml and fill in.
+# author-profile.local.yaml is gitignored — do not commit.
+#
+# knowledgeIntelligence — local author profile (example)
+
+display_name: "Ada Example"
+team: "platform"
+author_role: "dev" # dev | qe | pm | dm | mixed
+
+# Topics / areas you work on — used to suggest tags and area (you still pick area per doc)
+topics:
+  - auth
+  - observability
+
+# Optional
+# email: "you@company.com"
+# product: "Acme Suite"

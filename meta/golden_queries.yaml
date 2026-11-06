@@ -1,0 +1,10 @@
+# Golden queries for retrieval regression (REQUIREMENTS §5.5, §11)
+# Run manually or wire into CI once RAG eval harness exists.
+#
+# Expected doc: substring match against chunk doc_path (relative path)
+schema_version: "0.1.0"
+recall_at_k: 5
+queries:
+  - id: gq-001
+    query: knowledgeIntelligence template RAG
+    expected_doc_contains: knowledge/technical

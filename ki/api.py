@@ -1,0 +1,169 @@
+"""Minimal local HTTP API (REQUIREMENTS §5.6, §5.9) — stdlib only."""
+
+from __future__ import annotations
+
+import json
+import os
+import threading
+import urllib.parse
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from typing import Any
+
+from ki.fingerprint import corpus_fingerprint
+from ki.index_model import EMBEDDING_MODEL_ID
+from ki.index_runner import ensure_index, load_index_optional, rag_root
+from ki.manifest import read_manifest as read_manifest_raw
+from ki.manifest import write_manifest
+from ki.retrieve import build_context_pack, retrieve_candidates, rerank
+from ki.sync_status import compute_sync_status
+
+
+def _json_response(handler: BaseHTTPRequestHandler, code: int, payload: dict[str, Any]) -> None:
+    body = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
+    handler.send_response(code)
+    handler.send_header("Content-Type", "application/json; charset=utf-8")
+    handler.send_header("Content-Length", str(len(body)))
+    handler.end_headers()
+    handler.wfile.write(body)
+
+
+class KiHandler(BaseHTTPRequestHandler):
+    repo_root: Path
+
+    def log_message(self, fmt: str, *args: Any) -> None:
+        return  # quiet default
+
+    def do_GET(self) -> None:  # noqa: N802
+        parsed = urllib.parse.urlparse(self.path)
+        if parsed.path == "/v1/health":
+            self._health()
+            return
+        if parsed.path == "/":
+            _json_response(self, 200, {"service": "knowledgeIntelligence", "docs": "/v1/health"})
+            return
+        _json_response(self, 404, {"error": "not_found", "path": parsed.path})
+
+    def do_POST(self) -> None:  # noqa: N802
+        parsed = urllib.parse.urlparse(self.path)
+        length = int(self.headers.get("Content-Length", "0") or 0)
+        raw = self.rfile.read(length).decode("utf-8") if length else ""
+        try:
+            body = json.loads(raw) if raw.strip() else {}
+        except json.JSONDecodeError:
+            _json_response(self, 400, {"error": "invalid_json"})
+            return
+
+        if parsed.path == "/v1/retrieve":
+            self._retrieve(body)
+            return
+        if parsed.path == "/v1/context_pack":
+            self._context_pack(body)
+            return
+        _json_response(self, 404, {"error": "not_found", "path": parsed.path})
+
+    def _health(self) -> None:
+        root = self.repo_root.resolve()
+        rr = rag_root(root)
+        fp_now = corpus_fingerprint(root)
+        sync = compute_sync_status(root)
+        try:
+            ensure_index(root)
+        except Exception:
+            pass
+        m = read_manifest_raw(rr) or {}
+        payload = {
+            "index_status": m.get("index_status", "missing"),
+            "sync_status": sync.sync_status,
+            "corpus_fingerprint": m.get("corpus_fingerprint", fp_now),
+            "local_head": sync.local_head,
+            "upstream_head": sync.upstream_head,
+            "embedding_model_id": m.get("embedding_model_id", EMBEDDING_MODEL_ID),
+            "reranker_model_id": m.get("reranker_model_id", "mvp-pairwise-tf-idf"),
+            "schema_version": m.get("schema_version", "0.1.0"),
+            "chunk_count": m.get("chunk_count"),
+        }
+        if "error" in m:
+            payload["error"] = m["error"]
+        _json_response(self, 200, payload)
+
+    def _retrieve(self, body: dict[str, Any]) -> None:
+        root = self.repo_root.resolve()
+        q = str(body.get("query", "")).strip()
+        if not q:
+            _json_response(self, 400, {"error": "query_required"})
+            return
+        ensure_index(root)
+        idx = load_index_optional(root)
+        if idx is None:
+            _json_response(self, 503, {"error": "index_unavailable"})
+            return
+        top_n = int(body.get("candidate_k", 24))
+        pack_k = int(body.get("pack_k", 12))
+        domain = body.get("domain")
+        area = body.get("area")
+        cands = retrieve_candidates(idx, q, top_n=top_n, domain=domain, area=area)
+        ranked = rerank(q, cands, take=pack_k)
+        out = [
+            {
+                "chunk_id": s.chunk_id,
+                "doc_path": s.doc_path,
+                "heading_path": s.heading_path,
+                "text": s.text,
+                "line_start": s.line_start,
+                "line_end": s.line_end,
+                "retrieval_score": s.retrieval_score,
+                "rerank_score": s.rerank_score,
+                "meta": s.meta,
+            }
+            for s in ranked
+        ]
+        _json_response(
+            self,
+            200,
+            {"query": q, "chunks": out, "embedding_model_id": EMBEDDING_MODEL_ID},
+        )
+
+    def _context_pack(self, body: dict[str, Any]) -> None:
+        root = self.repo_root.resolve()
+        q = str(body.get("query", "")).strip()
+        if not q:
+            _json_response(self, 400, {"error": "query_required"})
+            return
+        ensure_index(root)
+        idx = load_index_optional(root)
+        if idx is None:
+            _json_response(self, 503, {"error": "index_unavailable"})
+            return
+        pack = build_context_pack(
+            idx,
+            q,
+            candidate_k=int(body.get("candidate_k", 24)),
+            pack_k=int(body.get("pack_k", 8)),
+            cap_per_doc=int(body.get("cap_per_doc", 2)),
+            domain=body.get("domain"),
+            area=body.get("area"),
+        )
+        _json_response(self, 200, {"query": q, "chunks": pack})
+
+
+def make_handler_class(repo_root: Path) -> type[KiHandler]:
+    resolved = repo_root.resolve()
+
+    class H(KiHandler):
+        repo_root = resolved
+
+    return H
+
+
+def run_server(repo_root: Path, *, host: str, port: int) -> ThreadingHTTPServer:
+    H = make_handler_class(repo_root)
+    server = ThreadingHTTPServer((host, port), H)
+    return server
+
+
+def serve_forever_background(repo_root: Path, *, host: str, port: int) -> tuple[ThreadingHTTPServer, threading.Thread]:
+    server = run_server(repo_root, host=host, port=port)
+    t = threading.Thread(target=server.serve_forever, daemon=True)
+    t.start()
+    return server, t

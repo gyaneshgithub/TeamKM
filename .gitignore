@@ -1,0 +1,16 @@
+# Local author profile — never commit (may contain name/email)
+meta/author-profile.local.yaml
+**/.knowledgeintelligence/
+
+# RAG build output (per REQUIREMENTS §12)
+.rag/
+
+# Local venv (see README)
+.venv/
+
+.pytest_cache/
+**/__pycache__/
+*.pyc
+
+# Editable install metadata
+*.egg-info/
