@@ -4,12 +4,12 @@ domain: technical
 area: meta
 author_role: dev
 type: adr
-status: draft
+status: reviewed
 tags:
-  - overview
+- overview
 exclude_from_default_retrieval: false
+last_reviewed: '2026-11-06'
 ---
-
 # Project overview
 
 This repository is the **TeamKM** template: Markdown under `knowledge/`, validated front matter (§6.1), and local RAG tooling under `ki/` and `scripts/`.
