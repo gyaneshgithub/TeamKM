@@ -1,0 +1,61 @@
+# On merge to `main`, auto-promote `status: draft` → `reviewed` for changed
+# knowledge/**/*.md (merge = integrated). Commit uses [skip ci] to avoid duplicate CI.
+
+name: Promote draft knowledge on main
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "knowledge/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: promote-draft-knowledge-main
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    # Skip pushes whose subject already includes [skip ci] (bot follow-up). workflow_dispatch has no head_commit.
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip ci]') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Need history so `before`..`after` and `HEAD^1` exist for merge commits.
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package (PyYAML)
+        run: pip install -e .
+
+      - name: Promote draft → reviewed for touched knowledge files
+        run: python3 scripts/promote_draft_on_merge.py
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}
+          PROMOTE_GIT_BEFORE: ${{ github.event.before }}
+          PROMOTE_GIT_AFTER: ${{ github.event.after }}
+
+      - name: Commit and push if changed
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          if git diff --quiet; then
+            echo "No promotion changes."
+            exit 0
+          fi
+          git add -A knowledge
+          git commit -m "$(cat <<'EOF'
+          chore(knowledge): auto-promote draft to reviewed after merge to main
+
+          Sets last_reviewed to UTC date. [skip ci]
+          EOF
+          )"
+          git push

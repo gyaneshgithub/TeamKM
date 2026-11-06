@@ -10,6 +10,8 @@ This repo is a **reusable template**: Markdown corpus under `knowledge/`, a **lo
 
 **GitHub `main` protection:** enable in the repo **Settings → Branches** (required PR + required check **`test`**). Private repos on some plans may need Pro for full API/UI protection—see [docs/GITHUB_BRANCH_PROTECTION.md](docs/GITHUB_BRANCH_PROTECTION.md).
 
+**Draft → reviewed on `main` (automated):** After merge to `main`, CI may run **`scripts/promote_draft_on_merge.py`** for touched knowledge files and promote **`status: draft`** to **`reviewed`**, setting **`last_reviewed`** (UTC date). You still get **human review on the PR**; you do not need to edit YAML by hand for that step. Use **`legacy_reviewed`**, **`deprecated`**, or another non-`draft` status before merge if the file should not be auto-promoted.
+
 ## Before you open a PR
 
 1. **Validate front matter** — `python3 scripts/validate_frontmatter.py --root .` (use `--inject-domain` if your team omits `domain` in drafts).
