@@ -11,7 +11,8 @@ This document describes **how we test** the repo today and **how we avoid corrup
 | Layer | Purpose | Command |
 |-------|---------|---------|
 | **Front matter** | Schema + path/domain rules (§6.1) | `python3 scripts/validate_frontmatter.py` |
-| **Index + API** | Chunk → index → retrieve/rerank/context_pack; `/v1/health` | `pytest` (includes `tests/test_index.py`, `tests/test_api.py`) |
+| **Index + API** | Chunk → index → hybrid retrieve (dense+BM25, RRF) → rerank → context_pack; `/v1/health` | `pytest` (includes `tests/test_index.py`, `tests/test_api.py`, `tests/test_hybrid.py`) |
+| **Golden queries** | recall@k vs `meta/golden_queries.yaml` | `python3 scripts/golden_queries.py --root .` |
 | **Unit tests** | Validator, atomic writes | `pytest` (after `pip install -e ".[dev]"`) |
 
 Optional:

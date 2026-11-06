@@ -95,14 +95,14 @@ meta/             # contribution templates, author-profile.example.yaml, etc.
 | **Corpus** | Authoritative Markdown under `knowledge/`; evolves by PR. |
 | **Ingest** | Discover files, parse front matter, normalize body. |
 | **Chunker** | Structure-aware splits; stable chunk ids; metadata propagation ([§5.4](REQUIREMENTS.md)). |
-| **Embedder** | Vector embedding per chunk; model id/version in manifest ([§5.5](REQUIREMENTS.md)). |
-| **Sparse index (V1+)** | BM25/FTS for exact tokens (paths, errors, APIs) — hybrid with dense ([§5.5, §10](REQUIREMENTS.md)). |
-| **Retriever** | First-stage candidate set (e.g. top 20–40). |
+| **Embedder (MVP)** | **tf‑idf** word vectors per chunk (dense surrogate until neural embeddings); model id in manifest. |
+| **Sparse index (MVP)** | **Okapi BM25** over chunk term frequencies — **hybrid** with dense, fused via **RRF** ([§5.5, §5.11](REQUIREMENTS.md)). |
+| **Retriever** | First stage: hybrid RRF → candidate set (e.g. top 20–40). |
 | **Reranker** | **Mandatory** second stage; local cross-encoder or light ranker ([§5.5](REQUIREMENTS.md)). |
 | **Context assembler** | Caps per doc, `related:` expansion, `inclusion_reason`, optional diversification ([§5.10](REQUIREMENTS.md)). |
 | **API** | REST JSON: `retrieve`, `context_pack`, `health`, optional `get_chunk` / neighbours ([§5.6](REQUIREMENTS.md)). |
 | **MCP adapter** | Same semantics as HTTP; namespaced tools (e.g. `kb_*`) ([§5.9](REQUIREMENTS.md)). |
-| **Validator** | `validate_frontmatter.py` (planned): schema + path/domain rules ([§6.1, §8](REQUIREMENTS.md)). |
+| **Validator** | `scripts/validate_frontmatter.py`: schema + path/domain rules ([§6.1, §8](REQUIREMENTS.md)). |
 | **Sync (optional)** | Fetch + fast-forward only when safe; feeds staleness for reindex ([§12.2](REQUIREMENTS.md)). |
 
 ---
@@ -114,13 +114,12 @@ flowchart TD
   A[knowledge/**/*.md] --> B[Parse front matter]
   B --> C[Strip / attach doc metadata to chunks]
   C --> D[Structure-aware chunking]
-  D --> E[Embed chunks]
-  D --> F[Optional sparse docs]
-  E --> G[(Vector store)]
-  F --> H[(Sparse index)]
-  G --> I[Index manifest]
-  H --> I
-  I --> J[schema version + model ids + corpus fingerprint]
+  D --> E[tf-idf vectors per chunk]
+  D --> F[BM25 stats per chunk]
+  E --> G[.rag/index.staging]
+  F --> G
+  G --> H[Atomic rename to .rag/index]
+  H --> I[manifest.json after success]
 ```
 
 **Incremental build:** Content-hash per file; re-chunk/re-embed only changed files ([§5.5](REQUIREMENTS.md)). **Fingerprint:** Align index staleness with `git` tree / hashes ([§12.1](REQUIREMENTS.md)).

@@ -1,0 +1,181 @@
+openapi: 3.1.0
+info:
+  title: knowledgeIntelligence local API
+  description: |
+    Loopback HTTP API for retrieval and health (REQUIREMENTS §5.6, §5.9).
+    Implementation serves this file at `GET /openapi.json` as YAML bytes, or use this file from repo root.
+  version: 0.2.0
+servers:
+  - url: http://127.0.0.1:8765
+    description: Default local server (KI_PORT)
+paths:
+  /v1/health:
+    get:
+      summary: Health and index/sync status
+      operationId: health
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /v1/retrieve:
+    post:
+      summary: Hybrid retrieve then mandatory rerank
+      operationId: retrieve
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RetrieveRequest"
+      responses:
+        "200":
+          description: Ranked chunks
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveResponse"
+        "400":
+          description: Bad request
+        "503":
+          description: Index unavailable
+  /v1/context_pack:
+    post:
+      summary: Context pack assembly
+      operationId: contextPack
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContextPackRequest"
+      responses:
+        "200":
+          description: Context pack
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContextPackResponse"
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        index_status:
+          type: string
+          enum: [missing, building, ready, stale]
+        sync_status:
+          type: string
+        corpus_fingerprint:
+          type: string
+        local_head:
+          type: string
+          nullable: true
+        upstream_head:
+          type: string
+          nullable: true
+        embedding_model_id:
+          type: string
+        sparse_model_id:
+          type: string
+        reranker_model_id:
+          type: string
+        schema_version:
+          type: string
+        chunk_count:
+          type: integer
+          nullable: true
+        retrieval:
+          type: string
+          description: e.g. hybrid_rrf_dense_bm25
+        error:
+          type: string
+          nullable: true
+    RetrieveRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+        candidate_k:
+          type: integer
+          default: 24
+        pack_k:
+          type: integer
+          default: 12
+        domain:
+          type: string
+          nullable: true
+        area:
+          type: string
+          nullable: true
+    RetrieveResponse:
+      type: object
+      properties:
+        query:
+          type: string
+        embedding_model_id:
+          type: string
+        sparse_model_id:
+          type: string
+        retrieval:
+          type: string
+        chunks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChunkResult"
+    ContextPackRequest:
+      allOf:
+        - $ref: "#/components/schemas/RetrieveRequest"
+      properties:
+        cap_per_doc:
+          type: integer
+          default: 2
+    ContextPackResponse:
+      type: object
+      properties:
+        query:
+          type: string
+        embedding_model_id:
+          type: string
+        sparse_model_id:
+          type: string
+        chunks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContextChunk"
+    ChunkResult:
+      type: object
+      properties:
+        chunk_id:
+          type: string
+        doc_path:
+          type: string
+        heading_path:
+          type: string
+        text:
+          type: string
+        line_start:
+          type: integer
+        line_end:
+          type: integer
+        retrieval_score:
+          type: number
+          description: Fused RRF score (dense+sparse ranks)
+        rerank_score:
+          type: number
+        dense_score:
+          type: number
+        sparse_score:
+          type: number
+        meta:
+          type: object
+    ContextChunk:
+      allOf:
+        - $ref: "#/components/schemas/ChunkResult"
+      properties:
+        inclusion_reason:
+          type: string
+          enum: [hit, related_doc]

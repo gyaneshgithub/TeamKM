@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from ki.fingerprint import corpus_fingerprint
-from ki.index_model import EMBEDDING_MODEL_ID
+from ki.index_model import EMBEDDING_MODEL_ID, INDEX_SCHEMA_VERSION, SPARSE_MODEL_ID
 from ki.index_runner import ensure_index, load_index_optional, rag_root
 from ki.manifest import read_manifest as read_manifest_raw
 from ki.manifest import write_manifest
@@ -40,7 +40,18 @@ class KiHandler(BaseHTTPRequestHandler):
             self._health()
             return
         if parsed.path == "/":
-            _json_response(self, 200, {"service": "knowledgeIntelligence", "docs": "/v1/health"})
+            _json_response(
+                self,
+                200,
+                {
+                    "service": "knowledgeIntelligence",
+                    "health": "/v1/health",
+                    "openapi": "/openapi.yaml",
+                },
+            )
+            return
+        if parsed.path in ("/openapi.yaml", "/openapi.json"):
+            self._openapi(root=self.repo_root.resolve())
             return
         _json_response(self, 404, {"error": "not_found", "path": parsed.path})
 
@@ -79,9 +90,11 @@ class KiHandler(BaseHTTPRequestHandler):
             "local_head": sync.local_head,
             "upstream_head": sync.upstream_head,
             "embedding_model_id": m.get("embedding_model_id", EMBEDDING_MODEL_ID),
+            "sparse_model_id": m.get("sparse_model_id", SPARSE_MODEL_ID),
             "reranker_model_id": m.get("reranker_model_id", "mvp-pairwise-tf-idf"),
-            "schema_version": m.get("schema_version", "0.1.0"),
+            "schema_version": m.get("schema_version", INDEX_SCHEMA_VERSION),
             "chunk_count": m.get("chunk_count"),
+            "retrieval": m.get("retrieval", "hybrid_rrf_dense_bm25"),
         }
         if "error" in m:
             payload["error"] = m["error"]
@@ -114,6 +127,8 @@ class KiHandler(BaseHTTPRequestHandler):
                 "line_end": s.line_end,
                 "retrieval_score": s.retrieval_score,
                 "rerank_score": s.rerank_score,
+                "dense_score": s.dense_score,
+                "sparse_score": s.sparse_score,
                 "meta": s.meta,
             }
             for s in ranked
@@ -121,7 +136,13 @@ class KiHandler(BaseHTTPRequestHandler):
         _json_response(
             self,
             200,
-            {"query": q, "chunks": out, "embedding_model_id": EMBEDDING_MODEL_ID},
+            {
+                "query": q,
+                "chunks": out,
+                "embedding_model_id": EMBEDDING_MODEL_ID,
+                "sparse_model_id": SPARSE_MODEL_ID,
+                "retrieval": "hybrid_rrf_dense_bm25",
+            },
         )
 
     def _context_pack(self, body: dict[str, Any]) -> None:
@@ -144,7 +165,29 @@ class KiHandler(BaseHTTPRequestHandler):
             domain=body.get("domain"),
             area=body.get("area"),
         )
-        _json_response(self, 200, {"query": q, "chunks": pack})
+        _json_response(
+            self,
+            200,
+            {
+                "query": q,
+                "chunks": pack,
+                "embedding_model_id": EMBEDDING_MODEL_ID,
+                "sparse_model_id": SPARSE_MODEL_ID,
+            },
+        )
+
+    def _openapi(self, *, root: Path) -> None:
+        spec_path = root / "docs" / "openapi.yaml"
+        if spec_path.is_file():
+            text = spec_path.read_text(encoding="utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/yaml; charset=utf-8")
+            b = text.encode("utf-8")
+            self.send_header("Content-Length", str(len(b)))
+            self.end_headers()
+            self.wfile.write(b)
+            return
+        _json_response(self, 404, {"error": "openapi_not_found"})
 
 
 def make_handler_class(repo_root: Path) -> type[KiHandler]:

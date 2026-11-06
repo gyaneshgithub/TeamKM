@@ -25,3 +25,6 @@ jobs:
 
       - name: Validate knowledge front matter
         run: python3 scripts/validate_frontmatter.py --root "$GITHUB_WORKSPACE"
+
+      - name: Golden queries (recall@k)
+        run: python3 scripts/golden_queries.py --root "$GITHUB_WORKSPACE"

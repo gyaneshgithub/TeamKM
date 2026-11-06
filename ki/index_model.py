@@ -1,4 +1,4 @@
-"""In-memory index (MVP dense surrogate: tf-idf cosine). REQUIRED §5.5 rerank applied in ki/retrieve.py."""
+"""Index: hybrid **dense** (tf-idf cosine) + **sparse** (BM25) for retrieval fusion in ki/retrieve.py."""
 
 from __future__ import annotations
 
@@ -8,12 +8,15 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from ki.bm25 import build_bm25_stats
 from ki.chunking import Chunk, chunk_markdown_file
 from ki.fingerprint import corpus_fingerprint
 from ki.tokenize import term_freq
 
-INDEX_SCHEMA_VERSION = "0.1.0"
-EMBEDDING_MODEL_ID = "mvp-tfidf"
+INDEX_SCHEMA_VERSION = "0.2.0"
+# Dense leg: tf-idf over word tokens (surrogate for embeddings until torch stack lands).
+EMBEDDING_MODEL_ID = "mvp-hybrid-tfidf-dense"
+SPARSE_MODEL_ID = "mvp-bm25-okapi"
 
 
 @dataclass
@@ -23,9 +26,14 @@ class CorpusIndex:
     idf: dict[str, float] = field(default_factory=dict)
     chunk_vectors: list[dict[str, float]] = field(default_factory=list)
     total_docs: int = 0
+    # BM25 leg
+    bm25_idf: dict[str, float] = field(default_factory=dict)
+    bm25_doc_lens: list[int] = field(default_factory=list)
+    bm25_avgdl: float = 0.0
+    chunk_term_freqs: list[dict[str, int]] = field(default_factory=list)
 
 
-def _build_idf(chunks: list[Chunk]) -> dict[str, float]:
+def _build_tfidf_idf(chunks: list[Chunk]) -> dict[str, float]:
     df: dict[str, int] = {}
     n = len(chunks)
     for ch in chunks:
@@ -69,14 +77,30 @@ def build_index(repo_root: Path) -> CorpusIndex:
     chunks: list[Chunk] = []
     for f in files:
         chunks.extend(chunk_markdown_file(f, repo_root=root))
-    idf = _build_idf(chunks)
-    vectors: list[dict[str, float]] = []
+
+    chunk_term_freqs: list[dict[str, int]] = []
     for ch in chunks:
         tf = ch.meta.get("_tf") or {}
-        assert isinstance(tf, dict)
-        itf = {k: int(v) for k, v in tf.items()}
-        vectors.append(_tfidf_vec(itf, idf))
-    return CorpusIndex(chunks=chunks, corpus_fingerprint=fp, idf=idf, chunk_vectors=vectors, total_docs=len(chunks))
+        chunk_term_freqs.append({k: int(float(v)) for k, v in tf.items()})
+
+    idf = _build_tfidf_idf(chunks)
+    vectors: list[dict[str, float]] = []
+    for tf in chunk_term_freqs:
+        vectors.append(_tfidf_vec(tf, idf))
+
+    bm25_idf, doc_lens, avgdl = build_bm25_stats(chunk_term_freqs)
+
+    return CorpusIndex(
+        chunks=chunks,
+        corpus_fingerprint=fp,
+        idf=idf,
+        chunk_vectors=vectors,
+        total_docs=len(chunks),
+        bm25_idf=bm25_idf,
+        bm25_doc_lens=doc_lens,
+        bm25_avgdl=avgdl,
+        chunk_term_freqs=chunk_term_freqs,
+    )
 
 
 def build_query_vector(query: str, idf: dict[str, float], *, total_docs: int) -> dict[str, float]:
@@ -102,6 +126,7 @@ def save_index_to_disk(index: CorpusIndex, dest_dir: Path) -> None:
     payload = {
         "schema_version": INDEX_SCHEMA_VERSION,
         "embedding_model_id": EMBEDDING_MODEL_ID,
+        "sparse_model_id": SPARSE_MODEL_ID,
         "reranker_model_id": "mvp-pairwise-tf-idf",
         "corpus_fingerprint": index.corpus_fingerprint,
         "chunk_count": len(index.chunks),
@@ -110,12 +135,32 @@ def save_index_to_disk(index: CorpusIndex, dest_dir: Path) -> None:
     (dest_dir / "chunks.json").write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (dest_dir / "idf.json").write_text(json.dumps(index.idf, indent=2) + "\n", encoding="utf-8")
     (dest_dir / "vectors.json").write_text(json.dumps(index.chunk_vectors) + "\n", encoding="utf-8")
+    bm25_payload = {
+        "bm25_idf": index.bm25_idf,
+        "bm25_doc_lens": index.bm25_doc_lens,
+        "bm25_avgdl": index.bm25_avgdl,
+        "chunk_term_freqs": index.chunk_term_freqs,
+    }
+    (dest_dir / "bm25.json").write_text(json.dumps(bm25_payload) + "\n", encoding="utf-8")
 
 
 def load_index_from_disk(src_dir: Path) -> CorpusIndex:
     payload = json.loads((src_dir / "chunks.json").read_text(encoding="utf-8"))
     idf = json.loads((src_dir / "idf.json").read_text(encoding="utf-8"))
     vectors = json.loads((src_dir / "vectors.json").read_text(encoding="utf-8"))
+    bm25_path = src_dir / "bm25.json"
+    if bm25_path.is_file():
+        bm25 = json.loads(bm25_path.read_text(encoding="utf-8"))
+        bm25_idf = {k: float(v) for k, v in bm25["bm25_idf"].items()}
+        bm25_doc_lens = [int(x) for x in bm25["bm25_doc_lens"]]
+        bm25_avgdl = float(bm25["bm25_avgdl"])
+        chunk_term_freqs = [
+            {k: int(v) for k, v in tf.items()} for tf in bm25["chunk_term_freqs"]
+        ]
+    else:
+        bm25_idf, bm25_doc_lens, bm25_avgdl = {}, [], 0.0
+        chunk_term_freqs = []
+
     chunks: list[Chunk] = []
     for ent in payload["chunks"]:
         chunks.append(
@@ -129,10 +174,25 @@ def load_index_from_disk(src_dir: Path) -> CorpusIndex:
                 meta=dict(ent.get("meta", {})),
             )
         )
+
+    if not chunk_term_freqs and chunks:
+        # Legacy 0.1 index: rebuild term freqs from stored text + title for BM25 at runtime
+        for ch in chunks:
+            title = str(ch.meta.get("title", ""))
+            chunk_term_freqs.append(dict(term_freq(ch.text + " " + title)))
+        from ki.bm25 import build_bm25_stats
+
+        bi, dl, adl = build_bm25_stats(chunk_term_freqs)
+        bm25_idf, bm25_doc_lens, bm25_avgdl = bi, dl, adl
+
     return CorpusIndex(
         chunks=chunks,
         corpus_fingerprint=payload.get("corpus_fingerprint", ""),
         idf={k: float(v) for k, v in idf.items()},
         chunk_vectors=[{k: float(v) for k, v in vec.items()} for vec in vectors],
         total_docs=len(chunks),
+        bm25_idf=bm25_idf,
+        bm25_doc_lens=bm25_doc_lens,
+        bm25_avgdl=bm25_avgdl,
+        chunk_term_freqs=chunk_term_freqs,
     )

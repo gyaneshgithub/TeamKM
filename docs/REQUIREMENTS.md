@@ -602,3 +602,4 @@ Goal: when **new commits** land on the tracked **upstream** branch (e.g. `origin
 | 0.21 | 2025-11-06 | **docs:** [ARCHITECTURE.md](ARCHITECTURE.md) (C4-style context, components, sequence flows); [LEADERSHIP_PITCH.md](LEADERSHIP_PITCH.md); intro links |
 | 0.22 | 2025-11-06 | **Build slice:** `ki/` package, `scripts/validate_frontmatter.py`, `knowledge/` sample, `pytest`, [TESTING.md](TESTING.md), GitHub Actions CI |
 | 0.23 | 2025-11-06 | **MVP implementation:** `ki index` / `ki serve` (HTTP `/v1/health`, `/v1/retrieve`, `/v1/context_pack`); tf-idf + mandatory rerank; `.rag/` manifest + lock; `meta/golden_queries.yaml`; [scripts/ki-session.sh](scripts/ki-session.sh) |
+| 0.24 | 2025-11-06 | **Hybrid retrieval:** BM25 + dense tf‑idf → RRF; index staging dir + atomic rename; manifest only after successful swap; [docs/openapi.yaml](openapi.yaml); [scripts/golden_queries.py](../scripts/golden_queries.py); CI golden run |

@@ -1,7 +1,8 @@
-"""Build index into .rag/index with lock + manifest (§12.1)."""
+"""Build index into .rag/index with lock; manifest written only after successful swap (§12.1)."""
 
 from __future__ import annotations
 
+import shutil
 import time
 from pathlib import Path
 
@@ -18,6 +19,10 @@ def rag_root(repo_root: Path) -> Path:
 
 def index_dir(repo_root: Path) -> Path:
     return rag_root(repo_root) / "index"
+
+
+def index_staging_dir(repo_root: Path) -> Path:
+    return rag_root(repo_root) / "index.staging"
 
 
 def lock_path(repo_root: Path) -> Path:
@@ -39,10 +44,11 @@ def needs_build(repo_root: Path) -> bool:
 
 
 def build_index_blocking(repo_root: Path) -> None:
-    """Full rebuild; caller holds lock."""
+    """Full rebuild; caller holds lock. Payload goes to staging; swap atomically; then manifest."""
     root = repo_root.resolve()
     rroot = rag_root(root)
     idir = index_dir(root)
+    staged = index_staging_dir(root)
     rroot.mkdir(parents=True, exist_ok=True)
     sync = compute_sync_status(root).sync_status
     write_manifest(
@@ -54,8 +60,13 @@ def build_index_blocking(repo_root: Path) -> None:
         sync_status=sync,
     )
     try:
+        if staged.exists():
+            shutil.rmtree(staged)
         index = build_index(root)
-        save_index_to_disk(index, idir)
+        save_index_to_disk(index, staged)
+        if idir.exists():
+            shutil.rmtree(idir)
+        staged.rename(idir)
         write_manifest(
             rroot,
             corpus_fingerprint=index.corpus_fingerprint,
@@ -65,10 +76,14 @@ def build_index_blocking(repo_root: Path) -> None:
             sync_status=sync,
             extra={
                 "chunk_count": len(index.chunks),
+                "sparse_model_id": "mvp-bm25-okapi",
+                "retrieval": "hybrid_rrf_dense_bm25",
                 "built_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             },
         )
     except Exception as e:
+        if staged.exists():
+            shutil.rmtree(staged, ignore_errors=True)
         write_manifest(
             rroot,
             corpus_fingerprint=corpus_fingerprint(root),
@@ -82,9 +97,6 @@ def build_index_blocking(repo_root: Path) -> None:
 
 
 def ensure_index(repo_root: Path) -> str:
-    """
-    If index is stale/missing, rebuild under lock. Returns index_status string.
-    """
     root = repo_root.resolve()
     if not needs_build(root):
         m = read_manifest(rag_root(root)) or {}

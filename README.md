@@ -37,6 +37,8 @@ curl -s http://127.0.0.1:8765/v1/retrieve -H 'Content-Type: application/json' \
 
 **Session wrapper** (per §12.1, pattern B): [scripts/ki-session.sh](scripts/ki-session.sh) — starts `ki serve` then `exec`s your assistant binary.
 
+**Retrieval (V1+ hybrid, implemented in Python):** first stage = **tf‑idf cosine** (dense surrogate) **+ BM25** fused with **RRF**; second stage = **mandatory rerank** (see `ki/retrieve.py`). **OpenAPI:** [docs/openapi.yaml](docs/openapi.yaml) (also `GET /openapi.yaml` when the server runs). **Golden queries:** [meta/golden_queries.yaml](meta/golden_queries.yaml) — run `python3 scripts/golden_queries.py --root .`
+
 ## Layout
 
 - `knowledge/` — corpus (Markdown + YAML front matter per §6.1)

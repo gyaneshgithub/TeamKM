@@ -1,10 +1,11 @@
-"""Retrieve → mandatory rerank → context pack (MVP — REQUIREMENTS §5.5, §5.10)."""
+"""Retrieve (hybrid dense + BM25 → RRF) → mandatory rerank → context pack (REQUIREMENTS §5.5, §5.10)."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any
 
+from ki.bm25 import bm25_score
 from ki.index_model import CorpusIndex, build_query_vector, cosine_sim
 from ki.tokenize import tokenize
 
@@ -20,25 +21,47 @@ class ScoredChunk:
     meta: dict[str, Any]
     retrieval_score: float
     rerank_score: float
+    dense_score: float = 0.0
+    sparse_score: float = 0.0
+    fused_score: float = 0.0
+
+
+def rrf_fuse(ranks_a: list[int], ranks_b: list[int], *, k_rrf: float = 60.0) -> dict[int, float]:
+    """Reciprocal Rank Fusion (RRF) over two ranked lists of chunk indices."""
+    scores: dict[int, float] = {}
+    for r, idx in enumerate(ranks_a):
+        scores[idx] = scores.get(idx, 0.0) + 1.0 / (k_rrf + r + 1)
+    for r, idx in enumerate(ranks_b):
+        scores[idx] = scores.get(idx, 0.0) + 1.0 / (k_rrf + r + 1)
+    return scores
 
 
 def pairwise_rerank_score(query: str, text: str) -> float:
-    """
-    Lightweight local 'cross-encoder' surrogate: token overlap density + char trigram-ish.
-    Mandatory rerank stage per §5.5 (not identity).
-    """
+    """Lightweight local reranker (mandatory second stage per §5.5)."""
     q = set(tokenize(query))
     if not q:
         return 0.0
     tl = (text or "").lower()
     hits = sum(1 for t in q if t in tl)
     base = hits / (len(q) ** 0.5)
-    # Bonus for phrase-ish: consecutive query tokens in order
     q_list = tokenize(query)
     if len(q_list) >= 2:
         bigrams = sum(1 for i in range(len(q_list) - 1) if f"{q_list[i]} {q_list[i + 1]}" in tl)
         base += 0.15 * bigrams
     return float(base)
+
+
+def _filter_chunk(
+    ch: Any,
+    *,
+    domain: str | None,
+    area: str | None,
+) -> bool:
+    if domain and (ch.meta.get("domain") or "") != domain:
+        return False
+    if area and (ch.meta.get("area") or "") != area:
+        return False
+    return True
 
 
 def retrieve_candidates(
@@ -48,27 +71,77 @@ def retrieve_candidates(
     top_n: int = 24,
     domain: str | None = None,
     area: str | None = None,
-) -> list[tuple[Any, float]]:
-    """First stage: tf-idf cosine on chunk vectors."""
+    rrf_k: float = 60.0,
+) -> list[tuple[Any, float, float, float, float]]:
+    """
+    First stage: **hybrid** — dense tf-idf cosine + BM25, fused with RRF (§5.5 V1+ pattern).
+
+    Returns list of (chunk, fused_score, dense_score, sparse_score).
+    """
     qvec = build_query_vector(query, index.idf, total_docs=index.total_docs)
-    scored: list[tuple[int, float]] = []
+    q_terms = tokenize(query)
+
+    dense_ranked: list[tuple[int, float]] = []
     for i, cv in enumerate(index.chunk_vectors):
         ch = index.chunks[i]
-        if domain and (ch.meta.get("domain") or "") != domain:
+        if not _filter_chunk(ch, domain=domain, area=area):
             continue
-        if area and (ch.meta.get("area") or "") != area:
+        dense_ranked.append((i, cosine_sim(qvec, cv)))
+    dense_ranked.sort(key=lambda x: x[1], reverse=True)
+
+    sparse_ranked: list[tuple[int, float]] = []
+    for i, tf in enumerate(index.chunk_term_freqs):
+        ch = index.chunks[i]
+        if not _filter_chunk(ch, domain=domain, area=area):
             continue
-        scored.append((i, cosine_sim(qvec, cv)))
-    scored.sort(key=lambda x: x[1], reverse=True)
-    return [(index.chunks[i], s) for i, s in scored[:top_n]]
+        dl = index.bm25_doc_lens[i] if i < len(index.bm25_doc_lens) else sum(tf.values())
+        s = bm25_score(
+            q_terms,
+            tf,
+            dl,
+            idf=index.bm25_idf,
+            avgdl=index.bm25_avgdl or 1.0,
+        )
+        sparse_ranked.append((i, s))
+    sparse_ranked.sort(key=lambda x: x[1], reverse=True)
+
+    dense_order = [i for i, _ in dense_ranked]
+    sparse_order = [i for i, _ in sparse_ranked]
+    fused = rrf_fuse(dense_order, sparse_order, k_rrf=rrf_k)
+
+    # Rank by fused score; break ties with dense then sparse
+    dense_map = {i: s for i, s in dense_ranked}
+    sparse_map = {i: s for i, s in sparse_ranked}
+    all_idx = sorted(
+        fused.keys(),
+        key=lambda i: (-fused[i], -dense_map.get(i, 0.0), -sparse_map.get(i, 0.0)),
+    )[:top_n]
+
+    out: list[tuple[Any, float, float, float]] = []
+    for i in all_idx:
+        ch = index.chunks[i]
+        out.append(
+            (
+                ch,
+                float(fused[i]),
+                float(dense_map.get(i, 0.0)),
+                float(sparse_map.get(i, 0.0)),
+            )
+        )
+    return out
 
 
-def rerank(query: str, candidates: list[tuple[Any, float]], *, take: int = 12) -> list[ScoredChunk]:
-    """§5.5 mandatory rerank on expanded candidate set."""
+def rerank(
+    query: str,
+    candidates: list[tuple[Any, float, float, float]],
+    *,
+    take: int = 12,
+) -> list[ScoredChunk]:
+    """§5.5 mandatory rerank: combine fused retrieval with pairwise scorer."""
     out: list[ScoredChunk] = []
-    for ch, rscore in candidates:
+    for ch, fused, ds, ss in candidates:
         rr = pairwise_rerank_score(query, ch.text)
-        combined = 0.45 * float(rscore) + 0.55 * float(rr)
+        combined = 0.35 * float(fused) + 0.65 * float(rr)
         out.append(
             ScoredChunk(
                 chunk_id=ch.chunk_id,
@@ -78,8 +151,11 @@ def rerank(query: str, candidates: list[tuple[Any, float]], *, take: int = 12) -
                 line_start=ch.line_start,
                 line_end=ch.line_end,
                 meta=dict(ch.meta),
-                retrieval_score=float(rscore),
+                retrieval_score=float(fused),
                 rerank_score=float(combined),
+                dense_score=float(ds),
+                sparse_score=float(ss),
+                fused_score=float(fused),
             )
         )
     out.sort(key=lambda x: x.rerank_score, reverse=True)
@@ -96,9 +172,7 @@ def build_context_pack(
     domain: str | None = None,
     area: str | None = None,
 ) -> list[dict[str, Any]]:
-    """
-    §5.10 context pack: retrieve → rerank → cap per doc → expand related (MVP).
-    """
+    """§5.10: retrieve → rerank → cap per doc → expand related."""
     cands = retrieve_candidates(index, query, top_n=candidate_k, domain=domain, area=area)
     ranked = rerank(query, cands, take=max(pack_k * 2, 12))
     pack: list[dict[str, Any]] = []
@@ -118,6 +192,8 @@ def build_context_pack(
                 "line_end": sc.line_end,
                 "retrieval_score": sc.retrieval_score,
                 "rerank_score": sc.rerank_score,
+                "dense_score": sc.dense_score,
+                "sparse_score": sc.sparse_score,
                 "inclusion_reason": "hit",
                 "meta": {k: v for k, v in sc.meta.items() if not str(k).startswith("_")},
             }
@@ -125,7 +201,6 @@ def build_context_pack(
         if len(pack) >= pack_k:
             break
 
-    # Related expansion from top hit
     if pack:
         top_meta = pack[0]["meta"]
         rel = top_meta.get("related")
@@ -147,6 +222,8 @@ def build_context_pack(
                             "line_end": ch.line_end,
                             "retrieval_score": 0.0,
                             "rerank_score": 0.0,
+                            "dense_score": 0.0,
+                            "sparse_score": 0.0,
                             "inclusion_reason": "related_doc",
                             "meta": {k: v for k, v in ch.meta.items() if not str(k).startswith("_")},
                         }
