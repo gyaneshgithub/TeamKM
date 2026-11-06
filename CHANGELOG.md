@@ -4,6 +4,7 @@ All notable changes to the **TeamKM engine** (this template repository) are list
 
 ## Unreleased
 
+- MCP: `python3 -m ki mcp` (stdio) exposes **`teamkm_*`** tools + **`teamkm_retrieve_first`** prompt against `TEAMKM_API_BASE` / `KI_HOST`+`KI_PORT`; install optional **`pip install -e ".[mcp]"`**. `GET /openapi.json` returns the OpenAPI spec as JSON. **[docs/MCP.md](docs/MCP.md)** — integration guide.
 - **Rename:** project and Python distribution **`knowledgeIntelligence` / `knowledge-intelligence` → TeamKM / `team-km`**; local profile path **`~/.teamkm/`** (was `~/.knowledgeintelligence/`).
 - Automation: after merge to `main`, GitHub Actions promotes **`status: draft` → `reviewed`** (sets **`last_reviewed`**) for touched `knowledge/**/*.md` via `scripts/promote_draft_on_merge.py`; follow-up commit uses **`[skip ci]`**. Uses push **`before`/`after`** (and **`HEAD^1..HEAD`** for merge commits) so **merge commits** are not skipped with an empty path list.
 - Documentation: multi-team maintenance, `legacy_reviewed`, `ki contribute`, optional pre-commit hook.

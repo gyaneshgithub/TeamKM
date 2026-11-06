@@ -7,8 +7,15 @@ from pathlib import Path
 
 from ki.api import run_server
 
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+
 
 def test_health_endpoint(tmp_path: Path):
+    (tmp_path / "docs").mkdir(parents=True)
+    (tmp_path / "docs" / "openapi.yaml").write_text(
+        (_REPO_ROOT / "docs" / "openapi.yaml").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
     (tmp_path / "knowledge" / "technical").mkdir(parents=True)
     (tmp_path / "knowledge" / "technical" / "z.md").write_text(
         "---\ntitle: Z\ndomain: technical\narea: z\nauthor_role: dev\n"
@@ -26,6 +33,12 @@ def test_health_endpoint(tmp_path: Path):
             body = json.loads(resp.read().decode())
         assert body.get("index_status") in {"ready", "building", "missing"}
         assert "corpus_fingerprint" in body
+
+        req_o = urllib.request.Request(f"http://127.0.0.1:{port}/openapi.json")
+        with urllib.request.urlopen(req_o, timeout=10) as resp:
+            spec = json.loads(resp.read().decode())
+        assert spec.get("openapi") == "3.1.0"
+        assert "/v1/health" in (spec.get("paths") or {})
     finally:
         srv.shutdown()
         srv.server_close()

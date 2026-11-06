@@ -265,13 +265,13 @@ The knowledge base is **locally hosted** by default: a small **HTTP API** (and/o
 | Requirement | Detail |
 |-------------|--------|
 | **Binding** | Default bind **`127.0.0.1`** (or `localhost`) on a **documented port**; optional config for LAN-only bind if the team explicitly allows it (document security implications). |
-| **Client workflow** | **Any** coding assistant that can invoke **HTTP** or **MCP** **calls the API** (or MCP tools) in a **retrieve-first** step: *query → ranked chunks / context pack* → then **analysis, planning, or code changes** use that grounded context with **citations**. Examples: Cursor, Claude Code, Copilot—**not** a closed list. |
-| **Transport** | **REST + JSON** as the canonical contract (versioned paths or `Accept-Version`); stable enough for scripts and IDE integrations. |
+| **Client workflow** | **Any** coding assistant that can invoke **HTTP** or **MCP** **calls the API** (or MCP tools) in a **retrieve-first** step: *query → ranked chunks / context pack* → then **analysis, planning, or code changes** use that grounded context with **citations**. Examples: Cursor, Claude Code, Copilot—**not** a closed list. **Agentic workflows:** the **LLM/planning loop** runs in the client; TeamKM provides **tools** (`teamkm_*` over HTTP) or direct REST. |
+| **Transport** | **REST + JSON** as the canonical contract (versioned paths or `Accept-Version`); stable enough for scripts and IDE integrations. **Discovery:** with `ki serve`, **`GET /openapi.yaml`** (source file) and **`GET /openapi.json`** (same spec as JSON). |
 | **Authentication (local)** | MVP: **no auth** on loopback, or optional shared secret in config if bind is non-loopback—document in `meta/`. |
-| **Multiple MCP servers** | The system SHOULD expose the same retrieval operations via an **MCP server** process so clients that speak MCP (e.g. Cursor with **multiple MCPs** enabled) can add **this** knowledge MCP **alongside** other MCPs (browser, git-host, ticketing, etc.). **No requirement** that this MCP is exclusive—teams run **several MCP servers** concurrently; each registers its own tools (e.g. `knowledge_retrieve`, `knowledge_context_pack`). |
-| **Coexistence** | Namespace MCP tool names (e.g. prefix `kb_`) to avoid collisions with tools from other MCPs on the same host. |
+| **Multiple MCP servers** | The system SHOULD expose the same retrieval operations via an **MCP server** process so clients that speak MCP (e.g. Cursor with **multiple MCPs** enabled) can add **this** knowledge MCP **alongside** other MCPs (browser, git-host, ticketing, etc.). **No requirement** that this MCP is exclusive—teams run **several MCP servers** concurrently. **Reference implementation:** `pip install -e ".[mcp]"` then `python3 -m ki mcp` (stdio); tools **`teamkm_health`**, **`teamkm_retrieve`**, **`teamkm_context_pack`**, **`teamkm_contribute_dry_run`**, prompt **`teamkm_retrieve_first`** — each tool **HTTP-calls** the local API (`TEAMKM_API_BASE` or `KI_HOST`+`KI_PORT`). |
+| **Coexistence** | Namespace MCP tool names with a **project prefix** (e.g. **`teamkm_*`**) to avoid collisions with tools from other MCPs on the same host. |
 
-**Implementation note:** One stack may bundle **HTTP API + MCP process** sharing the same index handle; behaviour must stay **consistent** between transports (same query → same ranked chunks for a given index version).
+**Implementation note:** **MCP is a thin adapter over the HTTP API** (not a second index path): start **`ki serve`**, run **`ki mcp`** as the host’s MCP subprocess; behaviour must stay **consistent** between transports (same query → same ranked chunks for a given index version).
 
 ### 5.10 Smart context assembly and relations (better agent outcomes)
 
@@ -366,7 +366,7 @@ Many simple RAG systems stop too early; **TeamKM** does not (§5.10):
 | Layer | Role | Assistant binding |
 |-------|------|-------------------|
 | **Canonical** | **REST + JSON** (versioned) on `localhost` | **None** — any client can `curl`, script, or use a generated SDK. |
-| **Optional** | **MCP server** exposing the same operations as tools | **None** — any host that loads MCP (Cursor, Claude Desktop/Code, other MCP clients) can attach. |
+| **Optional** | **MCP stdio server** (`python3 -m ki mcp`) exposing the same operations as **tools** that call the REST API | **None** — any host that loads MCP can attach; optional `[mcp]` install. |
 | **Optional** | **CLI** (`retrieve`, `context-pack`, `health`) | **None** — terminal-only workflows. |
 | **Optional UX** | `.cursor/skills/*`, editor-specific hooks | **Cursor** (or similar)—**convenience only**; not required to use the knowledge base. |
 
@@ -375,7 +375,7 @@ Many simple RAG systems stop too early; **TeamKM** does not (§5.10):
 1. **No proprietary-only APIs** as the only integration path—**HTTP** remains documented and stable.
 2. **Naming:** user-facing docs and examples MUST list **multiple** assistants where relevant (“Cursor, Claude Code, …”) and state that **others work** via the same REST/MCP surfaces.
 3. **Session / trigger language:** §12.1 uses **“coding assistant session”** as the abstract trigger; **one team’s recipe** (e.g. Claude in terminal + MCP) is **an example**, not an exclusive platform lock.
-4. **OpenAPI (V1+ recommended):** publish or generate an **OpenAPI** spec for the REST surface so new assistants can integrate without reverse-engineering.
+4. **OpenAPI:** ship **`docs/openapi.yaml`** in-repo; **`ki serve`** exposes **`GET /openapi.yaml`** and **`GET /openapi.json`** for clients and code generators.
 5. **Testing:** golden queries and health checks run against **HTTP** (or CLI)—not against a single IDE plugin.
 
 **Anti-patterns:** hard-coding only the Cursor SDK; requiring a single model provider for retrieval (embedding/rerank are **local/configurable**, not “Claude-only”).
@@ -488,7 +488,7 @@ The agent uses the profile to **suggest** §6.1 fields when committing knowledge
 - [ ] **Embedding model:** local vs API; dimension; offline / air-gap requirement; same model pinned in CI for reproducibility.
 - [ ] **Reranker model:** cross-encoder vs lightweight ranker; **approved** local model list; `candidate_k` / `context_pack_k` defaults.
 - [ ] **Chunking strategy:** max tokens per chunk; sub-split defaults; overlap values (starting defaults in §5.4).
-- [ ] **API surface:** default port, loopback-only defaults; **REST** contract versioning; MCP package layout and **tool naming** (`kb_*` vs other prefix).
+- [ ] **API surface:** default port, loopback-only defaults; **REST** contract versioning; MCP tool naming is **`teamkm_*`** in the reference server (`ki mcp`); teams MAY alias in host config.
 - [ ] **Multiple MCPs:** document how many concurrent MCP connections the team uses and **example configs** for major hosts (Cursor, Claude Code, …) plus generic JSON—**no single-vendor lock-in**.
 - [ ] **Retention:** how to deprecate or archive stale docs.
 - [ ] **Naming/versioning** of the repo and index schema.
@@ -626,3 +626,4 @@ Goal: when **new commits** land on the tracked **upstream** branch (e.g. `origin
 | 0.24 | 2025-11-06 | **Hybrid retrieval:** BM25 + dense tf‑idf → RRF; index staging dir + atomic rename; manifest only after successful swap; [docs/openapi.yaml](openapi.yaml); [scripts/golden_queries.py](../scripts/golden_queries.py); CI golden run |
 | 0.25 | 2025-11-06 | §4.6 multi-team maintenance + branching; §4.4 legacy vs deprecated; §6.1 `legacy_reviewed`, `applies_to`, `exclude_from_default_retrieval`; `ki contribute`, `POST /v1/contribute_dry_run`, `include_archived`; [CONTRIBUTING.md](../CONTRIBUTING.md), [CHANGELOG.md](../CHANGELOG.md), [.github/CODEOWNERS](../.github/CODEOWNERS), optional git hooks |
 | 0.26 | 2025-11-06 | [GITHUB_BRANCH_PROTECTION.md](GITHUB_BRANCH_PROTECTION.md): GitHub `main` protection, required check **`test`**, Pro/plan note |
+| 0.27 | 2025-11-06 | §5.9: MCP reference (`ki mcp`, **`teamkm_*`** tools, HTTP adapter); OpenAPI served as YAML+JSON; §5.12 MCP row; assistant loop stays in host; [MCP.md](MCP.md) integration guide |

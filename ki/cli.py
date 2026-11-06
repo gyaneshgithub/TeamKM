@@ -47,6 +47,17 @@ def cmd_serve(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_mcp(args: argparse.Namespace) -> int:
+    try:
+        from ki.mcp_server import main as mcp_main
+    except ImportError as e:
+        print("Install MCP support: pip install -e '.[mcp]'", file=sys.stderr)
+        print(e, file=sys.stderr)
+        return 1
+    mcp_main()
+    return 0
+
+
 def cmd_contribute(args: argparse.Namespace) -> int:
     root = _repo_root(args)
     draft = Path(args.file).read_text(encoding="utf-8") if args.file else sys.stdin.read()
@@ -75,6 +86,12 @@ def main(argv: list[str] | None = None) -> int:
     ps.add_argument("--host", default="127.0.0.1")
     ps.add_argument("--port", default=8765, type=int)
     ps.set_defaults(func=cmd_serve)
+
+    pm = sub.add_parser(
+        "mcp",
+        help="Run stdio MCP server (tools wrap local HTTP API; install .[mcp])",
+    )
+    pm.set_defaults(func=cmd_mcp)
 
     pc = sub.add_parser("contribute", help="Retrieval-first contribute dry-run (§5.8)")
     pc.add_argument("--file", "-f", type=Path, help="Draft markdown file (else stdin)")

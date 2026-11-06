@@ -42,6 +42,12 @@ This repo is a **reusable template**: Markdown corpus under `knowledge/`, a **lo
 
 Validates staged `knowledge/**/*.md` with `validate_frontmatter.py`.
 
+## Optional: MCP (assistant hosts)
+
+The **local HTTP API** is the canonical surface. For IDEs that speak **MCP**, install **`pip install -e ".[mcp]"`**, run **`python3 -m ki serve`** in the repo (default `http://127.0.0.1:8765`), then **`python3 -m ki mcp`** as the MCP server command. The host runs the **agent loop**; tools **`teamkm_*`** call `health` / `retrieve` / `context_pack` / `contribute_dry_run`. **Policy:** retrieve before editing code or adding knowledge; use **`teamkm_contribute_dry_run`** before opening new docs (§5.8). Override base URL with **`TEAMKM_API_BASE`** (or **`KI_HOST`** / **`KI_PORT`**).
+
+Full table and examples: [docs/MCP.md](docs/MCP.md).
+
 ## CODEOWNERS
 
 Edit [.github/CODEOWNERS](.github/CODEOWNERS) so important paths always get a reviewer.

@@ -39,7 +39,7 @@ flowchart LR
     Pipeline[Index pipeline]
     Store[(Vector + optional sparse index)]
     API[Local HTTP API]
-    MCP[MCP server optional]
+    MCP[MCP stdio python -m ki mcp]
     Manifest[.rag manifest gitignored]
   end
 
@@ -54,9 +54,9 @@ flowchart LR
   Pipeline --> Store
   Pipeline --> Manifest
   API --> Store
-  MCP --> Store
-  IDE -->|localhost REST or MCP| API
-  IDE --> MCP
+  MCP -->|HTTP tools| API
+  IDE -->|localhost REST| API
+  IDE -->|MCP host| MCP
   Term -->|curl / CLI| API
   Repo -->|same files| Corpus
 ```
@@ -101,7 +101,7 @@ meta/             # contribution templates, author-profile.example.yaml, etc.
 | **Reranker** | **Mandatory** second stage; local cross-encoder or light ranker ([§5.5](REQUIREMENTS.md)). |
 | **Context assembler** | Caps per doc, `related:` expansion, `inclusion_reason`, optional diversification ([§5.10](REQUIREMENTS.md)). |
 | **API** | REST JSON: `retrieve`, `context_pack`, `health`, optional `get_chunk` / neighbours ([§5.6](REQUIREMENTS.md)). |
-| **MCP adapter** | Same semantics as HTTP; namespaced tools (e.g. `kb_*`) ([§5.9](REQUIREMENTS.md)). |
+| **MCP adapter** | Optional stdio server (`python3 -m ki mcp` after `pip install -e ".[mcp]"`): tools **`teamkm_*`** call the same local HTTP API; agent loop stays in the host ([§5.9, §5.12](REQUIREMENTS.md); [MCP.md](MCP.md)). |
 | **Validator** | `scripts/validate_frontmatter.py`: schema + path/domain rules ([§6.1, §8](REQUIREMENTS.md)). |
 | **Sync (optional)** | Fetch + fast-forward only when safe; feeds staleness for reindex ([§12.2](REQUIREMENTS.md)). |
 

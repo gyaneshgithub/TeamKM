@@ -28,7 +28,7 @@ This product does **not** replace good management or mentorship. It **institutio
 |-------|------------|
 | **Corpus** | Markdown under `knowledge/` with YAML metadata; **PR-only** merges ([REQUIREMENTS §4](REQUIREMENTS.md)). |
 | **Intelligence** | Local **RAG**: chunk → embed → **retrieve → mandatory rerank** → **context packs** (not naive “top‑k cosine” only) ([§5.4–§5.6, §5.10, §5.11](REQUIREMENTS.md)). |
-| **Access** | **HTTP on localhost** plus optional **MCP** so **Cursor, Claude Code, Copilot-class tools, or scripts** can integrate the same way ([§5.9, §5.12](REQUIREMENTS.md)). |
+| **Access** | **HTTP on localhost** (canonical) plus optional **MCP** stdio server (`python3 -m ki mcp`, tools **`teamkm_*`**) so **Cursor, Claude Code, Copilot-class tools, or scripts** integrate the same way—the **host** runs the agent loop ([§5.9, §5.12](REQUIREMENTS.md)). |
 | **Adoption** | Any team can treat this repo as a **template**: clone, point `origin` at **their** remote, customize layout and policy ([§4.5](REQUIREMENTS.md)). |
 
 ---
@@ -102,3 +102,4 @@ Aligned with [REQUIREMENTS §11](REQUIREMENTS.md):
 | Version | Date | Notes |
 |---------|------|-------|
 | 0.1 | 2025-11-06 | Initial leadership brief. |
+| 0.2 | 2025-11-06 | Access row: MCP stdio (`ki mcp`, **`teamkm_*`**) as HTTP adapter; host holds agent loop — [MCP.md](MCP.md). |

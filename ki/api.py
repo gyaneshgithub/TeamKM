@@ -47,12 +47,16 @@ class KiHandler(BaseHTTPRequestHandler):
                 {
                     "service": "TeamKM",
                     "health": "/v1/health",
-                    "openapi": "/openapi.yaml",
+                    "openapi_yaml": "/openapi.yaml",
+                    "openapi_json": "/openapi.json",
                 },
             )
             return
-        if parsed.path in ("/openapi.yaml", "/openapi.json"):
-            self._openapi(root=self.repo_root.resolve())
+        if parsed.path == "/openapi.yaml":
+            self._openapi_yaml(root=self.repo_root.resolve())
+            return
+        if parsed.path == "/openapi.json":
+            self._openapi_json(root=self.repo_root.resolve())
             return
         _json_response(self, 404, {"error": "not_found", "path": parsed.path})
 
@@ -213,7 +217,7 @@ class KiHandler(BaseHTTPRequestHandler):
         )
         _json_response(self, 200, payload)
 
-    def _openapi(self, *, root: Path) -> None:
+    def _openapi_yaml(self, *, root: Path) -> None:
         spec_path = root / "docs" / "openapi.yaml"
         if spec_path.is_file():
             text = spec_path.read_text(encoding="utf-8")
@@ -225,6 +229,24 @@ class KiHandler(BaseHTTPRequestHandler):
             self.wfile.write(b)
             return
         _json_response(self, 404, {"error": "openapi_not_found"})
+
+    def _openapi_json(self, *, root: Path) -> None:
+        spec_path = root / "docs" / "openapi.yaml"
+        if not spec_path.is_file():
+            _json_response(self, 404, {"error": "openapi_not_found"})
+            return
+        try:
+            import yaml
+        except ImportError:
+            _json_response(self, 500, {"error": "yaml_required_for_openapi_json"})
+            return
+        data = yaml.safe_load(spec_path.read_text(encoding="utf-8"))
+        body = json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
 
 
 def make_handler_class(repo_root: Path) -> type[KiHandler]:

@@ -11,7 +11,8 @@ This document describes **how we test** the repo today and **how we avoid corrup
 | Layer | Purpose | Command |
 |-------|---------|---------|
 | **Front matter** | Schema + path/domain rules (§6.1) | `python3 scripts/validate_frontmatter.py` |
-| **Index + API** | Chunk → index → hybrid retrieve (dense+BM25, RRF) → rerank → context_pack; `/v1/health` | `pytest` (includes `tests/test_index.py`, `tests/test_api.py`, `tests/test_hybrid.py`) |
+| **Index + API** | Chunk → index → hybrid retrieve (dense+BM25, RRF) → rerank → context_pack; `/v1/health`; `/openapi.json` | `pytest` (includes `tests/test_index.py`, `tests/test_api.py`, `tests/test_hybrid.py`) |
+| **MCP (optional)** | Stdio server `python3 -m ki mcp` calls the HTTP API; install **`pip install -e ".[mcp]"`** | Manual: configure host + run `ki serve`; no pytest cover of full MCP handshake yet |
 | **Golden queries** | recall@k vs `meta/golden_queries.yaml` | `python3 scripts/golden_queries.py --root .` |
 | **Contribute dry-run** | Merge-vs-new hints from retrieval (§5.8) | `python3 -m ki contribute --root . -f draft.md` |
 | **Unit tests** | Validator, atomic writes | `pytest` (after `pip install -e ".[dev]"`) |
@@ -62,7 +63,7 @@ Implemented patterns (MVP):
 Workflow **ci.yml** runs:
 
 1. Install Python **3.11**
-2. `pip install -e ".[dev]"`
+2. `pip install -e ".[dev,mcp]"` — **mcp** extra so imports of `ki/mcp_server.py` stay compatible with packaging
 3. `pytest`
 4. `python3 scripts/validate_frontmatter.py --root "$GITHUB_WORKSPACE"`
 5. `python3 scripts/golden_queries.py --root "$GITHUB_WORKSPACE"`
