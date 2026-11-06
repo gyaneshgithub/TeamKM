@@ -9,6 +9,7 @@
 | [docs/LEADERSHIP_PITCH.md](docs/LEADERSHIP_PITCH.md) | Leadership brief |
 | [docs/TESTING.md](docs/TESTING.md) | How we test and stay safe |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Branches, PRs, corpus maintenance |
+| [docs/GITHUB_BRANCH_PROTECTION.md](docs/GITHUB_BRANCH_PROTECTION.md) | Protect `main` on GitHub |
 
 ## Quick start (tooling)
 
