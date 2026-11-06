@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: knowledgeIntelligence local API
+  title: TeamKM local API
   description: |
     Loopback HTTP API for retrieval and health (REQUIREMENTS §5.6, §5.9).
     Implementation serves this file at `GET /openapi.json` as YAML bytes, or use this file from repo root.

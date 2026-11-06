@@ -1,5 +1,5 @@
 ---
-title: knowledgeIntelligence project overview
+title: TeamKM project overview
 domain: technical
 area: meta
 author_role: dev
@@ -12,7 +12,7 @@ exclude_from_default_retrieval: false
 
 # Project overview
 
-This repository is the **knowledgeIntelligence** template: Markdown under `knowledge/`, validated front matter (§6.1), and local RAG tooling under `ki/` and `scripts/`.
+This repository is the **TeamKM** template: Markdown under `knowledge/`, validated front matter (§6.1), and local RAG tooling under `ki/` and `scripts/`.
 
 See [docs/REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) for the full specification.
 

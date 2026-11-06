@@ -14,7 +14,7 @@ exclude_from_default_retrieval: false
 
 # Workflow validation
 
-This note exists to validate the **feature branch → contribute checks → PR** flow for knowledgeIntelligence.
+This note exists to validate the **feature branch → contribute checks → PR** flow for TeamKM.
 
 It intentionally stays small and scoped under `knowledge/technical/meta/` with valid §6.1 front matter.
 

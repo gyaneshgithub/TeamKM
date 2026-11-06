@@ -2,14 +2,14 @@
 name: knowledge-author-profile
 description: >-
   Sets up or updates a **local only** author profile (name, team, topics, role)
-  for knowledgeIntelligence so agents can pre-fill YAML front matter when
+  for TeamKM so agents can pre-fill YAML front matter when
   committing knowledge docs. Use when the user asks to configure their profile,
   set up local contributor metadata, or default front matter for knowledge
   commits.
 disable-model-invocation: true
 ---
 
-# knowledgeIntelligence — local author profile
+# TeamKM — local author profile
 
 ## Purpose
 
@@ -23,7 +23,7 @@ Each team member keeps a **local profile** (not committed—see `.gitignore`) wi
    - **Must remain gitignored**; never stage or commit it.
 
 2. **Alternative (machine-wide):**  
-   **`~/.knowledgeintelligence/profile.yaml`**  
+   **`~/.teamkm/profile.yaml`**  
    - Use if the same person works across multiple clones and wants one profile.
 
 If **both** exist, **project-local wins** when the workspace is this repo.
@@ -39,7 +39,7 @@ If **both** exist, **project-local wins** when the workspace is this repo.
    - **`topics`** — list of **areas** / themes they own or touch (string[]), e.g. `["auth", "reports"]` — maps to front matter **`area`** and **`tags`** hints.
    - **`email`** — optional; **do not** commit if policy says keep out of repo; profile file is local only.
    - **`product`** — optional default product name for functional notes.
-3. Confirm `.gitignore` includes `meta/author-profile.local.yaml` and `**/.knowledgeintelligence/`.
+3. Confirm `.gitignore` includes `meta/author-profile.local.yaml` and `**/.teamkm/`.
 4. Tell the user: edits to the profile apply on the **next** doc the agent helps with; they can run validation after save.
 
 ## Using the profile when writing front matter

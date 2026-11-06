@@ -1,4 +1,4 @@
-# Testing and safety guardrails (knowledgeIntelligence)
+# Testing and safety guardrails (TeamKM)
 
 This document describes **how we test** the repo today and **how we avoid corrupting** knowledge, local index state, or git history as we add the RAG stack.
 

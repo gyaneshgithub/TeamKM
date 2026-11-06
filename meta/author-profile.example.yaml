@@ -1,7 +1,7 @@
 # Copy to meta/author-profile.local.yaml and fill in.
 # author-profile.local.yaml is gitignored — do not commit.
 #
-# knowledgeIntelligence — local author profile (example)
+# TeamKM — local author profile (example)
 
 display_name: "Ada Example"
 team: "platform"

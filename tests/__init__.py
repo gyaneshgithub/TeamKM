@@ -1,1 +1,1 @@
-# Tests for knowledgeIntelligence tooling
+# Tests for TeamKM tooling

@@ -1,6 +1,6 @@
 # Local author profile — never commit (may contain name/email)
 meta/author-profile.local.yaml
-**/.knowledgeintelligence/
+**/.teamkm/
 
 # RAG build output (per REQUIREMENTS §12)
 .rag/

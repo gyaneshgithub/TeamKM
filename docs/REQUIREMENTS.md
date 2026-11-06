@@ -1,11 +1,11 @@
-# knowledgeIntelligence — Requirements
+# TeamKM — Requirements
 
-**Project name:** **knowledgeIntelligence** (repository / product name for this RAG knowledge base).  
+**Project name:** **TeamKM** (repository / product name for this RAG knowledge base).  
 **Status:** Draft for review  
 **Owner:** GYANESH  
 **Last updated:** 2025-11-06
 
-This document captures the planned behaviour of **knowledgeIntelligence**: a **git-hosted, RAG-based knowledge base** for agent-assisted development. **Retrieval-Augmented Generation (RAG)** is the core pattern: knowledge lives in the repo as normal files; a **local pipeline** chunks, embeds, and indexes them so agents **retrieve** grounded passages before (or instead of) answering. The **retrieval service runs locally** (e.g. `localhost`); **any agent coding assistant** that can call **HTTP** or **MCP** can integrate—**assistant-agnostic by design** (§5.12). **Cursor**, **Claude**, **Windsurf**, **GitHub Copilot**, or a **shell script** are **examples**, not hard dependencies. Revise sections as the team agrees.
+This document captures the planned behaviour of **TeamKM**: a **git-hosted, RAG-based knowledge base** for agent-assisted development. **Retrieval-Augmented Generation (RAG)** is the core pattern: knowledge lives in the repo as normal files; a **local pipeline** chunks, embeds, and indexes them so agents **retrieve** grounded passages before (or instead of) answering. The **retrieval service runs locally** (e.g. `localhost`); **any agent coding assistant** that can call **HTTP** or **MCP** can integrate—**assistant-agnostic by design** (§5.12). **Cursor**, **Claude**, **Windsurf**, **GitHub Copilot**, or a **shell script** are **examples**, not hard dependencies. Revise sections as the team agrees.
 
 **Core product idea:** **Knowledge compounds.** Every merged contribution adds to a shared corpus. Over weeks and months the index reflects **technical, delivery, testing, and product** learning—so **developers**, **QE**, **PMs**, and the **dev manager** can pull **the same grounded context** when improving **products and features** they own (new builds, refactors, quality hardening, roadmap decisions), instead of re-deriving it from memory or chat.
 
@@ -275,7 +275,7 @@ The knowledge base is **locally hosted** by default: a small **HTTP API** (and/o
 
 ### 5.10 Smart context assembly and relations (better agent outcomes)
 
-Raw “top‑k similar chunks” often **under-serve** agents: they may be **redundant**, **miss linked docs**, or **omit** the complementary view (e.g. **QE** testing notes when the query sounds **technical**). **knowledgeIntelligence** implements **context assembly** that builds **coherent bundles** with **explicit structure** so **any** integrated coding assistant performs better **after** the retrieve step. **MVP (required):** cap chunks per document, expand **explicit** `related` links, attach **`inclusion_reason`** per chunk, group output for readability. **V1+ (recommended):** MMR / diversify, cross‑domain same‑`area` expansion, optional `intent` / `profile` / `role` hints—see §10.
+Raw “top‑k similar chunks” often **under-serve** agents: they may be **redundant**, **miss linked docs**, or **omit** the complementary view (e.g. **QE** testing notes when the query sounds **technical**). **TeamKM** implements **context assembly** that builds **coherent bundles** with **explicit structure** so **any** integrated coding assistant performs better **after** the retrieve step. **MVP (required):** cap chunks per document, expand **explicit** `related` links, attach **`inclusion_reason`** per chunk, group output for readability. **V1+ (recommended):** MMR / diversify, cross‑domain same‑`area` expansion, optional `intent` / `profile` / `role` hints—see §10.
 
 #### 5.10.1 Relation sources (built at index time)
 
@@ -328,7 +328,7 @@ A **context pack** is not a flat list: it is a **budgeted** set of chunks (by ma
 
 #### 5.11.2 Context assembly (what goes to the assistant)
 
-Many simple RAG systems stop too early; **knowledgeIntelligence** does not (§5.10):
+Many simple RAG systems stop too early; **TeamKM** does not (§5.10):
 
 | Technique | Role |
 |-----------|------|
@@ -361,7 +361,7 @@ Many simple RAG systems stop too early; **knowledgeIntelligence** does not (§5.
 
 ### 5.12 Coding-assistant agnosticism (cross–agent coding assistant)
 
-**knowledgeIntelligence** MUST NOT depend on a **single** vendor IDE or model. The **product contract** is:
+**TeamKM** MUST NOT depend on a **single** vendor IDE or model. The **product contract** is:
 
 | Layer | Role | Assistant binding |
 |-------|------|-------------------|
@@ -450,7 +450,7 @@ So each member does not re-type **name, team, topics**, the repo MAY ship an **e
 
 - **Canonical path:** `meta/author-profile.local.yaml` (**gitignored**).
 - **Example template:** `meta/author-profile.example.yaml` (committed).
-- **Machine-wide optional:** `~/.knowledgeintelligence/profile.yaml` — project-local file wins when present.
+- **Machine-wide optional:** `~/.teamkm/profile.yaml` — project-local file wins when present.
 
 The agent uses the profile to **suggest** §6.1 fields when committing knowledge (`author_role`, `tags`, `area`, optional `contributor`, `team`, `topics_author`). **Humans still approve** PR content; profile data **never** forces incorrect `area` on a doc.
 
@@ -536,11 +536,11 @@ The agent uses the profile to **suggest** §6.1 fields when committing knowledge
 
 Goal: when a team member **checks out** this repo (clone, checkout, pull) or **starts a coding-assistant session** (terminal or IDE) with this project, **indexing begins without a manual step** so retrieval is warm or warming. Details are **assistant-agnostic** (§5.12).
 
-**Primary hook (MVP): assistant session starts MCP or local API.** The team picks one **documented** entrypoint. **knowledgeIntelligence** MUST tie indexing (and optional upstream sync—§12.2) to that moment:
+**Primary hook (MVP): assistant session starts MCP or local API.** The team picks one **documented** entrypoint. **TeamKM** MUST tie indexing (and optional upstream sync—§12.2) to that moment:
 
 | Trigger | Required behaviour (MVP) |
 |---------|--------------------------|
-| **Coding-assistant session (primary)** | At least one pattern MUST be documented and supported: **(A)** **MCP**: the host assistant loads **knowledgeIntelligence** MCP so **`initialize`** runs the local API or attached service → background **sync** (§12.2, if enabled) → background **index** if missing/stale (**works for any MCP-capable assistant**). **(B)** **Shell wrapper** (e.g. `scripts/ki-session.sh`) that the team aliases to their assistant CLI (**claude**, **cursor**, **etc.**), which spawns API/MCP then **`exec`s** the real binary (non-blocking fork where possible). **(C)** **`direnv` / `.envrc` or shell function** that runs **`ki ensure-index &`** when `cwd` is this repo (weaker: per-shell, not per assistant invocation). **(A) or (B) is preferred.** |
+| **Coding-assistant session (primary)** | At least one pattern MUST be documented and supported: **(A)** **MCP**: the host assistant loads **TeamKM** MCP so **`initialize`** runs the local API or attached service → background **sync** (§12.2, if enabled) → background **index** if missing/stale (**works for any MCP-capable assistant**). **(B)** **Shell wrapper** (e.g. `scripts/ki-session.sh`) that the team aliases to their assistant CLI (**claude**, **cursor**, **etc.**), which spawns API/MCP then **`exec`s** the real binary (non-blocking fork where possible). **(C)** **`direnv` / `.envrc` or shell function** that runs **`ki ensure-index &`** when `cwd` is this repo (weaker: per-shell, not per assistant invocation). **(A) or (B) is preferred.** |
 | **Fresh clone / checkout / pull** | **Optional (supplementary):** **git hooks** (e.g. `post-checkout`, `post-merge`) or **`./scripts/install-hooks.sh`**. On trigger, run **`index build` in the background** if **missing or stale**. **Opt-in** install—see caveat below. Hooks **do not** replace the **session** path. |
 | **MCP / local API initialize** | Whenever the **MCP server** or **local API** starts: (1) **`/health`** with `index_status`, `sync_status` (§12.2), `corpus_fingerprint`, optional `progress`; (2) **enqueue** background **sync** (if enabled) then **index** if missing/stale; (3) **do not block** handshake on full completion—degraded retrieval until `ready` (§5.9). |
 | **IDE workspace open** | **Recommended (V1+):** editor “on folder open” or hooks—same non-blocking rules; secondary to **MCP** for portability across assistants. |
@@ -564,13 +564,13 @@ Goal: when **new commits** land on the tracked **upstream** branch (e.g. `origin
 | **Clean** working tree and index; local branch can **fast-forward** | Run **`git fetch`** then **`git merge --ff-only`** (or equivalent `git pull --ff-only`) to the configured upstream. **No rebase**, **no force**. |
 | **Dirty** working tree (uncommitted changes) | **Do not** pull. Surface **`sync_status: blocked_dirty_tree`** via **health** (§5.6) and logs; optionally notify once. User resolves or commits. |
 | **Diverged** (local commits not on upstream, non-FF) | **Do not** auto-merge. Surface **`sync_status: blocked_diverged`**; user must integrate manually (branch, rebase, or merge as per team policy). |
-| **Detached HEAD** or **no upstream** | **Do not** pull unless `knowledgeIntelligence.sync.upstream` is explicitly set; surface **`sync_status: not_configured`**. |
+| **Detached HEAD** or **no upstream** | **Do not** pull unless `TeamKM.sync.upstream` is explicitly set; surface **`sync_status: not_configured`**. |
 
 **Triggers (MVP—at least one must be implemented; all may coexist):**
 
 1. **Same as indexing—assistant session:** on **MCP initialize** (when the coding assistant loads MCP), run **fetch + ff-only** (§12.2 rules) then **reindex** if `HEAD` changed—**primary** alignment with “start session = up to date when safe.”
 2. **Periodic timer inside MCP/API:** e.g. every **5–30 min** (default **15 min**) for clones where the session stays open—catches upstream pushes **without** restarting the assistant.
-3. **Optional daemon:** documented **`knowledgeintelligence sync`** long-running command that **only** fetch/ff-only + reindex.
+3. **Optional daemon:** documented **`teamkm sync`** long-running command that **only** fetch/ff-only + reindex.
 4. **Git hooks** supplement only; **not** sufficient when others push upstream unless combined with (1) or (2).
 
 **Configuration (documented env or config file):**
@@ -608,7 +608,7 @@ Goal: when **new commits** land on the tracked **upstream** branch (e.g. `origin
 | 0.6 | 2025-11-06 | Smart chunking (structure-aware) and smart index (hybrid, metadata, incremental, light evaluation) |
 | 0.7 | 2025-11-06 | Cumulative knowledge + cross-role (dev/QE/PM/DM); TPM fixes: §6.1 schema, phases, SLOs, metrics, operations, overlap defaults |
 | 0.8 | 2025-11-06 | Local hosting (localhost), Cursor/Claude retrieve-then-analyse; multi-MCP coexistence + §5.9 |
-| 0.9 | 2025-11-06 | Project name **knowledgeIntelligence** in title and intro |
+| 0.9 | 2025-11-06 | Project name **TeamKM** in title and intro |
 | 0.10 | 2025-11-06 | §5.10 smart context assembly and relations (Cursor/Claude); §5.6 context pack fields; §10 phase alignment |
 | 0.11 | 2025-11-06 | §12.1 auto-index on checkout/pull + Claude/MCP start; health `index_status`; open decision on hooks/fingerprint |
 | 0.12 | 2025-11-06 | §12.2 auto **fetch + ff-only** upstream sync; dirty/diverged safety; health `sync_status`; MVP table + success criteria |

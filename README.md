@@ -1,8 +1,8 @@
-# knowledgeIntelligence
+# TeamKM
 
 **Your team’s memory, in git—searchable on your machine.**
 
-knowledgeIntelligence is a **template repo** for durable engineering knowledge: Markdown lives under `knowledge/` with validated YAML front matter, merges happen through **PRs**, and a **local** retrieval pipeline turns that corpus into **grounded context** for agents and humans (hybrid search, mandatory rerank, HTTP API on loopback). Normative behaviour: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md).
+TeamKM is a **template repo** for durable engineering knowledge: Markdown lives under `knowledge/` with validated YAML front matter, merges happen through **PRs**, and a **local** retrieval pipeline turns that corpus into **grounded context** for agents and humans (hybrid search, mandatory rerank, HTTP API on loopback). Normative behaviour: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md).
 
 ---
 
@@ -59,7 +59,7 @@ flowchart LR
 **Python 3.10+.**
 
 ```bash
-cd /path/to/knowledgeIntelligence
+cd /path/to/TeamKM
 python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
