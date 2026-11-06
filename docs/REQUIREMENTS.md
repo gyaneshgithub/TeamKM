@@ -126,9 +126,10 @@ Teams **do not** need to stay tied to an upstream “template” repo unless the
 1. **CONTRIBUTING.md** documents merge criteria, naming, and merge-vs-new guidance.
 2. Optional **CODEOWNERS** enforces review for paths such as `knowledge/functional/**`.
 3. **CI** runs front matter validation, tests, golden queries, and optional index dry-run as configured.
-4. **`ki contribute` (dry-run)** implements **retrieval-first** duplicate detection (§5.8): contributors run it before opening a PR or call **`POST /v1/contribute_dry_run`** with draft markdown.
-5. **Archive / low-priority docs:** authors MAY set **`exclude_from_default_retrieval: true`** on low-value or historical overflow so default retrieval stays tight; callers MAY pass **`include_archived: true`** on `/v1/retrieve` and `/v1/context_pack` to include them.
-6. **Opt-in git hook:** `scripts/git-hooks/pre-commit-validate-knowledge.sh` may be installed via `scripts/install-git-hooks.sh` to validate staged `knowledge/**/*.md` locally.
+4. **Auto-promote on `main`:** When a PR merges to `main`, a GitHub Action may update touched `knowledge/**/*.md` files that still have **`status: draft`** to **`status: reviewed`** and set **`last_reviewed`** to the merge day (UTC). Authors can leave **`draft`** at PR time; **human review stays on the PR**; the promotion step is mechanical and does **not** replace review. Set another `status` (e.g. `legacy_reviewed`, `deprecated`) before merge if the doc should not be promoted this way.
+5. **`ki contribute` (dry-run)** implements **retrieval-first** duplicate detection (§5.8): contributors run it before opening a PR or call **`POST /v1/contribute_dry_run`** with draft markdown.
+6. **Archive / low-priority docs:** authors MAY set **`exclude_from_default_retrieval: true`** on low-value or historical overflow so default retrieval stays tight; callers MAY pass **`include_archived: true`** on `/v1/retrieve` and `/v1/context_pack` to include them.
+7. **Opt-in git hook:** `scripts/git-hooks/pre-commit-validate-knowledge.sh` may be installed via `scripts/install-git-hooks.sh` to validate staged `knowledge/**/*.md` locally.
 
 ---
 

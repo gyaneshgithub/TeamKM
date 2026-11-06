@@ -4,6 +4,7 @@ All notable changes to the **knowledgeIntelligence engine** (this template repos
 
 ## Unreleased
 
+- Automation: after merge to `main`, GitHub Actions promotes **`status: draft` → `reviewed`** (sets **`last_reviewed`**) for touched `knowledge/**/*.md` via `scripts/promote_draft_on_merge.py`; follow-up commit uses **`[skip ci]`**. Uses push **`before`/`after`** (and **`HEAD^1..HEAD`** for merge commits) so **merge commits** are not skipped with an empty path list.
 - Documentation: multi-team maintenance, `legacy_reviewed`, `ki contribute`, optional pre-commit hook.
 - Front matter: `legacy_reviewed`, `applies_to`, `doc_version`, `canonical_since`, `exclude_from_default_retrieval`.
 - Retrieval: `include_archived` on HTTP API; `POST /v1/contribute_dry_run`.

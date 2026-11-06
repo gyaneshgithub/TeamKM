@@ -4,7 +4,8 @@ domain: technical
 area: meta
 author_role: dev
 type: adr
-status: draft
+status: reviewed
+last_reviewed: "2026-11-06"
 tags:
   - workflow
   - validation
