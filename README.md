@@ -4,6 +4,8 @@
 
 TeamKM is a **template repo** for durable engineering knowledge: Markdown lives under `knowledge/` with validated YAML front matter, merges happen through **PRs**, and a **local** retrieval pipeline turns that corpus into **grounded context** for agents and humans (hybrid search, mandatory rerank, HTTP API on loopback). Normative behaviour: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md).
 
+**New here?** Start with **[How to use TeamKM](docs/HOW_TO_USE_TEAMKM.md)** — short, structured guide for **everyone** (including non-developers).
+
 ---
 
 ## Why this exists
@@ -61,6 +63,7 @@ flowchart LR
 
 | Doc | Read it for… |
 |-----|----------------|
+| [docs/HOW_TO_USE_TEAMKM.md](docs/HOW_TO_USE_TEAMKM.md) | **Start here:** simple flow for the whole team (writers, reviewers, leads). |
 | [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) | Full product spec (normative). |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How indexing and retrieval fit together. |
 | [docs/LEADERSHIP_PITCH.md](docs/LEADERSHIP_PITCH.md) | Short executive / leadership brief. |
