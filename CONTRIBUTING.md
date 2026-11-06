@@ -8,6 +8,8 @@ This repo is a **reusable template**: Markdown corpus under `knowledge/`, a **lo
 - **`feature/<short-slug>`**: branch from `main`, open a **Pull Request**, delete after merge.
 - **Releases**: tag the **engine** (e.g. `v0.6.0`) when you want downstream teams to pin a known-good template.
 
+**GitHub `main` protection:** enable in the repo **Settings → Branches** (required PR + required check **`test`**). Private repos on some plans may need Pro for full API/UI protection—see [docs/GITHUB_BRANCH_PROTECTION.md](docs/GITHUB_BRANCH_PROTECTION.md).
+
 ## Before you open a PR
 
 1. **Validate front matter** — `python3 scripts/validate_frontmatter.py --root .` (use `--inject-domain` if your team omits `domain` in drafts).
