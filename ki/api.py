@@ -12,9 +12,10 @@ from typing import Any
 
 from ki.fingerprint import corpus_fingerprint
 from ki.index_model import EMBEDDING_MODEL_ID, INDEX_SCHEMA_VERSION, SPARSE_MODEL_ID
-from ki.index_runner import ensure_index, load_index_optional, rag_root
+from ki.index_runner import ensure_index, index_dir, load_index_optional, rag_root
 from ki.manifest import read_manifest as read_manifest_raw
 from ki.manifest import write_manifest
+from ki.contribute import contribute_dry_run
 from ki.retrieve import build_context_pack, retrieve_candidates, rerank
 from ki.sync_status import compute_sync_status
 
@@ -71,6 +72,9 @@ class KiHandler(BaseHTTPRequestHandler):
         if parsed.path == "/v1/context_pack":
             self._context_pack(body)
             return
+        if parsed.path == "/v1/contribute_dry_run":
+            self._contribute_dry_run(body)
+            return
         _json_response(self, 404, {"error": "not_found", "path": parsed.path})
 
     def _health(self) -> None:
@@ -95,6 +99,10 @@ class KiHandler(BaseHTTPRequestHandler):
             "schema_version": m.get("schema_version", INDEX_SCHEMA_VERSION),
             "chunk_count": m.get("chunk_count"),
             "retrieval": m.get("retrieval", "hybrid_rrf_dense_bm25"),
+            "manifest": {
+                "built_at": m.get("built_at"),
+                "index_dir": str(index_dir(root)),
+            },
         }
         if "error" in m:
             payload["error"] = m["error"]
@@ -115,7 +123,15 @@ class KiHandler(BaseHTTPRequestHandler):
         pack_k = int(body.get("pack_k", 12))
         domain = body.get("domain")
         area = body.get("area")
-        cands = retrieve_candidates(idx, q, top_n=top_n, domain=domain, area=area)
+        include_archived = bool(body.get("include_archived", False))
+        cands = retrieve_candidates(
+            idx,
+            q,
+            top_n=top_n,
+            domain=domain,
+            area=area,
+            include_archived=include_archived,
+        )
         ranked = rerank(q, cands, take=pack_k)
         out = [
             {
@@ -164,6 +180,7 @@ class KiHandler(BaseHTTPRequestHandler):
             cap_per_doc=int(body.get("cap_per_doc", 2)),
             domain=body.get("domain"),
             area=body.get("area"),
+            include_archived=bool(body.get("include_archived", False)),
         )
         _json_response(
             self,
@@ -175,6 +192,26 @@ class KiHandler(BaseHTTPRequestHandler):
                 "sparse_model_id": SPARSE_MODEL_ID,
             },
         )
+
+    def _contribute_dry_run(self, body: dict[str, Any]) -> None:
+        root = self.repo_root.resolve()
+        draft = str(body.get("draft_markdown", "") or body.get("text", "") or "")
+        if not draft.strip():
+            _json_response(self, 400, {"error": "draft_markdown_required"})
+            return
+        try:
+            ensure_index(root)
+        except Exception:
+            pass
+        payload = contribute_dry_run(
+            root,
+            draft,
+            candidate_k=int(body.get("candidate_k", 24)),
+            top_k=int(body.get("top_k", 8)),
+            domain=body.get("domain"),
+            area=body.get("area"),
+        )
+        _json_response(self, 200, payload)
 
     def _openapi(self, *, root: Path) -> None:
         spec_path = root / "docs" / "openapi.yaml"

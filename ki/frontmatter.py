@@ -11,7 +11,7 @@ import yaml
 
 DOMAIN_SEGMENTS = frozenset({"technical", "delivery", "testing", "functional", "meta"})
 VALID_AUTHOR_ROLES = frozenset({"dev", "qe", "pm", "dm", "mixed"})
-VALID_STATUS = frozenset({"draft", "reviewed", "deprecated"})
+VALID_STATUS = frozenset({"draft", "reviewed", "legacy_reviewed", "deprecated"})
 
 FRONT_MATTER_RE = re.compile(r"\A---\s*\r?\n(.*?)\r?\n---\s*\r?\n", re.DOTALL)
 
@@ -145,12 +145,49 @@ def validate_markdown_file(
     status = data.get("status")
     if not isinstance(status, str) or status not in VALID_STATUS:
         add(f"status must be one of {sorted(VALID_STATUS)}", "status")
-    elif status == "reviewed":
+    elif status in ("reviewed", "legacy_reviewed"):
         lr = data.get("last_reviewed")
         if not lr or not isinstance(lr, str):
-            add("last_reviewed (YYYY-MM-DD) required when status is reviewed", "last_reviewed")
+            add(
+                "last_reviewed (YYYY-MM-DD) required when status is reviewed or legacy_reviewed",
+                "last_reviewed",
+            )
         elif not re.match(r"\A\d{4}-\d{2}-\d{2}\Z", lr.strip()):
             add("last_reviewed must be ISO date YYYY-MM-DD", "last_reviewed")
+        if status == "legacy_reviewed":
+            csince = data.get("canonical_since")
+            if csince is not None and isinstance(csince, str) and csince.strip():
+                if not re.match(r"\A\d{4}-\d{2}-\d{2}\Z", csince.strip()):
+                    add("canonical_since must be ISO date YYYY-MM-DD when present", "canonical_since")
+
+    elif status == "deprecated":
+        sup_a = data.get("supersedes")
+        sup_b = data.get("superseded_by")
+        has_sup = (isinstance(sup_a, str) and sup_a.strip()) or (isinstance(sup_b, str) and sup_b.strip())
+        if not has_sup:
+            add(
+                "status deprecated requires at least one of supersedes, superseded_by (conflict resolution only—see §4.4)",
+                "supersedes",
+            )
+
+    # --- Optional scope / version (legacy-friendly knowledge)
+    applies_to = data.get("applies_to")
+    if applies_to is not None:
+        if not isinstance(applies_to, list):
+            add("applies_to must be a list of strings when present", "applies_to")
+        else:
+            for x in applies_to:
+                if not isinstance(x, str) or not x.strip():
+                    add("applies_to entries must be non-empty strings", "applies_to")
+                    break
+
+    doc_version = data.get("doc_version")
+    if doc_version is not None and (not isinstance(doc_version, str) or not doc_version.strip()):
+        add("doc_version must be a non-empty string when present", "doc_version")
+
+    exclude = data.get("exclude_from_default_retrieval")
+    if exclude is not None and not isinstance(exclude, bool):
+        add("exclude_from_default_retrieval must be a boolean when present", "exclude_from_default_retrieval")
 
     # --- tags
     tags = data.get("tags")

@@ -4,7 +4,7 @@ info:
   description: |
     Loopback HTTP API for retrieval and health (REQUIREMENTS §5.6, §5.9).
     Implementation serves this file at `GET /openapi.json` as YAML bytes, or use this file from repo root.
-  version: 0.2.0
+  version: 0.3.0
 servers:
   - url: http://127.0.0.1:8765
     description: Default local server (KI_PORT)
@@ -58,6 +58,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContextPackResponse"
+  /v1/contribute_dry_run:
+    post:
+      summary: Retrieval-first contribution dry-run (REQUIREMENTS §5.8)
+      operationId: contributeDryRun
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContributeDryRunRequest"
+      responses:
+        "200":
+          description: Similar chunks and suggested action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContributeDryRunResponse"
+        "400":
+          description: Missing draft_markdown
 components:
   schemas:
     HealthResponse:
@@ -93,6 +112,15 @@ components:
         error:
           type: string
           nullable: true
+        manifest:
+          type: object
+          nullable: true
+          properties:
+            built_at:
+              type: string
+              nullable: true
+            index_dir:
+              type: string
     RetrieveRequest:
       type: object
       required: [query]
@@ -111,6 +139,10 @@ components:
         area:
           type: string
           nullable: true
+        include_archived:
+          type: boolean
+          default: false
+          description: If true, include chunks with exclude_from_default_retrieval
     RetrieveResponse:
       type: object
       properties:
@@ -179,3 +211,41 @@ components:
         inclusion_reason:
           type: string
           enum: [hit, related_doc]
+    ContributeDryRunRequest:
+      type: object
+      required: [draft_markdown]
+      properties:
+        draft_markdown:
+          type: string
+        text:
+          type: string
+          description: Alias for draft_markdown (optional)
+        candidate_k:
+          type: integer
+          default: 24
+        top_k:
+          type: integer
+          default: 8
+        domain:
+          type: string
+          nullable: true
+        area:
+          type: string
+          nullable: true
+    ContributeDryRunResponse:
+      type: object
+      properties:
+        suggested_action:
+          type: string
+          enum: [edit, extend, new_doc]
+        reason:
+          type: string
+        best_rerank_score:
+          type: number
+        similar:
+          type: array
+          items:
+            type: object
+        error:
+          type: string
+          nullable: true

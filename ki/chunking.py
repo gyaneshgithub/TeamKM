@@ -145,5 +145,11 @@ def _chunk_meta(meta_base: dict[str, Any], text: str) -> dict[str, Any]:
         "title": meta_base.get("title"),
         "status": meta_base.get("status"),
         "related": meta_base.get("related"),
+        "applies_to": meta_base.get("applies_to"),
+        "doc_version": meta_base.get("doc_version"),
+        "canonical_since": meta_base.get("canonical_since"),
+        "supersedes": meta_base.get("supersedes"),
+        "superseded_by": meta_base.get("superseded_by"),
+        "exclude_from_default_retrieval": meta_base.get("exclude_from_default_retrieval"),
         "_tf": dict(term_freq(text + " " + title)),
     }

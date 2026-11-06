@@ -27,6 +27,8 @@ If the user has not set up a local profile, offer **[knowledge-author-profile](.
 
 ## Required steps (agent)
 
+Read [CONTRIBUTING.md](../../../CONTRIBUTING.md) for branch naming and maintenance.
+
 ### 1. Sync and branch
 
 1. Ensure working tree is clean or stash with user consent.
@@ -57,7 +59,7 @@ If the user has not set up a local profile, offer **[knowledge-author-profile](.
 ### 3. Content and placement
 
 - Put files under `knowledge/<domain>/...` per [docs/REQUIREMENTS.md §6](../../../docs/REQUIREMENTS.md)—**choosing the folder is the primary way to choose `domain`** (see **Domain inference** in §6.1).
-- If overlap with existing knowledge is possible, run retrieval / similarity first (§5.9).
+- If overlap with existing knowledge is possible, run **`python3 -m ki contribute --root . -f <draft.md>`** (or `POST /v1/contribute_dry_run`) for **retrieval-first** merge-vs-new hints (§5.8).
 
 ### 4. Stage and commit (commit only if user asked)
 
@@ -72,7 +74,7 @@ If the user has not set up a local profile, offer **[knowledge-author-profile](.
 
 ## Front matter quick reference
 
-Required fields are in [docs/REQUIREMENTS.md §6.1](../../../docs/REQUIREMENTS.md): `title`, `area`, `author_role`, `type`, `status`, plus `last_reviewed` when `status: reviewed`. **`domain`:** required in the **effective** file (match path or omit for validator inject—see §6.1 **Domain inference**). Optional: `contributor`, `team`, `topics_author`, `tags`, `product`, `related`.
+Required fields are in [docs/REQUIREMENTS.md §6.1](../../../docs/REQUIREMENTS.md): `title`, `area`, `author_role`, `type`, `status`, plus `last_reviewed` when `status` is `reviewed` or `legacy_reviewed`. **`domain`:** required in the **effective** file (match path or omit for validator inject—see §6.1 **Domain inference**). Optional: `contributor`, `team`, `topics_author`, `tags`, `product`, `related`, `applies_to`, `doc_version`, `exclude_from_default_retrieval`.
 
 ## Scripts in this repo
 

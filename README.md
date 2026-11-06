@@ -8,6 +8,7 @@
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System architecture |
 | [docs/LEADERSHIP_PITCH.md](docs/LEADERSHIP_PITCH.md) | Leadership brief |
 | [docs/TESTING.md](docs/TESTING.md) | How we test and stay safe |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Branches, PRs, corpus maintenance |
 
 ## Quick start (tooling)
 
@@ -22,6 +23,12 @@ pytest
 python3 scripts/validate_frontmatter.py
 python3 -m ki index --root .
 python3 -m ki serve --root . --host 127.0.0.1 --port 8765
+```
+
+Before adding a doc, run **contribute dry-run** (merge vs new):
+
+```bash
+python3 -m ki contribute --root . -f path/to/draft.md
 ```
 
 In another terminal:

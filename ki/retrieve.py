@@ -56,10 +56,13 @@ def _filter_chunk(
     *,
     domain: str | None,
     area: str | None,
+    include_archived: bool = False,
 ) -> bool:
     if domain and (ch.meta.get("domain") or "") != domain:
         return False
     if area and (ch.meta.get("area") or "") != area:
+        return False
+    if not include_archived and ch.meta.get("exclude_from_default_retrieval") is True:
         return False
     return True
 
@@ -71,8 +74,9 @@ def retrieve_candidates(
     top_n: int = 24,
     domain: str | None = None,
     area: str | None = None,
+    include_archived: bool = False,
     rrf_k: float = 60.0,
-) -> list[tuple[Any, float, float, float, float]]:
+) -> list[tuple[Any, float, float, float]]:
     """
     First stage: **hybrid** — dense tf-idf cosine + BM25, fused with RRF (§5.5 V1+ pattern).
 
@@ -84,7 +88,7 @@ def retrieve_candidates(
     dense_ranked: list[tuple[int, float]] = []
     for i, cv in enumerate(index.chunk_vectors):
         ch = index.chunks[i]
-        if not _filter_chunk(ch, domain=domain, area=area):
+        if not _filter_chunk(ch, domain=domain, area=area, include_archived=include_archived):
             continue
         dense_ranked.append((i, cosine_sim(qvec, cv)))
     dense_ranked.sort(key=lambda x: x[1], reverse=True)
@@ -92,7 +96,7 @@ def retrieve_candidates(
     sparse_ranked: list[tuple[int, float]] = []
     for i, tf in enumerate(index.chunk_term_freqs):
         ch = index.chunks[i]
-        if not _filter_chunk(ch, domain=domain, area=area):
+        if not _filter_chunk(ch, domain=domain, area=area, include_archived=include_archived):
             continue
         dl = index.bm25_doc_lens[i] if i < len(index.bm25_doc_lens) else sum(tf.values())
         s = bm25_score(
@@ -171,9 +175,17 @@ def build_context_pack(
     cap_per_doc: int = 2,
     domain: str | None = None,
     area: str | None = None,
+    include_archived: bool = False,
 ) -> list[dict[str, Any]]:
     """§5.10: retrieve → rerank → cap per doc → expand related."""
-    cands = retrieve_candidates(index, query, top_n=candidate_k, domain=domain, area=area)
+    cands = retrieve_candidates(
+        index,
+        query,
+        top_n=candidate_k,
+        domain=domain,
+        area=area,
+        include_archived=include_archived,
+    )
     ranked = rerank(query, cands, take=max(pack_k * 2, 12))
     pack: list[dict[str, Any]] = []
     per_doc: dict[str, int] = {}

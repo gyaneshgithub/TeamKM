@@ -13,6 +13,7 @@ This document describes **how we test** the repo today and **how we avoid corrup
 | **Front matter** | Schema + path/domain rules (§6.1) | `python3 scripts/validate_frontmatter.py` |
 | **Index + API** | Chunk → index → hybrid retrieve (dense+BM25, RRF) → rerank → context_pack; `/v1/health` | `pytest` (includes `tests/test_index.py`, `tests/test_api.py`, `tests/test_hybrid.py`) |
 | **Golden queries** | recall@k vs `meta/golden_queries.yaml` | `python3 scripts/golden_queries.py --root .` |
+| **Contribute dry-run** | Merge-vs-new hints from retrieval (§5.8) | `python3 -m ki contribute --root . -f draft.md` |
 | **Unit tests** | Validator, atomic writes | `pytest` (after `pip install -e ".[dev]"`) |
 
 Optional:
@@ -63,11 +64,20 @@ Workflow **ci.yml** runs:
 1. Install Python **3.11**
 2. `pip install -e ".[dev]"`
 3. `pytest`
-4. `python3 scripts/validate_frontmatter.py --root "$PWD"`
+4. `python3 scripts/validate_frontmatter.py --root "$GITHUB_WORKSPACE"`
+5. `python3 scripts/golden_queries.py --root "$GITHUB_WORKSPACE"`
+
+## 5. Optional local pre-commit
+
+```bash
+./scripts/install-git-hooks.sh
+```
+
+Validates staged `knowledge/**/*.md` with [validate_frontmatter.py](../scripts/validate_frontmatter.py).
 
 ---
 
-## 5. Future tests (RAG pipeline)
+## 6. Future tests (RAG pipeline)
 
 When ingest/index code lands, add:
 
@@ -82,3 +92,4 @@ When ingest/index code lands, add:
 | Version | Date | Notes |
 |---------|------|-------|
 | 0.1 | 2025-11-06 | Initial testing doc; ties validator + pytest + future index/sync rules. |
+| 0.2 | 2025-11-06 | Golden queries in CI; contribute dry-run; optional pre-commit hook |

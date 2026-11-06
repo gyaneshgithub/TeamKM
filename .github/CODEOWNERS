@@ -1,0 +1,8 @@
+# Optional: replace @your-team with GitHub usernames or team handles.
+# Lines are last-match wins.
+
+# Example — uncomment and customize:
+# /knowledge/functional/ @product-team
+# /knowledge/testing/   @qa-team
+# /ki/                   @platform-team
+# /docs/REQUIREMENTS.md   @owner

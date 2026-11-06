@@ -97,11 +97,12 @@ Reviewers check that contributions:
 
 ### 4.4 Conflicting or superseded knowledge
 
-When retrieval surfaces **two passages that disagree**:
+When retrieval surfaces **two passages that disagree** for the **same scope** (product version, environment, or “current default”):
 
 1. **Do not** silently merge contradictory facts in prose; reviewers resolve in a follow-up PR.
-2. Prefer **one canonical** doc: add front matter `status: deprecated` and `supersedes` / `superseded_by` pointing to the replacement path, or a short **“Resolution”** subsection dated in the owning doc.
-3. Optional: use **`see_also`** / **`related`** for complementary (non-conflicting) views.
+2. **Historical knowledge must remain valid** where it still applies (older stacks, older product lines). Prefer **`status: legacy_reviewed`** plus **`applies_to`** / **`doc_version`** (see §6.1) so agents and humans retrieve **version-scoped** truth instead of deleting old notes.
+3. Reserve **`status: deprecated`** **only** for **canonical replacement** when two answers cannot both be true for the **same context**; require at least one of **`supersedes`**, **`superseded_by`** so the graph is explicit. Deprecation **does not** mean “old”; it means **replaced default** for a named scope.
+4. Optional: use **`see_also`** / **`related`** for complementary (non-conflicting) views.
 
 ### 4.5 Adopting this repository as a team template
 
@@ -113,6 +114,21 @@ Any team may use this project as a **starting layout and requirements spec** for
 4. **Customize** for your team: `knowledge/` structure, §6 front matter, `meta/` (golden queries, policies), CI, and optional Cursor skills under **`.cursor/skills/`**—the **contract** stays **git + markdown + PR merges + local RAG** (§5, §12).
 
 Teams **do not** need to stay tied to an upstream “template” repo unless they want occasional merges from it; most adopters will treat their copy as **the** source of truth.
+
+### 4.6 Multi-team usage, corpus growth, and development workflow
+
+**Multi-team / LoB model:** The reusable **engine** (this repository’s tooling and conventions) is **not** the same as any one team’s **corpus**. Each team or LoB SHOULD maintain **its own clone** of the template with **its own remote**, so knowledge volume and governance stay **owned**—see §4.5. **Cross-team read access** is via **HTTP/MCP** or git dependencies, not by pushing unrelated prose into one shared knowledge tree without owners.
+
+**Branching (industry-accepted default):** **`main` is the integration line** (CI-green). Contributors use **short-lived `feature/<slug>` branches**, open **Pull Requests**, pass **required checks**, then merge to `main`. **Stable releases** of the engine are **tagged** (e.g. `v0.5.0`); adopters MAY pin those tags. Long-lived parallel `stable` branches are **discouraged** unless the team documents release trains (e.g. `release/0.5` patch lines).
+
+**Maintenance mechanics (normative for this repo):**
+
+1. **CONTRIBUTING.md** documents merge criteria, naming, and merge-vs-new guidance.
+2. Optional **CODEOWNERS** enforces review for paths such as `knowledge/functional/**`.
+3. **CI** runs front matter validation, tests, golden queries, and optional index dry-run as configured.
+4. **`ki contribute` (dry-run)** implements **retrieval-first** duplicate detection (§5.8): contributors run it before opening a PR or call **`POST /v1/contribute_dry_run`** with draft markdown.
+5. **Archive / low-priority docs:** authors MAY set **`exclude_from_default_retrieval: true`** on low-value or historical overflow so default retrieval stays tight; callers MAY pass **`include_archived: true`** on `/v1/retrieve` and `/v1/context_pack` to include them.
+6. **Opt-in git hook:** `scripts/git-hooks/pre-commit-validate-knowledge.sh` may be installed via `scripts/install-git-hooks.sh` to validate staged `knowledge/**/*.md` locally.
 
 ---
 
@@ -397,11 +413,15 @@ Every **`knowledge/**/*.md`** file MUST include YAML front matter between `---` 
 | `tags` | Optional | string[] | Fine-grained labels |
 | `author_role` | **Always** | string | `dev` \| `qe` \| `pm` \| `dm` \| `mixed` |
 | `type` | **Always** | string | Doc kind: e.g. `adr`, `runbook`, `delivery-summary`, `test-plan`, `feature`, `glossary` |
-| `status` | **Always** | string | `draft` \| `reviewed` \| `deprecated` |
-| `last_reviewed` | **When `status: reviewed`** | ISO date `YYYY-MM-DD` | Freshness and staleness warnings |
+| `status` | **Always** | string | `draft` \| `reviewed` \| `legacy_reviewed` \| `deprecated` |
+| `last_reviewed` | **When `status: reviewed` or `legacy_reviewed`** | ISO date `YYYY-MM-DD` | Freshness and staleness warnings |
+| `canonical_since` | Optional when `legacy_reviewed` | ISO date `YYYY-MM-DD` | When this doc became non-default / historical for the **current** product line (still valid under `applies_to`) |
+| `applies_to` | Optional | string[] | Version/scope tags (e.g. `product:acme:v1`, `stack:jdk8`, `env:prod-eu`) for retrieval filtering and legacy-friendly truth |
+| `doc_version` | Optional | string | Document or bundle version for humans and filters (e.g. `v2.1`) |
+| `exclude_from_default_retrieval` | Optional | boolean | If **true**, omit from default `/v1/retrieve` and `/v1/context_pack` unless caller passes **`include_archived: true`** (use for archive overflow or low-signal notes) |
 | `product` | Recommended under `functional/**` | string | Product or offering the note supports (helps PM/DM queries) |
 | `related` | Optional | string[] | Paths to other `.md` files in this repo |
-| `supersedes` / `superseded_by` | When obsoleting | string | Canonical replacement path (see §4.4) |
+| `supersedes` / `superseded_by` | When `status: deprecated` (at least one required) | string | Replacement graph for **conflicting** defaults only (§4.4) |
 | `contributor` | Optional | string | **Display name** of the person who last substantively edited the note—often pre-filled from **local author profile** (§6.2) |
 | `team` | Optional | string | Squad or team name—pre-filled from profile when helpful for DM/PM filters |
 | `topics_author` | Optional | string[] | **Topics** this author focuses on (may overlap `tags`)—from profile; helps retrieval when filtering “who knows what” |
@@ -603,3 +623,4 @@ Goal: when **new commits** land on the tracked **upstream** branch (e.g. `origin
 | 0.22 | 2025-11-06 | **Build slice:** `ki/` package, `scripts/validate_frontmatter.py`, `knowledge/` sample, `pytest`, [TESTING.md](TESTING.md), GitHub Actions CI |
 | 0.23 | 2025-11-06 | **MVP implementation:** `ki index` / `ki serve` (HTTP `/v1/health`, `/v1/retrieve`, `/v1/context_pack`); tf-idf + mandatory rerank; `.rag/` manifest + lock; `meta/golden_queries.yaml`; [scripts/ki-session.sh](scripts/ki-session.sh) |
 | 0.24 | 2025-11-06 | **Hybrid retrieval:** BM25 + dense tf‑idf → RRF; index staging dir + atomic rename; manifest only after successful swap; [docs/openapi.yaml](openapi.yaml); [scripts/golden_queries.py](../scripts/golden_queries.py); CI golden run |
+| 0.25 | 2025-11-06 | §4.6 multi-team maintenance + branching; §4.4 legacy vs deprecated; §6.1 `legacy_reviewed`, `applies_to`, `exclude_from_default_retrieval`; `ki contribute`, `POST /v1/contribute_dry_run`, `include_archived`; [CONTRIBUTING.md](../CONTRIBUTING.md), [CHANGELOG.md](../CHANGELOG.md), [.github/CODEOWNERS](../.github/CODEOWNERS), optional git hooks |
