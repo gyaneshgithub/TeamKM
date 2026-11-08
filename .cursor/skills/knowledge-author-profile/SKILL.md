@@ -2,14 +2,14 @@
 name: knowledge-author-profile
 description: >-
   Sets up or updates a **local only** author profile (name, team, topics, role)
-  for TeamKM so agents can pre-fill YAML front matter when
+  for Groundline so agents can pre-fill YAML front matter when
   committing knowledge docs. Use when the user asks to configure their profile,
   set up local contributor metadata, or default front matter for knowledge
   commits.
 disable-model-invocation: true
 ---
 
-# TeamKM — local author profile
+# Groundline — local author profile
 
 ## Purpose
 

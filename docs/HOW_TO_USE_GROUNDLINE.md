@@ -1,4 +1,4 @@
-# How to use TeamKM (simple guide)
+# How to use Groundline (simple guide)
 
 **Audience:** Anyone on the team—**you do not need to be a programmer** to help with the knowledge in this repo. Technical setup is optional; **writing and reviewing clear notes** is the main job.
 
@@ -6,9 +6,9 @@
 
 ---
 
-## 1. What TeamKM is (in plain words)
+## 1. What Groundline is (in plain words)
 
-Think of TeamKM as a **shared notebook in git**:
+Think of Groundline as a **shared notebook in git**:
 
 - Important things the team agrees on live in **Markdown files** under **`knowledge/`** (not lost in chat or tickets).
 - Changes go through a **Pull Request (PR)** so someone **reviews** before it becomes official on **`main`**.
@@ -62,7 +62,7 @@ If unsure **where** a note goes, open a PR anyway and ask in the description—a
 
 ## 5. If you use an AI coding assistant
 
-**Idea:** Let the assistant **read TeamKM first**, then answer or edit code—so it uses **your** merged notes, not only generic training data.
+**Idea:** Let the assistant **read Groundline first**, then answer or edit code—so it uses **your** merged notes, not only generic training data.
 
 - **Simple path:** Paste relevant excerpts from `knowledge/` into the chat (still cite the file path in your question).
 - **Team setup (technical):** Someone runs the **local API** and optionally connects **MCP** so the assistant can call **search tools** automatically—see [MCP.md](MCP.md) and the [documentation home](index.md) / [README on GitHub](https://github.com/gyaneshgithub/TeamKM/blob/main/README.md).

@@ -6,5 +6,5 @@ schema_version: "0.1.0"
 recall_at_k: 5
 queries:
   - id: gq-001
-    query: TeamKM template RAG
+    query: Groundline template RAG
     expected_doc_contains: knowledge/technical

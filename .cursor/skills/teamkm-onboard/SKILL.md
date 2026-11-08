@@ -1,24 +1,24 @@
 ---
 name: teamkm-onboard
 description: >-
-  Onboard someone to TeamKM: non-developers to HOW_TO_USE_TEAMKM.md; developers
+  Onboard someone to Groundline: non-developers to HOW_TO_USE_GROUNDLINE.md; developers
   to CONTRIBUTING, README quick start, and optional skills. Use when the user is
-  new, asks how to start, how TeamKM works, or what to read first.
+  new, asks how to start, how Groundline works, or what to read first.
 ---
 
-# TeamKM — onboard
+# Groundline — onboard
 
 Route the user by **role** and **goal**. Keep the first reply **short**; link deeper docs only when needed.
 
 ## 1. One-paragraph elevator
 
-TeamKM is a **team notebook in git**: approved notes live under **`knowledge/`**, change via **Pull Requests**, and (optionally) a **local search tool** helps humans and AI assistants **find and cite** what was merged—not chat memory.
+Groundline is a **team notebook in git**: approved notes live under **`knowledge/`**, change via **Pull Requests**, and (optionally) a **local search tool** helps humans and AI assistants **find and cite** what was merged—not chat memory.
 
 ## 2. Who are they?
 
 | If they are… | Send them to… | They usually do… |
 |--------------|----------------|------------------|
-| **Non-technical** (PM, DM, new hire) | [docs/HOW_TO_USE_TEAMKM.md](../../../docs/HOW_TO_USE_TEAMKM.md) | Write/review markdown via GitHub UI with a developer; no Python required |
+| **Non-technical** (PM, DM, new hire) | [docs/HOW_TO_USE_GROUNDLINE.md](../../../docs/HOW_TO_USE_GROUNDLINE.md) | Write/review markdown via GitHub UI with a developer; no Python required |
 | **Developer** contributing | [CONTRIBUTING.md](../../../CONTRIBUTING.md) + [README.md](../../../README.md) Quick start | Branch → validate → PR; optional `ki serve` / MCP |
 | **Engineering lead** | [docs/LEADERSHIP_PITCH.md](../../../docs/LEADERSHIP_PITCH.md) + HOW_TO_USE § For engineering leads | Template adoption, branch protection, pilot area |
 | **Implementer / architect** | [docs/REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) + [docs/ARCHITECTURE.md](../../../docs/ARCHITECTURE.md) | Full contract and data flows |
@@ -39,7 +39,7 @@ TeamKM is a **team notebook in git**: approved notes live under **`knowledge/`**
 
 ## 4. Non-developer first hour
 
-1. [docs/HOW_TO_USE_TEAMKM.md](../../../docs/HOW_TO_USE_TEAMKM.md) — sections 1–4 and glossary.
+1. [docs/HOW_TO_USE_GROUNDLINE.md](../../../docs/HOW_TO_USE_GROUNDLINE.md) — sections 1–4 and glossary.
 2. Ask their team for **who reviews** `knowledge/` PRs and which **folder** (`technical`, `testing`, `functional`, …) they usually use.
 3. They can edit on GitHub: create branch → edit file → open PR (developer can run validators on their machine if CI fails).
 

@@ -1,6 +1,6 @@
-# TeamKM documentation site (MkDocs Material). Build: pip install -e ".[docs]" && mkdocs serve
-site_name: TeamKM
-site_description: Team-owned knowledge in git—searchable locally for humans and coding assistants.
+# Groundline documentation site (MkDocs Material). Build: pip install -e ".[docs]" && mkdocs serve
+site_name: Groundline
+site_description: Grounded context infrastructure for engineering teams — git-hosted knowledge and local retrieval.
 site_url: https://gyaneshgithub.github.io/TeamKM/
 repo_url: https://github.com/gyaneshgithub/TeamKM
 repo_name: gyaneshgithub/TeamKM
@@ -44,9 +44,10 @@ nav:
     - Product: for-product.md
     - Quality & QE: for-quality.md
   - Guides:
-    - How to use TeamKM: HOW_TO_USE_TEAMKM.md
+    - How to use Groundline: HOW_TO_USE_GROUNDLINE.md
     - Leadership brief: LEADERSHIP_PITCH.md
   - Reference:
+    - Brand & identifiers: BRAND.md
     - Requirements: REQUIREMENTS.md
     - Architecture: ARCHITECTURE.md
     - Testing: TESTING.md

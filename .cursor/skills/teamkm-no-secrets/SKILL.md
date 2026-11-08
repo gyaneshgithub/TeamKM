@@ -7,7 +7,7 @@ description: >-
   what must not be committed.
 ---
 
-# TeamKM — no secrets in the corpus
+# Groundline — no secrets in the corpus
 
 **Normative:** [docs/REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) §3.3 (out of scope v1) and §3 (no PII/secrets).
 

@@ -1,12 +1,12 @@
 ---
 name: teamkm-pre-pr-checklist
 description: >-
-  Pre-PR gate for TeamKM: pytest, validate_frontmatter.py, golden_queries.py,
+  Pre-PR gate for Groundline: pytest, validate_frontmatter.py, golden_queries.py,
   optional ki contribute dry-run on changed knowledge files. Use when opening a
   PR, before push, or when the user asks if the branch is ready to merge.
 ---
 
-# TeamKM — pre-PR checklist
+# Groundline — pre-PR checklist
 
 Run from **repository root** with venv active (`pip install -e ".[dev]"` minimum).
 

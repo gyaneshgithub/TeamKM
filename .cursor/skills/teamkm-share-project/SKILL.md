@@ -1,14 +1,14 @@
 ---
 name: teamkm-share-project
 description: >-
-  Adopt or share TeamKM: fork template to team org remote (§4.5), GitHub
+  Adopt or share Groundline: fork template to team org remote (§4.5), GitHub
   template/fork/push, or Cursor share/new-repo skills for Cursor-hosted backup.
-  Use when forking TeamKM, moving to org GitHub, or saving the project remotely.
+  Use when forking Groundline, moving to org GitHub, or saving the project remotely.
 ---
 
-# TeamKM — share / adopt the template
+# Groundline — share / adopt the template
 
-TeamKM is meant to be **copied per team**: your **`knowledge/`** corpus and remotes are **yours**; the engine ( `ki/`, CI, skills) travels with the clone.
+Groundline is meant to be **copied per team**: your **`knowledge/`** corpus and remotes are **yours**; the engine ( `ki/`, CI, skills) travels with the clone.
 
 **Normative:** [docs/REQUIREMENTS.md §4.5](../../../docs/REQUIREMENTS.md)
 
@@ -45,12 +45,12 @@ Do **not** create a second remote if `origin` already points at the team’s can
 
 4. **Do not** commit secrets — **teamkm-no-secrets** skill.
 
-5. **Tell the team** — **teamkm-onboard** skill / [HOW_TO_USE_TEAMKM.md](../../../docs/HOW_TO_USE_TEAMKM.md).
+5. **Tell the team** — **teamkm-onboard** skill / [HOW_TO_USE_GROUNDLINE.md](../../../docs/HOW_TO_USE_GROUNDLINE.md).
 
 ## `gh` shortcuts (when user wants CLI)
 
 ```bash
-gh repo fork <template-owner>/TeamKM --org <org> --clone=false   # org fork
+gh repo fork <template-owner>/Groundline --org <org> --clone=false   # org fork
 gh repo create <org>/<name> --private --source=. --remote=origin --push
 ```
 
@@ -64,7 +64,7 @@ When the user says “save on Cursor”, “backup”, or “create repo on Curs
 2. Before any commit: run **teamkm-no-secrets** scan; ensure `.rag/`, `.venv/`, `author-profile.local.yaml` are ignored.
 3. After remote exists: link **teamkm-onboard** for teammates.
 
-TeamKM’s **product default** for engineering teams is still **GitHub/GitLab + PRs**; Cursor repo is an optional **host**, not a replacement for §4.5 unless the team chooses it.
+Groundline’s **product default** for engineering teams is still **GitHub/GitLab + PRs**; Cursor repo is an optional **host**, not a replacement for §4.5 unless the team chooses it.
 
 ## Multi-team note (§4.6)
 

@@ -1,6 +1,6 @@
 # For product
 
-**You:** product manager, business analyst, or functional owner. **Success:** durable intent, decisions, and acceptance context in **`knowledge/functional/`** (and related areas)—reviewed like code, findable later—**without** installing TeamKM locally.
+**You:** product manager, business analyst, or functional owner. **Success:** durable intent, decisions, and acceptance context in **`knowledge/functional/`** (and related areas)—reviewed like code, findable later—**without** installing Groundline locally.
 
 ---
 
@@ -18,7 +18,7 @@ Normative rule: [REQUIREMENTS §3](REQUIREMENTS.md) — self-contained markdown 
 
 ## How to participate (no Python required)
 
-1. Read [How to use TeamKM](HOW_TO_USE_TEAMKM.md) (sections 1–4).
+1. Read [How to use Groundline](HOW_TO_USE_GROUNDLINE.md) (sections 1–4).
 2. Ask your team which **folder** to use — usually `knowledge/functional/` or `knowledge/delivery/`.
 3. Edit on GitHub: **branch → edit file → Pull Request**.
 4. Request a reviewer who knows the feature area.

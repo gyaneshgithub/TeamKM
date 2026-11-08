@@ -6,7 +6,7 @@
 
 ## Elevator pitch
 
-TeamKM keeps **agreed know-how in git** as Markdown. Anything merged to **`main`** is **official**. A **local** retrieval layer lets coding assistants **cite** that corpus instead of inventing from generic training data.
+Groundline keeps **agreed know-how in git** as Markdown. Anything merged to **`main`** is **official**. A **local** retrieval layer lets coding assistants **cite** that corpus instead of inventing from generic training data.
 
 Full brief: [Leadership brief](LEADERSHIP_PITCH.md).
 
@@ -29,7 +29,7 @@ Full brief: [Leadership brief](LEADERSHIP_PITCH.md).
 3. **Name owners** — who reviews `knowledge/` by area; use `.github/CODEOWNERS` if helpful.
 4. **Pilot one area** — one service or feature; avoid boiling the ocean.
 5. **Tie to definition of done** — short knowledge PRs when decisions or runbooks matter.
-6. **Communicate to non-devs** — [How to use TeamKM](HOW_TO_USE_TEAMKM.md); they can edit via GitHub UI.
+6. **Communicate to non-devs** — [How to use Groundline](HOW_TO_USE_GROUNDLINE.md); they can edit via GitHub UI.
 
 ---
 

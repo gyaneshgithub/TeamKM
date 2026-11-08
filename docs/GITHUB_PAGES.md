@@ -1,12 +1,12 @@
 # Publishing this documentation site
 
-TeamKM uses **[MkDocs](https://www.mkdocs.org/)** with **[Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)**. The site is built from this `docs/` folder.
+Groundline uses **[MkDocs](https://www.mkdocs.org/)** with **[Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)**. The site is built from this `docs/` folder.
 
 ---
 
 ## Live site URL
 
-After setup: **`https://<github-org-or-user>.github.io/TeamKM/`**  
+After setup: **`https://<github-org-or-user>.github.io/<repo>/`**  
 (for this template: [gyaneshgithub.github.io/TeamKM](https://gyaneshgithub.github.io/TeamKM))
 
 ---
@@ -29,7 +29,7 @@ Workflow [`.github/workflows/docs.yml`](https://github.com/gyaneshgithub/TeamKM/
 
 ### If you see GitHub’s “404 — File not found” page
 
-The **Docs** workflow can succeed and still show a 404 at `https://<user>.github.io/TeamKM/` when:
+The **Docs** workflow can succeed and still show a 404 at `https://<user>.github.io/<repo>/` when:
 
 | Cause | What to do |
 |-------|------------|

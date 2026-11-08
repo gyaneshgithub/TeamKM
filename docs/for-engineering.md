@@ -6,7 +6,7 @@
 
 ## Week 1
 
-1. Skim [How to use TeamKM](HOW_TO_USE_TEAMKM.md) and [Contributing](contributing.md).
+1. Skim [How to use Groundline](HOW_TO_USE_GROUNDLINE.md) and [Contributing](contributing.md).
 2. Clone **your team’s** repo (after [template adoption](REQUIREMENTS.md#45-adopting-this-repository-as-a-team-template)).
 3. Run the quick start below; confirm `/v1/health` reports index ready.
 4. Open a small `knowledge/technical/` doc via PR; let merge automation set `reviewed` if you used `draft`.

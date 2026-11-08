@@ -39,7 +39,7 @@ def cmd_serve(args: argparse.Namespace) -> int:
     except Exception as e:
         print("warning: index build failed (server still starts):", e, file=sys.stderr)
     server = run_server(root, host=host, port=port)
-    print(f"TeamKM listening on http://{host}:{port}", file=sys.stderr)
+    print(f"Groundline listening on http://{host}:{port}", file=sys.stderr)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
@@ -75,7 +75,7 @@ def cmd_contribute(args: argparse.Namespace) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="ki", description="TeamKM local tooling")
+    p = argparse.ArgumentParser(prog="ki", description="Groundline local tooling")
     p.add_argument("--root", type=Path, help="Repository root (default: cwd)")
     sub = p.add_subparsers(dest="cmd", required=True)
 

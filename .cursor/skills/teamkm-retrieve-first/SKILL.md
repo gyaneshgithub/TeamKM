@@ -1,18 +1,18 @@
 ---
 name: teamkm-retrieve-first
 description: >-
-  Enforces retrieve-first work: query TeamKM local API (or MCP teamkm_* tools)
+  Enforces retrieve-first work: query Groundline local API (or MCP teamkm_* tools)
   before editing code, reviewing PRs, or answering "how do we…?" Always cite
   doc_path and line ranges from chunks. Use when the user changes code, asks
   about team conventions, debugs a feature, or requests implementation guidance
   in this repo.
 ---
 
-# TeamKM — retrieve-first
+# Groundline — retrieve-first
 
 **Policy (normative summary):** [CONTRIBUTING.md](../../../CONTRIBUTING.md) (MCP section) • [docs/MCP.md](../../../docs/MCP.md) • REQUIREMENTS §5.7–§5.9.
 
-The **host** (this chat) runs the reasoning loop. TeamKM provides **grounded context** from merged `knowledge/**/*.md`. **Do not** rely on model memory alone for stack-specific or team-specific facts.
+The **host** (this chat) runs the reasoning loop. Groundline provides **grounded context** from merged `knowledge/**/*.md`. **Do not** rely on model memory alone for stack-specific or team-specific facts.
 
 ## When to apply
 
@@ -61,7 +61,7 @@ Optional filters: `domain`, `area`, `include_archived` (see [docs/openapi.yaml](
 
 ## Step 3 — MCP (if connected)
 
-If the user has **TeamKM MCP** enabled, prefer tools (same semantics):
+If the user has **Groundline MCP** enabled, prefer tools (same semantics):
 
 | Tool | Use |
 |------|-----|

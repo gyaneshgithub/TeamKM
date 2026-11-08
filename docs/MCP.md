@@ -1,8 +1,8 @@
-# TeamKM — MCP integration (stdio)
+# Groundline — MCP integration (stdio)
 
 **Normative behaviour:** [REQUIREMENTS.md](REQUIREMENTS.md) §5.9, §5.12. **Architecture:** [ARCHITECTURE.md](ARCHITECTURE.md).
 
-TeamKM’s **canonical** integration is the **local HTTP API** (`ki serve`). The **MCP server** is an optional **stdio adapter**: MCP tools call that same API over HTTP. The **IDE or agent host** runs the **LLM / planning loop**.
+Groundline’s **canonical** integration is the **local HTTP API** (`ki serve`). The **MCP server** is an optional **stdio adapter**: MCP tools call that same API over HTTP. The **IDE or agent host** runs the **LLM / planning loop**.
 
 ## Prerequisites
 

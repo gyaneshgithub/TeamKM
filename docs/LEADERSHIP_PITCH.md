@@ -1,4 +1,4 @@
-# TeamKM — Leadership brief
+# Groundline — Leadership brief
 
 **Audience:** Engineering leadership, product leadership, delivery management  
 **Companion:** [ARCHITECTURE.md](ARCHITECTURE.md) (how it works), [REQUIREMENTS.md](REQUIREMENTS.md) (full spec)  
@@ -8,7 +8,7 @@
 
 ## Elevator statement
 
-**TeamKM** is a **team-owned knowledge base** where durable know-how lives in **git** as Markdown, and a **local retrieval service** makes that corpus **queryable by any coding assistant**—with **mandatory reranking**, **structured context packs**, and **citations** so answers are **grounded in what the team actually merged**, not in model memory alone.
+**Groundline** is a **team-owned knowledge base** where durable know-how lives in **git** as Markdown, and a **local retrieval service** makes that corpus **queryable by any coding assistant**—with **mandatory reranking**, **structured context packs**, and **citations** so answers are **grounded in what the team actually merged**, not in model memory alone.
 
 ---
 

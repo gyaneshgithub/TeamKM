@@ -12,7 +12,7 @@
 | Release verification themes | `knowledge/testing/` or `knowledge/delivery/` |
 | Known defect classes, flaky-test runbooks | `knowledge/technical/` or `testing/` |
 
-Same PR rules as code: [Contributing](contributing.md), [How to use](HOW_TO_USE_TEAMKM.md).
+Same PR rules as code: [Contributing](contributing.md), [How to use](HOW_TO_USE_GROUNDLINE.md).
 
 ---
 

@@ -1,4 +1,4 @@
-# Contributing to TeamKM
+# Contributing to Groundline
 
 This repo is a **reusable template**: Markdown corpus under `knowledge/`, a **local** index under `.rag/` (gitignored), and **git + PRs** for governance. Normative behaviour is in [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md).
 

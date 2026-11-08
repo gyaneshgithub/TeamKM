@@ -1,13 +1,13 @@
 ---
 name: teamkm-run-local
 description: >-
-  Run TeamKM locally: venv, pip install -e ".[dev]" or ".[mcp]", build index
+  Run Groundline locally: venv, pip install -e ".[dev]" or ".[mcp]", build index
   (ki --root . index), start HTTP API (ki serve), verify /v1/health. Use when
-  the user says run TeamKM, start the API, rebuild index, or local RAG is not
+  the user says run Groundline, start the API, rebuild index, or local RAG is not
   working.
 ---
 
-# TeamKM — run locally
+# Groundline — run locally
 
 Workspace root = this repository (contains `knowledge/`, `pyproject.toml`, `ki/`).
 
@@ -16,7 +16,7 @@ Workspace root = this repository (contains `knowledge/`, `pyproject.toml`, `ki/`
 Requires **Python 3.10+**. Prefer a venv:
 
 ```bash
-cd /path/to/TeamKM
+cd /path/to/Groundline
 python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 ```
@@ -76,7 +76,7 @@ Expect `index_status` in `ready` | `building` | `missing` (usually `ready` after
 ```bash
 curl -s http://127.0.0.1:8765/v1/retrieve \
   -H 'Content-Type: application/json' \
-  -d '{"query":"TeamKM","pack_k":5}' | python3 -m json.tool
+  -d '{"query":"Groundline","pack_k":5}' | python3 -m json.tool
 ```
 
 ## Two terminals (typical dev day)
@@ -102,5 +102,5 @@ curl -s http://127.0.0.1:8765/v1/retrieve \
 ## References
 
 - [README.md](../../../README.md) — quick start
-- [docs/HOW_TO_USE_TEAMKM.md](../../../docs/HOW_TO_USE_TEAMKM.md) — non-technical overview
+- [docs/HOW_TO_USE_GROUNDLINE.md](../../../docs/HOW_TO_USE_GROUNDLINE.md) — non-technical overview
 - [docs/openapi.yaml](../../../docs/openapi.yaml) — API contract

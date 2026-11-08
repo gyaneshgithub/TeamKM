@@ -1,5 +1,5 @@
 ---
-title: TeamKM project overview
+title: Groundline project overview
 domain: technical
 area: meta
 author_role: dev
@@ -12,7 +12,7 @@ last_reviewed: '2026-11-06'
 ---
 # Project overview
 
-This repository is the **TeamKM** template: Markdown under `knowledge/`, validated front matter (§6.1), and local RAG tooling under `ki/` and `scripts/`.
+This repository is the **Groundline** template: Markdown under `knowledge/`, validated front matter (§6.1), and local RAG tooling under `ki/` and `scripts/`.
 
 See [docs/REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) for the full specification.
 

@@ -1,7 +1,7 @@
-"""TeamKM MCP server (stdio): exposes local HTTP API as MCP tools.
+"""Groundline MCP server (stdio): exposes local HTTP API as MCP tools.
 
 Run `ki serve` in another terminal (or rely on a host that starts it). This
-process is intentionally thin: the **host** runs the LLM agent loop; TeamKM
+process is intentionally thin: the **host** runs the LLM agent loop; Groundline
 remains retrieval + corpus ops (see docs/ARCHITECTURE.md).
 
 Requires: pip install -e ".[mcp]"
@@ -15,7 +15,7 @@ import urllib.error
 import urllib.request
 from typing import Any
 
-INSTRUCTIONS = """TeamKM MCP — tools call the local TeamKM HTTP API on loopback.
+INSTRUCTIONS = """Groundline MCP — tools call the local Groundline HTTP API on loopback.
 
 **Retrieve-first policy (recommended):** Before changing code or writing new knowledge,
 call `teamkm_health`, then `teamkm_retrieve` or `teamkm_context_pack` for the task topic.
@@ -160,14 +160,14 @@ def main() -> None:
 
     @mcp.prompt(
         name="teamkm_retrieve_first",
-        description="Instruct the assistant to call TeamKM tools before changing code or writing docs.",
+        description="Instruct the assistant to call Groundline tools before changing code or writing docs.",
     )
     def teamkm_retrieve_first(task_description: str) -> str:
         return f"""You are helping with this task:
 
 {task_description}
 
-**TeamKM policy:** Before editing code or authoring new markdown under `knowledge/`, call `teamkm_health`
+**Groundline policy:** Before editing code or authoring new markdown under `knowledge/`, call `teamkm_health`
 then `teamkm_retrieve` or `teamkm_context_pack` with a query summarizing the task. Cite retrieved
 `doc_path` and line ranges when you use them. If the user wants a new knowledge doc, run
 `teamkm_contribute_dry_run` on a draft outline first."""

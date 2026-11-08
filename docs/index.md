@@ -1,8 +1,10 @@
-# TeamKM
+# Groundline
 
-**Your team’s memory, in git—searchable on your machine.**
+**Grounded context infrastructure for engineering teams.**
 
-TeamKM is a **template repository**: durable knowledge lives as **reviewed Markdown** under `knowledge/`, changes flow through **Pull Requests**, and an optional **local retrieval service** grounds assistants and humans in **what the team merged**—with citations, not chat memory.
+*Your team’s memory, in git—searchable on your machine.*
+
+Groundline is a **template repository**: durable knowledge lives as **reviewed Markdown** under `knowledge/`, changes flow through **Pull Requests**, and an optional **local retrieval service** grounds assistants and humans in **what the team merged**—with citations, not chat memory.
 
 ---
 
@@ -14,7 +16,7 @@ TeamKM is a **template repository**: durable knowledge lives as **reviewed Markd
 | **Engineering or product leadership** | [For management](for-management.md) | Rollout, risks, policy, template adoption (§4.5) |
 | **Product / functional owner** | [For product](for-product.md) | Write intent and decisions in `knowledge/functional/` without running servers |
 | **Quality / QE** | [For quality & QE](for-quality.md) | Testing corpus, golden queries, pre-merge gates |
-| **Anyone writing docs** | [How to use TeamKM](HOW_TO_USE_TEAMKM.md) | Plain-language PR loop and glossary |
+| **Anyone writing docs** | [How to use Groundline](HOW_TO_USE_GROUNDLINE.md) | Plain-language PR loop and glossary |
 
 ---
 

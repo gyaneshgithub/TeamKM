@@ -1,10 +1,10 @@
-# TeamKM — Architecture
+# Groundline — Architecture
 
 **Status:** Draft (aligned with [REQUIREMENTS.md](REQUIREMENTS.md))  
 **Owner:** GYANESH  
 **Last updated:** 2025-11-06  
 
-This document describes the **logical and physical architecture** of **TeamKM**: a **git-hosted** corpus of Markdown, a **local** RAG index and services, and **assistant-agnostic** clients (HTTP, MCP, CLI). Normative behaviour, schemas, and phases remain in **REQUIREMENTS**; this file is the **systems view** for implementers and reviewers.
+This document describes the **logical and physical architecture** of **Groundline**: a **git-hosted** corpus of Markdown, a **local** RAG index and services, and **assistant-agnostic** clients (HTTP, MCP, CLI). Normative behaviour, schemas, and phases remain in **REQUIREMENTS**; this file is the **systems view** for implementers and reviewers.
 
 ---
 
@@ -31,7 +31,7 @@ flowchart LR
   end
 
   subgraph git_host [Git host]
-    Repo[(TeamKM repo)]
+    Repo[(Groundline repo)]
   end
 
   subgraph local [Contributor machine]

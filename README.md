@@ -1,12 +1,16 @@
-# TeamKM
+# Groundline
 
-**Your team’s memory, in git—searchable on your machine.**
+**Grounded context infrastructure for engineering teams.**
 
-**Documentation (all roles):** [TeamKM docs site](https://gyaneshgithub.github.io/TeamKM/) — engineering, management, product, quality, and reference. *(Requires [GitHub Pages](docs/GITHUB_PAGES.md) on the **`gh-pages`** branch; **public** repo or plan that supports Pages.)*
+*Your team’s memory, in git—searchable on your machine.*
 
-TeamKM is a **template repo** for durable engineering knowledge: Markdown lives under `knowledge/` with validated YAML front matter, merges happen through **PRs**, and a **local** retrieval pipeline turns that corpus into **grounded context** for agents and humans (hybrid search, mandatory rerank, HTTP API on loopback). Normative behaviour: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md).
+**Documentation (all roles):** [Groundline docs site](https://gyaneshgithub.github.io/TeamKM/) — engineering, management, product, quality, and reference. *(GitHub repo: [gyaneshgithub/TeamKM](https://github.com/gyaneshgithub/TeamKM) — template codename until you rename the remote.)*
 
-**New here?** Start with **[How to use TeamKM](docs/HOW_TO_USE_TEAMKM.md)** — short, structured guide for **everyone** (including non-developers).
+**Identifiers:** [docs/BRAND.md](docs/BRAND.md)
+
+Groundline is a **template repo** for durable engineering knowledge: Markdown lives under `knowledge/` with validated YAML front matter, merges happen through **PRs**, and a **local** retrieval pipeline turns that corpus into **grounded context** for agents and humans (hybrid search, mandatory rerank, HTTP API on loopback). Normative behaviour: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md).
+
+**New here?** Start with **[How to use Groundline](docs/HOW_TO_USE_GROUNDLINE.md)** — short, structured guide for **everyone** (including non-developers).
 
 ---
 
@@ -65,7 +69,7 @@ flowchart LR
 
 | Doc | Read it for… |
 |-----|----------------|
-| [docs/HOW_TO_USE_TEAMKM.md](docs/HOW_TO_USE_TEAMKM.md) | **Start here:** simple flow for the whole team (writers, reviewers, leads). |
+| [docs/HOW_TO_USE_GROUNDLINE.md](docs/HOW_TO_USE_GROUNDLINE.md) | **Start here:** simple flow for the whole team (writers, reviewers, leads). |
 | [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) | Full product spec (normative). |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How indexing and retrieval fit together. |
 | [docs/LEADERSHIP_PITCH.md](docs/LEADERSHIP_PITCH.md) | Short executive / leadership brief. |
@@ -82,7 +86,7 @@ flowchart LR
 **Python 3.10+.**
 
 ```bash
-cd /path/to/TeamKM
+cd /path/to/Groundline
 python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"

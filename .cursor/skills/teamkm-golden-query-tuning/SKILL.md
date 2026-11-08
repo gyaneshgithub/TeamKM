@@ -6,7 +6,7 @@ description: >-
   in CI, retrieval regression, or improving search quality.
 ---
 
-# TeamKM — golden query tuning
+# Groundline — golden query tuning
 
 **Spec:** REQUIREMENTS §5.5, §7, §11 • **File:** [meta/golden_queries.yaml](../../../meta/golden_queries.yaml) • **Runner:** `python3 scripts/golden_queries.py --root .`
 
@@ -19,7 +19,7 @@ schema_version: "0.1.0"
 recall_at_k: 5   # top 5 after rerank
 queries:
   - id: gq-001
-    query: TeamKM template RAG
+    query: Groundline template RAG
     expected_doc_contains: knowledge/technical
 ```
 

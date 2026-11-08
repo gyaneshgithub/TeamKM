@@ -1,14 +1,18 @@
 # Changelog
 
-All notable changes to the **TeamKM engine** (this template repository) are listed here. Adopters **pin git tags** for stability; each team’s **`knowledge/` corpus** has its own history in that team’s fork.
+All notable changes to the **Groundline engine** (this template repository) are listed here. Adopters **pin git tags** for stability; each team’s **`knowledge/` corpus** has its own history in that team’s fork.
 
 ## Unreleased
 
-- Documentation site: MkDocs Material (`mkdocs.yml`), stakeholder pages (`for-engineering`, management, product, quality), GitHub Actions deploy to `gh-pages`; optional `pip install -e ".[docs]"`.
+## 0.4.0 — 2026-11-08
+
+- **Rebrand:** product name **Groundline**; tagline *Grounded context infrastructure for engineering teams.* User-facing docs, MkDocs, CLI/API service name, and leadership brief updated. Technical ids unchanged (`team-km`, `ki`, `teamkm_*` MCP tools, `TEAMKM_*` env). [docs/BRAND.md](docs/BRAND.md).
+- **Rename:** `docs/HOW_TO_USE_TEAMKM.md` → [docs/HOW_TO_USE_GROUNDLINE.md](docs/HOW_TO_USE_GROUNDLINE.md).
+- GitHub template repository remains **`gyaneshgithub/TeamKM`** (Pages URL `/TeamKM/` until repo rename).
 
 ## 0.3.0 — 2026-11-08
 
-Milestone release: TeamKM rename, local agent/MCP integration, merge automation, contribution CLI, extended front matter and retrieval API, and Cursor agent skills.
+Milestone release: Groundline rename, local agent/MCP integration, merge automation, contribution CLI, extended front matter and retrieval API, and Cursor agent skills.
 
 ### Cursor agent skills
 
@@ -34,8 +38,8 @@ Milestone release: TeamKM rename, local agent/MCP integration, merge automation,
 
 ### Project identity and docs
 
-- **Rename:** project and Python distribution **`knowledgeIntelligence` / `knowledge-intelligence` → TeamKM / `team-km`**; local profile path **`~/.teamkm/`** (was `~/.knowledgeintelligence/`).
-- **[HOW_TO_USE_TEAMKM.md](docs/HOW_TO_USE_TEAMKM.md)** — plain-language guide for non-technical contributors; linked from README.
+- **Rename:** project and Python distribution **`knowledgeIntelligence` / `knowledge-intelligence` → Groundline / `team-km`**; local profile path **`~/.teamkm/`** (was `~/.knowledgeintelligence/`).
+- **[HOW_TO_USE_GROUNDLINE.md](docs/HOW_TO_USE_GROUNDLINE.md)** — plain-language guide for non-technical contributors; linked from README.
 - README, CONTRIBUTING, REQUIREMENTS, ARCHITECTURE, TESTING, LEADERSHIP_PITCH, and operational docs brought in line with the above.
 
 ## 0.2.x — 2025-11-06

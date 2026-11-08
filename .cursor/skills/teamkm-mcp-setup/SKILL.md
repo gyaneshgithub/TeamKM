@@ -1,12 +1,12 @@
 ---
 name: teamkm-mcp-setup
 description: >-
-  Wire Cursor or another MCP host to TeamKM: pip install ".[mcp]", run ki serve
+  Wire Cursor or another MCP host to Groundline: pip install ".[mcp]", run ki serve
   plus ki mcp (stdio), TEAMKM_API_BASE / KI_HOST / KI_PORT, example MCP config.
-  Use when configuring MCP, TeamKM tools in the IDE, or teamkm_* not working.
+  Use when configuring MCP, Groundline tools in the IDE, or teamkm_* not working.
 ---
 
-# TeamKM — MCP setup
+# Groundline — MCP setup
 
 **Read first:** [docs/MCP.md](../../../docs/MCP.md) • [CONTRIBUTING.md](../../../CONTRIBUTING.md) (Optional: MCP).
 
@@ -34,7 +34,7 @@ python3 -m ki --root . serve --host 127.0.0.1 --port 8765
 **Terminal B — MCP (stdio; host usually launches this):**
 
 ```bash
-cd /path/to/TeamKM
+cd /path/to/Groundline
 python3 -m ki mcp
 ```
 
@@ -57,9 +57,9 @@ Add a server entry (location depends on Cursor version: **Settings → MCP** or 
 {
   "mcpServers": {
     "teamkm": {
-      "command": "/path/to/TeamKM/.venv/bin/python3",
+      "command": "/path/to/Groundline/.venv/bin/python3",
       "args": ["-m", "ki", "mcp"],
-      "cwd": "/path/to/TeamKM",
+      "cwd": "/path/to/Groundline",
       "env": {
         "TEAMKM_API_BASE": "http://127.0.0.1:8765"
       }
@@ -76,7 +76,7 @@ If `ki` is on PATH from `pip install -e ".[mcp]"`:
     "teamkm": {
       "command": "python3",
       "args": ["-m", "ki", "mcp"],
-      "cwd": "/absolute/path/to/TeamKM"
+      "cwd": "/absolute/path/to/Groundline"
     }
   }
 }
@@ -98,7 +98,7 @@ Prompt: **`teamkm_retrieve_first`**.
 ## 6. Stdio rules
 
 - MCP uses **stdin/stdout** for JSON-RPC. **Do not** `print()` debug to stdout on the MCP process (breaks the wire). Use **logging to stderr** if needed.
-- **`ki serve`** is separate; it **does** log to stderr (`TeamKM listening on http://...`).
+- **`ki serve`** is separate; it **does** log to stderr (`Groundline listening on http://...`).
 
 ## 7. Verify
 

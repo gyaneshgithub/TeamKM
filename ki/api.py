@@ -45,7 +45,7 @@ class KiHandler(BaseHTTPRequestHandler):
                 self,
                 200,
                 {
-                    "service": "TeamKM",
+                    "service": "Groundline",
                     "health": "/v1/health",
                     "openapi_yaml": "/openapi.yaml",
                     "openapi_json": "/openapi.json",
