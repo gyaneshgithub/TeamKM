@@ -2,6 +2,9 @@
 meta/author-profile.local.yaml
 **/.teamkm/
 
+# Local-only notes (GTM, pricing, client ideas — never commit)
+.local/
+
 # RAG build output (per REQUIREMENTS §12)
 .rag/
 
