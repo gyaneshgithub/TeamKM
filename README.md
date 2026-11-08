@@ -70,6 +70,7 @@ flowchart LR
 | [docs/TESTING.md](docs/TESTING.md) | Tests, golden queries, safety rails. |
 | [docs/MCP.md](docs/MCP.md) | Optional MCP stdio server (`ki mcp`), tools, env vars. |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Branches, PRs, corpus rules, draft promotion. |
+| `.cursor/skills/teamkm-*` | Agent skills: retrieve-first, run local, MCP, pre-PR; **no-secrets**, **onboard**, **golden-query-tuning**, **share-project**. |
 | [docs/GITHUB_BRANCH_PROTECTION.md](docs/GITHUB_BRANCH_PROTECTION.md) | Protecting `main` on GitHub. |
 
 ---

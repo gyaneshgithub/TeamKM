@@ -4,6 +4,7 @@ All notable changes to the **TeamKM engine** (this template repository) are list
 
 ## Unreleased
 
+- Cursor skills under `.cursor/skills/`: `teamkm-retrieve-first`, `teamkm-run-local`, `teamkm-mcp-setup`, `teamkm-pre-pr-checklist`; governance/onboarding `teamkm-no-secrets`, `teamkm-onboard`, `teamkm-golden-query-tuning`, `teamkm-share-project`.
 - Documentation: [HOW_TO_USE_TEAMKM.md](docs/HOW_TO_USE_TEAMKM.md) — structured, plain-language guide for non-technical contributors; linked from README.
 - MCP: `python3 -m ki mcp` (stdio) exposes **`teamkm_*`** tools + **`teamkm_retrieve_first`** prompt against `TEAMKM_API_BASE` / `KI_HOST`+`KI_PORT`; install optional **`pip install -e ".[mcp]"`**. `GET /openapi.json` returns the OpenAPI spec as JSON. **[docs/MCP.md](docs/MCP.md)** — integration guide.
 - **Rename:** project and Python distribution **`knowledgeIntelligence` / `knowledge-intelligence` → TeamKM / `team-km`**; local profile path **`~/.teamkm/`** (was `~/.knowledgeintelligence/`).

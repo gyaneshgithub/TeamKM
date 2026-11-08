@@ -15,7 +15,7 @@ TeamKM’s **canonical** integration is the **local HTTP API** (`ki serve`). The
 2. **API running** (default `http://127.0.0.1:8765`):
 
    ```bash
-   python3 -m ki serve --root .
+   python3 -m ki --root . serve
    ```
 
 ## MCP server command
