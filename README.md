@@ -2,7 +2,7 @@
 
 **Your team’s memory, in git—searchable on your machine.**
 
-**Documentation (all roles):** [TeamKM docs site](https://gyaneshgithub.github.io/TeamKM/) — engineering, management, product, quality, and reference.
+**Documentation (all roles):** [TeamKM docs site](https://gyaneshgithub.github.io/TeamKM/) — engineering, management, product, quality, and reference. *(Requires [GitHub Pages](docs/GITHUB_PAGES.md) on the **`gh-pages`** branch; **public** repo or plan that supports Pages.)*
 
 TeamKM is a **template repo** for durable engineering knowledge: Markdown lives under `knowledge/` with validated YAML front matter, merges happen through **PRs**, and a **local** retrieval pipeline turns that corpus into **grounded context** for agents and humans (hybrid search, mandatory rerank, HTTP API on loopback). Normative behaviour: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md).
 
