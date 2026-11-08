@@ -4,6 +4,8 @@ All notable changes to the **TeamKM engine** (this template repository) are list
 
 ## Unreleased
 
+- Documentation site: MkDocs Material (`mkdocs.yml`), stakeholder pages (`for-engineering`, management, product, quality), GitHub Actions deploy to `gh-pages`; optional `pip install -e ".[docs]"`.
+
 ## 0.3.0 — 2026-11-08
 
 Milestone release: TeamKM rename, local agent/MCP integration, merge automation, contribution CLI, extended front matter and retrieval API, and Cursor agent skills.

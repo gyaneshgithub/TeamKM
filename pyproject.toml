@@ -22,6 +22,11 @@ mcp = [
 dev = [
   "pytest>=7.4",
 ]
+docs = [
+  "mkdocs>=1.6",
+  "mkdocs-material>=9.5",
+  "mkdocs-include-markdown-plugin>=6.0",
+]
 
 [tool.setuptools.packages.find]
 where = ["."]

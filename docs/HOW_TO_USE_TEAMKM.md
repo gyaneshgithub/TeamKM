@@ -2,7 +2,7 @@
 
 **Audience:** Anyone on the team—**you do not need to be a programmer** to help with the knowledge in this repo. Technical setup is optional; **writing and reviewing clear notes** is the main job.
 
-**Deep detail:** [REQUIREMENTS.md](REQUIREMENTS.md) • **Developers:** [CONTRIBUTING.md](../CONTRIBUTING.md) • **Leaders:** [LEADERSHIP_PITCH.md](LEADERSHIP_PITCH.md)
+**Deep detail:** [REQUIREMENTS.md](REQUIREMENTS.md) • **Developers:** [Contributing](contributing.md) • **Leaders:** [LEADERSHIP_PITCH.md](LEADERSHIP_PITCH.md)
 
 ---
 
@@ -42,7 +42,7 @@ flowchart TD
 1. **Write** — Add or change a `.md` file under the right `knowledge/...` folder. A small template sits at the top of each file (called **front matter**): title, area, `status`, etc.
 2. **Pull Request** — Propose the change so others can see a **diff** and comment.
 3. **Review** — At least one person checks facts, tone, and placement.
-4. **Merge** — When merged to **`main`**, the note is part of the official corpus (and automation may set **`reviewed`** on drafts—see [CONTRIBUTING.md](../CONTRIBUTING.md)).
+4. **Merge** — When merged to **`main`**, the note is part of the official corpus (and automation may set **`reviewed`** on drafts—see [Contributing](contributing.md)).
 5. **Search (optional)** — People who installed the tooling can **refresh the index** and **ask questions** against merged notes—always citing **which file** the answer came from.
 
 ---
@@ -65,7 +65,7 @@ If unsure **where** a note goes, open a PR anyway and ask in the description—a
 **Idea:** Let the assistant **read TeamKM first**, then answer or edit code—so it uses **your** merged notes, not only generic training data.
 
 - **Simple path:** Paste relevant excerpts from `knowledge/` into the chat (still cite the file path in your question).
-- **Team setup (technical):** Someone runs the **local API** and optionally connects **MCP** so the assistant can call **search tools** automatically—see [MCP.md](MCP.md) and the “Agents” section in [README.md](../README.md).
+- **Team setup (technical):** Someone runs the **local API** and optionally connects **MCP** so the assistant can call **search tools** automatically—see [MCP.md](MCP.md) and the [documentation home](index.md) / [README on GitHub](https://github.com/gyaneshgithub/TeamKM/blob/main/README.md).
 
 **Rule of thumb:** Prefer **retrieve → then act** (search notes first, then change code or docs).
 
@@ -86,7 +86,7 @@ If unsure **where** a note goes, open a PR anyway and ask in the description—a
 
 ## 7. Where to go next
 
-- **First contribution:** [CONTRIBUTING.md](../CONTRIBUTING.md) (branches, checks, what not to commit).
+- **First contribution:** [Contributing](contributing.md) (branches, checks, what not to commit).
 - **Why we built this:** [LEADERSHIP_PITCH.md](LEADERSHIP_PITCH.md).
 - **Protecting the default branch:** [GITHUB_BRANCH_PROTECTION.md](GITHUB_BRANCH_PROTECTION.md).
 

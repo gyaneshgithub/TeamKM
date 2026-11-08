@@ -14,10 +14,10 @@ That does **not** mean branch protection is impossible—it means **API-based** 
 
 1. Open the repo on GitHub → **Settings** → **Branches** (or use **Protect this branch** in the banner).
 2. **Add branch protection rule** for `main`.
-3. Enable (aligned with [CONTRIBUTING.md](../CONTRIBUTING.md)):
+3. Enable (aligned with [Contributing](contributing.md)):
    - **Require a pull request before merging**
    - **Require approvals**: at least **1** (tune per team)
-   - **Require status checks to pass** (our workflow job is named **`test`** in [.github/workflows/ci.yml](../.github/workflows/ci.yml))
+   - **Require status checks to pass** (our workflow job is named **`test`** in [`.github/workflows/ci.yml`](https://github.com/gyaneshgithub/TeamKM/blob/main/.github/workflows/ci.yml))
    - **Require conversation resolution** before merging (optional but useful)
    - **Do not allow bypassing** the above settings (admins follow rules too), if available
 4. Save.
@@ -36,4 +36,4 @@ The CI workflow defines a single job `test` (see `ci.yml`). In branch protection
 
 ## Related
 
-- [CONTRIBUTING.md](../CONTRIBUTING.md) — branch workflow (`main` + feature branches)
+- [Contributing](contributing.md) — branch workflow (`main` + feature branches)

@@ -1,0 +1,79 @@
+# TeamKM documentation site (MkDocs Material). Build: pip install -e ".[docs]" && mkdocs serve
+site_name: TeamKM
+site_description: Team-owned knowledge in git—searchable locally for humans and coding assistants.
+site_url: https://gyaneshgithub.github.io/TeamKM/
+repo_url: https://github.com/gyaneshgithub/TeamKM
+repo_name: gyaneshgithub/TeamKM
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+
+plugins:
+  - search
+  - include-markdown
+
+nav:
+  - Home: index.md
+  - By role:
+    - Engineering: for-engineering.md
+    - Management: for-management.md
+    - Product: for-product.md
+    - Quality & QE: for-quality.md
+  - Guides:
+    - How to use TeamKM: HOW_TO_USE_TEAMKM.md
+    - Leadership brief: LEADERSHIP_PITCH.md
+  - Reference:
+    - Requirements: REQUIREMENTS.md
+    - Architecture: ARCHITECTURE.md
+    - Testing: TESTING.md
+    - MCP integration: MCP.md
+    - Branch protection: GITHUB_BRANCH_PROTECTION.md
+    - Publishing this site: GITHUB_PAGES.md
+  - Contributing: contributing.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - toc:
+      permalink: true
+  - tables
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/gyaneshgithub/TeamKM
