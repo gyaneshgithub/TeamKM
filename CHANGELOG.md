@@ -4,6 +4,8 @@ All notable changes to the **Groundline engine** (this template repository) are 
 
 ## Unreleased
 
+- [docs/ADOPTION_OVERVIEW.md](docs/ADOPTION_OVERVIEW.md) — free self-serve vs optional professional services (no pricing); linked from README and MkDocs.
+
 ## 0.4.0 — 2026-11-08
 
 - **Rebrand:** product name **Groundline**; tagline *Grounded context infrastructure for engineering teams.* User-facing docs, MkDocs, CLI/API service name, and leadership brief updated. Technical ids unchanged (`team-km`, `ki`, `teamkm_*` MCP tools, `TEAMKM_*` env). [docs/BRAND.md](docs/BRAND.md).

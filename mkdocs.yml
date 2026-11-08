@@ -44,6 +44,7 @@ nav:
     - Product: for-product.md
     - Quality & QE: for-quality.md
   - Guides:
+    - Adopting Groundline: ADOPTION_OVERVIEW.md
     - How to use Groundline: HOW_TO_USE_GROUNDLINE.md
     - Leadership brief: LEADERSHIP_PITCH.md
   - Reference:

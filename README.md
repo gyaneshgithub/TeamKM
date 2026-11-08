@@ -6,7 +6,7 @@
 
 **Documentation (all roles):** [Groundline docs site](https://gyaneshgithub.github.io/TeamKM/) — engineering, management, product, quality, and reference. *(GitHub repo: [gyaneshgithub/TeamKM](https://github.com/gyaneshgithub/TeamKM) — template codename until you rename the remote.)*
 
-**Identifiers:** [docs/BRAND.md](docs/BRAND.md)
+**Identifiers:** [docs/BRAND.md](docs/BRAND.md) · **Adoption (free vs services):** [docs/ADOPTION_OVERVIEW.md](docs/ADOPTION_OVERVIEW.md)
 
 Groundline is a **template repo** for durable engineering knowledge: Markdown lives under `knowledge/` with validated YAML front matter, merges happen through **PRs**, and a **local** retrieval pipeline turns that corpus into **grounded context** for agents and humans (hybrid search, mandatory rerank, HTTP API on loopback). Normative behaviour: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md).
 
