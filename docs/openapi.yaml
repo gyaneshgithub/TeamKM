@@ -4,7 +4,7 @@ info:
   description: |
     Loopback HTTP API for retrieval and health (REQUIREMENTS §5.6, §5.9).
     Served at runtime as `GET /openapi.yaml` (YAML) and `GET /openapi.json` (OpenAPI as JSON); this file is the source in repo root.
-  version: 0.3.0
+  version: 0.4.1
 servers:
   - url: http://127.0.0.1:8765
     description: Default local server (KI_PORT)

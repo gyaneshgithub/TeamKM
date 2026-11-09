@@ -2,7 +2,8 @@
 name: teamkm-run-local
 description: >-
   Run Groundline locally: venv, pip install -e ".[dev]" or ".[mcp]", build index
-  (ki --root . index), start HTTP API (ki serve), verify /v1/health. Use when
+  (ki --root . index), status, eval, start HTTP API (ki --root . serve), verify
+  /v1/health. Use when
   the user says run Groundline, start the API, rebuild index, or local RAG is not
   working.
 ---
@@ -43,6 +44,8 @@ pip install -e ".[dev,mcp]"
 |---------|--------|
 | `python3 -m ki --root . index` | `python3 -m ki index --root .` |
 | `python3 -m ki --root . serve` | `python3 -m ki serve --root .` |
+| `python3 -m ki --root . status` | `python3 -m ki status --root .` |
+| `python3 -m ki --root . eval` | `python3 -m ki eval --root .` |
 
 From repo root you may omit `--root .` if cwd is the repo.
 
@@ -54,6 +57,20 @@ python3 -m ki --root . index
 
 - Writes under **`.rag/`** (gitignored).
 - Re-run after pulling `main` when `knowledge/` changed materially.
+
+## Check index freshness
+
+```bash
+python3 -m ki --root . status
+```
+
+Or with the API running: `GET /v1/health` — fields **`index_stale`**, **`corpus_fingerprint_current`**, **`corpus_fingerprint_indexed`**.
+
+## Golden eval (optional smoke)
+
+```bash
+python3 -m ki --root . eval --report md
+```
 
 ## Start HTTP API (foreground)
 
@@ -69,7 +86,7 @@ Overrides: `KI_HOST`, `KI_PORT`.
 curl -s http://127.0.0.1:8765/v1/health | python3 -m json.tool
 ```
 
-Expect `index_status` in `ready` | `building` | `missing` (usually `ready` after index).
+Expect `index_status` in `ready` | `building` | `missing` (usually `ready` after index). When `index_stale` is **true**, run **`python3 -m ki --root . index`**.
 
 **Smoke retrieve:**
 
@@ -84,11 +101,11 @@ curl -s http://127.0.0.1:8765/v1/retrieve \
 | Terminal | Command |
 |----------|---------|
 | 1 | `python3 -m ki --root . serve` |
-| 2 | Editor chat + optional `python3 -m ki mcp` (see **teamkm-mcp-setup**) |
+| 2 | Editor chat + optional `python3 -m ki --root . mcp` (see **teamkm-mcp-setup**) |
 
 ## Session wrapper (optional)
 
-[scripts/ki-session.sh](../../../scripts/ki-session.sh) starts `ki serve` in the background then `exec`s another command (e.g. your assistant CLI).
+[scripts/ki-session.sh](../../../scripts/ki-session.sh) starts `ki --root . serve` in the background then `exec`s another command (e.g. your assistant CLI).
 
 ## Troubleshooting
 
@@ -97,7 +114,7 @@ curl -s http://127.0.0.1:8765/v1/retrieve \
 | `index_unavailable` / 503 on retrieve | `python3 -m ki --root . index` |
 | Port in use | Change `--port` or `KI_PORT` |
 | Empty retrieval | Confirm `knowledge/` has `.md`; check health `chunk_count` |
-| Stale answers | Re-index after merge; compare `corpus_fingerprint` in health |
+| Stale answers | `python3 -m ki --root . status`; re-index when `index_stale` |
 
 ## References
 

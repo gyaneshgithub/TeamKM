@@ -17,10 +17,12 @@ This repo is a **reusable template**: Markdown corpus under `knowledge/`, a **lo
 1. **Validate front matter** — `python3 scripts/validate_frontmatter.py --root .` (use `--inject-domain` if your team omits `domain` in drafts).
 2. **Retrieval-first contribute** (recommended) — see §5.8:
    ```bash
-   python3 -m ki contribute --root . -f path/to/draft.md
+   python3 -m ki --root . contribute -f path/to/draft.md
    ```
    or pipe markdown on stdin. Prefer **edit** or **extend** when similarity is high.
 3. **Run tests** — `pytest`.
+4. **Index freshness** (if you changed `knowledge/`) — `python3 -m ki --root . status` then `python3 -m ki --root . index` when stale.
+5. **Golden queries** — `python3 scripts/golden_queries.py --root .` or `python3 -m ki --root . eval --report md` (recall@k + MRR; see [docs/TESTING.md](docs/TESTING.md)).
 
 ## What to commit
 
@@ -44,7 +46,7 @@ Validates staged `knowledge/**/*.md` with `validate_frontmatter.py`.
 
 ## Optional: MCP (assistant hosts)
 
-The **local HTTP API** is the canonical surface. For IDEs that speak **MCP**, install **`pip install -e ".[mcp]"`**, run **`python3 -m ki serve`** in the repo (default `http://127.0.0.1:8765`), then **`python3 -m ki mcp`** as the MCP server command. The host runs the **agent loop**; tools **`teamkm_*`** call `health` / `retrieve` / `context_pack` / `contribute_dry_run`. **Policy:** retrieve before editing code or adding knowledge; use **`teamkm_contribute_dry_run`** before opening new docs (§5.8). Override base URL with **`TEAMKM_API_BASE`** (or **`KI_HOST`** / **`KI_PORT`**).
+The **local HTTP API** is the canonical surface. For IDEs that speak **MCP**, install **`pip install -e ".[mcp]"`**, run **`python3 -m ki --root . serve`** (default `http://127.0.0.1:8765`), then **`python3 -m ki --root . mcp`** as the MCP server command. The host runs the **agent loop**; tools **`teamkm_*`** call `health` / `retrieve` / `context_pack` / `contribute_dry_run`. **Policy:** retrieve before editing code or adding knowledge; use **`teamkm_contribute_dry_run`** before opening new docs (§5.8). Override base URL with **`TEAMKM_API_BASE`** (or **`KI_HOST`** / **`KI_PORT`**).
 
 Full table and examples: [docs/MCP.md](docs/MCP.md).
 

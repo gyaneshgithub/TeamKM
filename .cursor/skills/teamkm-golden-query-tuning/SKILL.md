@@ -1,18 +1,18 @@
 ---
 name: teamkm-golden-query-tuning
 description: >-
-  Tune meta/golden_queries.yaml: add queries, interpret FAIL recall@k, decide
-  fix corpus vs query vs re-index vs chunking. Use when golden_queries.py fails
-  in CI, retrieval regression, or improving search quality.
+  Tune meta/golden_queries.yaml: add queries, interpret FAIL recall@k / low MRR@k,
+  decide fix corpus vs query vs re-index vs chunking. Use when golden_queries.py
+  or ki eval fails in CI, retrieval regression, or improving search quality.
 ---
 
 # Groundline — golden query tuning
 
-**Spec:** REQUIREMENTS §5.5, §7, §11 • **File:** [meta/golden_queries.yaml](../../../meta/golden_queries.yaml) • **Runner:** `python3 scripts/golden_queries.py --root .`
+**Spec:** REQUIREMENTS §5.5, §7, §11 • **File:** [meta/golden_queries.yaml](../../../meta/golden_queries.yaml) • **Runners:** `python3 scripts/golden_queries.py --root .` or `python3 -m ki --root . eval --report md`
 
 ## What golden queries do
 
-Each entry asks: “For this **natural-language query**, does the **top k** ranked chunk come from a doc whose path **contains** `expected_doc_contains`?”
+Each entry asks: “For this **natural-language query**, does the **top k** ranked chunk come from a doc whose path **contains** `expected_doc_contains`?” **`ki eval`** also reports **MRR@k** (rank of the first matching hit).
 
 ```yaml
 schema_version: "0.1.0"
@@ -29,11 +29,13 @@ queries:
 ## Run locally
 
 ```bash
+python3 -m ki --root . status         # index_stale?
 python3 -m ki --root . index          # if stale
 python3 scripts/golden_queries.py --root .
+python3 -m ki --root . eval --report md
 ```
 
-Optional: `--file path/to/alternate.yaml` for experiments (do not commit ad-hoc files without team review).
+Optional: `--file path/to/alternate.yaml` for experiments (do not commit ad-hoc files without team review). Reports: `--report text|md|json|quiet`.
 
 ## Interpreting FAIL
 
@@ -48,7 +50,7 @@ FAIL gq-001 expected doc containing 'knowledge/technical/meta', got ['knowledge/
 | Expected doc **missing** from top-k | Thin corpus, wrong `query` wording, or doc not indexed | Add/improve target doc; re-run index |
 | **Wrong** doc ranks higher | Overlap in topics, need clearer title/headings/`area`/`tags` | Edit corpus (preferred) |
 | Right doc ranks **just below** k | Raise `recall_at_k` **temporarily** to diagnose; do not raise k in CI without sign-off |
-| All paths empty / index error | Index not built | `ki index`; check `.rag/manifest.json` |
+| All paths empty / index error | Index not built | `python3 -m ki --root . index`; check `.rag/manifest.json` |
 | Fail after **merge** only | Fingerprint stale | `python3 -m ki --root . index` |
 
 **Default rule:** fix **corpus** or **query text** before changing retrieval code.

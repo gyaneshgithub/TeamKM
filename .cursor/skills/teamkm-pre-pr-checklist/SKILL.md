@@ -1,7 +1,7 @@
 ---
 name: teamkm-pre-pr-checklist
 description: >-
-  Pre-PR gate for Groundline: pytest, validate_frontmatter.py, golden_queries.py,
+  Pre-PR gate for Groundline: pytest, validate_frontmatter.py, ki status, golden_queries / ki eval,
   optional ki contribute dry-run on changed knowledge files. Use when opening a
   PR, before push, or when the user asks if the branch is ready to merge.
 ---
@@ -52,15 +52,24 @@ Use `--fix` only when the user asked to write corrected `domain` from path.
 
 **Dates:** `last_reviewed` must be a **quoted string** in YAML (e.g. `"2026-11-08"`) so validation does not treat it as a date object.
 
-### 3. Golden queries (retrieval regression)
+### 3. Index freshness (if `knowledge/` changed)
+
+```bash
+python3 -m ki --root . status
+```
+
+When **stale**, `python3 -m ki --root . index` before golden queries.
+
+### 4. Golden queries (retrieval regression)
 
 ```bash
 python3 scripts/golden_queries.py --root .
+python3 -m ki --root . eval --report md
 ```
 
-Requires a built index; script calls `ensure_index`. Failures mean top-k retrieval no longer hits expected docs—fix corpus, query file, or index before merge.
+Requires a built index; script calls `ensure_index`. Failures mean top-k retrieval no longer hits expected docs—fix corpus, query file, or index before merge. **MRR@k** helps when the right doc ranks below k.
 
-### 4. Optional — contribute dry-run (knowledge PRs)
+### 5. Optional — contribute dry-run (knowledge PRs)
 
 For **each new or heavily rewritten** `knowledge/**/*.md`:
 
@@ -72,13 +81,13 @@ Review `suggested_action` (`edit` | `extend` | `new_doc`) and `similar` paths. P
 
 Requires local API/index only indirectly (contribute uses index); run **teamkm-run-local** if contribute errors on missing index.
 
-### 5. Git hygiene (remind user)
+### 6. Git hygiene (remind user)
 
 - Branch name: `feature/<slug>` or `kb/<slug>` per CONTRIBUTING.
 - **No** secrets, ticket dumps, or PII in `knowledge/`.
 - **No commit** unless the user explicitly asked (team rule).
 
-### 6. CI parity
+### 7. CI parity
 
 GitHub Actions **ci.yml** runs the same core checks:
 

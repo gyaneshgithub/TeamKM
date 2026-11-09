@@ -48,7 +48,7 @@ Developers follow **Quick start** below; leadership mainly sets **policy, owners
 | Piece | What it does |
 |-------|----------------|
 | **`knowledge/`** | The corpus—technical, delivery, testing, functional, meta—with §6.1 front matter. |
-| **`ki`** | Validate, index, serve: chunk → hybrid retrieve → rerank → context packs. |
+| **`ki`** | Index, **status**, **eval**, serve: chunk → hybrid retrieve → rerank → context packs. |
 | **HTTP API** | `127.0.0.1` by default—any tool that speaks HTTP (or MCP downstream) can plug in. |
 | **MCP (optional)** | `pip install -e ".[mcp]"` then `python3 -m ki mcp` — tools **`teamkm_*`** call the same API; the **IDE host** runs the agent loop (retrieve-first policy). |
 | **CI** | Tests, front matter checks, golden queries—see [docs/TESTING.md](docs/TESTING.md). |
@@ -101,6 +101,7 @@ pip install -e ".[dev]"
 pytest
 python3 scripts/validate_frontmatter.py --root .
 python3 -m ki --root . index
+python3 -m ki --root . status
 python3 -m ki --root . serve --host 127.0.0.1 --port 8765
 ```
 
@@ -120,11 +121,15 @@ curl -s http://127.0.0.1:8765/v1/retrieve -H 'Content-Type: application/json' \
 
 **Validator flags:** `--inject-domain` if `domain` is omitted (canonical from path); `--fix` to write `domain` atomically after other checks pass.
 
-**Session wrapper** (REQUIREMENTS §12.1, pattern B): [scripts/ki-session.sh](scripts/ki-session.sh) starts `ki serve` then runs your assistant.
+**Session wrapper** (REQUIREMENTS §12.1, pattern B): [scripts/ki-session.sh](scripts/ki-session.sh) starts `ki --root . serve` then runs your assistant.
 
-**Retrieval stack (implemented):** tf‑idf cosine **+** BM25, **RRF** fusion, then **mandatory rerank** (`ki/retrieve.py`). **OpenAPI:** [docs/openapi.yaml](docs/openapi.yaml) — with `ki serve`, **`GET /openapi.yaml`** or **`GET /openapi.json`**. **Golden queries:** [meta/golden_queries.yaml](meta/golden_queries.yaml) — run `python3 scripts/golden_queries.py --root .`
+**Retrieval stack (implemented):** tf‑idf cosine **+** BM25, **RRF** fusion, then **mandatory rerank** (`ki/retrieve.py`). **OpenAPI:** [docs/openapi.yaml](docs/openapi.yaml) — with `ki --root . serve`, **`GET /openapi.yaml`** or **`GET /openapi.json`**.
 
-**Agents (recommended pattern):** run **`python3 -m ki serve`** in the repo, then point your MCP host at **`python3 -m ki mcp`** (install **`.[mcp]`**). Set **`TEAMKM_API_BASE`** if the API is not `http://127.0.0.1:8765`. Tools: **`teamkm_health`**, **`teamkm_retrieve`**, **`teamkm_context_pack`**, **`teamkm_contribute_dry_run`**; prompt **`teamkm_retrieve_first`** encodes retrieve-before-edit policy.
+**Index freshness:** `python3 -m ki --root . status` — or `GET /v1/health` fields `index_stale`, `corpus_fingerprint_current` / `_indexed`. Re-index after `knowledge/` changes: `python3 -m ki --root . index`.
+
+**Golden queries (recall@k + MRR):** [meta/golden_queries.yaml](meta/golden_queries.yaml) — `python3 scripts/golden_queries.py --root .` or `python3 -m ki --root . eval --report md`.
+
+**Agents (recommended pattern):** run **`python3 -m ki --root . serve`**, then **`python3 -m ki --root . mcp`** (install **`.[mcp]`**). Set **`TEAMKM_API_BASE`** if the API is not `http://127.0.0.1:8765`. Tools: **`teamkm_health`**, **`teamkm_retrieve`**, **`teamkm_context_pack`**, **`teamkm_contribute_dry_run`**; prompt **`teamkm_retrieve_first`** encodes retrieve-before-edit policy.
 
 ---
 

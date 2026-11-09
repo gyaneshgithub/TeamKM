@@ -11,10 +11,11 @@ This document describes **how we test** the repo today and **how we avoid corrup
 | Layer | Purpose | Command |
 |-------|---------|---------|
 | **Front matter** | Schema + path/domain rules (§6.1) | `python3 scripts/validate_frontmatter.py` |
-| **Index + API** | Chunk → index → hybrid retrieve (dense+BM25, RRF) → rerank → context_pack; `/v1/health`; `/openapi.json` | `pytest` (includes `tests/test_index.py`, `tests/test_api.py`, `tests/test_hybrid.py`) |
-| **MCP (optional)** | Stdio server `python3 -m ki mcp` calls the HTTP API; install **`pip install -e ".[mcp]"`** | Manual: configure host + run `ki serve`; no pytest cover of full MCP handshake yet |
+| **Index + API** | Chunk → index → hybrid retrieve (dense+BM25, RRF) → rerank → context_pack; `/v1/health`; `/openapi.json` | `pytest` (includes `tests/test_index.py`, `tests/test_api.py`, `tests/test_hybrid.py`, `tests/test_golden_eval.py`) |
+| **Index freshness** | Corpus fingerprint vs manifest; `index_stale` on `/v1/health` | `python3 -m ki --root . status` or `pytest tests/test_index_status.py` |
+| **MCP (optional)** | Stdio server `python3 -m ki --root . mcp` calls the HTTP API; install **`pip install -e ".[mcp]"`** | Manual: configure host + run `python3 -m ki --root . serve`; no pytest cover of full MCP handshake yet |
 | **Golden queries** | recall@k + mean MRR@k vs `meta/golden_queries.yaml` | `python3 scripts/golden_queries.py --root .` or `python3 -m ki --root . eval --report md` |
-| **Contribute dry-run** | Merge-vs-new hints from retrieval (§5.8) | `python3 -m ki contribute --root . -f draft.md` |
+| **Contribute dry-run** | Merge-vs-new hints from retrieval (§5.8) | `python3 -m ki --root . contribute -f draft.md` |
 | **Unit tests** | Validator, atomic writes | `pytest` (after `pip install -e ".[dev]"`) |
 
 Optional:
@@ -39,7 +40,7 @@ Implemented patterns (MVP):
 - **`index/` payload** — `chunks.json`, `idf.json`, `vectors.json` written as normal files (atomizing each file write is a future tighten-up).
 - **`manifest.json`** — updated with **`corpus_fingerprint`**, **`index_status`**, model ids, **`chunk_count`**, built via **atomic write** ([ki/manifest.py](../ki/manifest.py)).
 - **Single-flight lock** — **`.rag/build.lock`** with `fcntl` flock where available ([ki/lockfile.py](../ki/lockfile.py)).
-- **Staleness** — if `corpus_fingerprint` ≠ live hash of `knowledge/**/*.md`, **`ki index`** / **`ensure_index()`** rebuilds (§12.1).
+- **Staleness** — if `corpus_fingerprint` ≠ live hash of `knowledge/**/*.md`, **`python3 -m ki --root . index`** / **`ensure_index()`** rebuilds; **`python3 -m ki --root . status`** and **`GET /v1/health`** expose `index_stale` (§12.1).
 
 ### 2.3 Git operations (future auto-sync)
 

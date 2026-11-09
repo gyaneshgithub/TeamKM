@@ -59,7 +59,7 @@ Read [CONTRIBUTING.md](../../../CONTRIBUTING.md) for branch naming and maintenan
 ### 3. Content and placement
 
 - Put files under `knowledge/<domain>/...` per [docs/REQUIREMENTS.md §6](../../../docs/REQUIREMENTS.md)—**choosing the folder is the primary way to choose `domain`** (see **Domain inference** in §6.1).
-- If overlap with existing knowledge is possible, run **`python3 -m ki contribute --root . -f <draft.md>`** (or `POST /v1/contribute_dry_run`) for **retrieval-first** merge-vs-new hints (§5.8).
+- If overlap with existing knowledge is possible, run **`python3 -m ki --root . contribute -f <draft.md>`** (or `POST /v1/contribute_dry_run`) for **retrieval-first** merge-vs-new hints (§5.8).
 
 ### 4. Stage and commit (commit only if user asked)
 

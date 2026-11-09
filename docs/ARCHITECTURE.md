@@ -148,6 +148,17 @@ sequenceDiagram
 
 **Contract:** Responses expose paths, line ranges, retrieval and rerank scores where applicable ([§5.6](REQUIREMENTS.md)). Downstream **generation** must cite chunks or mark gaps ([§5.7](REQUIREMENTS.md)).
 
+### Index freshness and golden eval (implemented)
+
+| Surface | Role |
+|---------|------|
+| `python3 -m ki --root . status` | CLI report: manifest `corpus_fingerprint` vs live corpus hash |
+| `GET /v1/health` | `index_stale`, `index_stale_now`, `corpus_fingerprint_current` / `_indexed` |
+| `python3 -m ki --root . eval` | Golden queries: recall@k + **MRR@k** (`meta/golden_queries.yaml`) |
+| `python3 scripts/golden_queries.py` | Same harness as `ki eval` (CI uses this entrypoint) |
+
+Re-index when stale: `python3 -m ki --root . index`. See [TESTING.md](TESTING.md).
+
 ---
 
 ## 7. Contribution flow (retrieval-first)

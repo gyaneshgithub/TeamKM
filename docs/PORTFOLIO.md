@@ -26,7 +26,7 @@ Teams lose context in chat and wikis; coding assistants guess without **cited, m
 | **RAG engine** | Chunking, tf-idf + BM25, RRF fusion, mandatory rerank, context packs (`ki/`) |
 | **API** | Fast loopback HTTP: health, retrieve, context_pack, contribute dry-run, OpenAPI JSON |
 | **MCP** | Stdio server; `teamkm_*` tools call the same API (assistant-agnostic) |
-| **Governance** | YAML front matter validator, golden queries in CI, draft→reviewed on merge to `main` |
+| **Governance** | YAML front matter validator, golden queries (recall@k + **MRR**), `ki status` index freshness, draft→reviewed on merge to `main` |
 | **Agent UX** | 10 Cursor skills (retrieve-first, MCP setup, pre-PR, onboarding, etc.) |
 | **Docs** | MkDocs Material site, role-based guides (eng / mgmt / product / QE) |
 | **Spec** | Normative REQUIREMENTS + architecture docs suitable for template adoption |
@@ -44,8 +44,8 @@ Python 3.10+, PyYAML, pytest, GitHub Actions, MkDocs Material, optional MCP SDK,
 **Follow:** [DEMO.md](DEMO.md) — timed script (~10 min), curl commands, optional MCP, screen-recording checklist.
 
 1. **Self-serve path** — [HOW_TO_USE_GROUNDLINE](HOW_TO_USE_GROUNDLINE.md) + [Quick start](../README.md#quick-start-tooling).
-2. **Retrieval** — `ki serve` → `curl /v1/retrieve` with `doc_path` citations.
-3. **Quality** — `pytest`, `golden_queries.py`, front matter validation.
+2. **Retrieval** — `python3 -m ki --root . serve` → `curl /v1/retrieve` with `doc_path` citations.
+3. **Quality** — `pytest`, `ki status`, `ki eval --report md`, front matter validation.
 4. **Agents** — `ki mcp` + retrieve-first ([MCP.md](MCP.md)).
 5. **Docs** — https://gyaneshgithub.github.io/TeamKM/
 

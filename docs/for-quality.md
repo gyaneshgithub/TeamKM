@@ -23,7 +23,9 @@ From repo root with venv and `pip install -e ".[dev]"`:
 ```bash
 pytest -q
 python3 scripts/validate_frontmatter.py --root .
+python3 -m ki --root . status
 python3 scripts/golden_queries.py --root .
+python3 -m ki --root . eval --report md
 ```
 
 Optional contribute check before large new docs:
@@ -36,11 +38,13 @@ python3 -m ki --root . contribute -f path/to/draft.md
 
 ## Golden queries (regression radar)
 
-Defined in `meta/golden_queries.yaml`. Each query asserts that recall@k returns a chunk from an expected path substring.
+Defined in `meta/golden_queries.yaml`. Each query asserts **recall@k** and reports **MRR@k** (first-hit rank) against an expected `doc_path` substring.
 
 ```bash
 python3 -m ki --root . index
+python3 -m ki --root . status
 python3 scripts/golden_queries.py --root .
+python3 -m ki --root . eval --report md
 ```
 
 When CI fails:

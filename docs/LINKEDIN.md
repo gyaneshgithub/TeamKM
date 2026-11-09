@@ -21,7 +21,7 @@ Open-source **Groundline** — git-native RAG for engineering teams (local API, 
 
 - Designed and built **Groundline**, a **local-first RAG** platform combining BM25 + tf-idf fusion, reranking, and citation-oriented context packs for agent-assisted development.
 - Delivered **MCP stdio integration** and HTTP API (`/v1/retrieve`, `/v1/context_pack`) with OpenAPI, keeping the assistant host in control of the LLM loop.
-- Added **governance automation**: YAML front matter validation, golden-query CI, GitHub Actions promotion of knowledge docs from `draft` to `reviewed` on merge to `main`.
+- Added **governance automation**: YAML front matter validation, golden-query CI (**recall@k + MRR@k**), **index freshness** (`ki status` / health `index_stale`), GitHub Actions promotion of knowledge from `draft` to `reviewed` on merge to `main`.
 
 ---
 
