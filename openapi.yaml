@@ -1,0 +1,263 @@
+openapi: 3.1.0
+info:
+  title: Groundline local API
+  description: |
+    Loopback HTTP API for retrieval and health (REQUIREMENTS §5.6, §5.9).
+    Served at runtime as `GET /openapi.yaml` (YAML) and `GET /openapi.json` (OpenAPI as JSON); this file is the source in repo root.
+  version: 0.4.1
+servers:
+  - url: http://127.0.0.1:8765
+    description: Default local server (KI_PORT)
+paths:
+  /v1/health:
+    get:
+      summary: Health and index/sync status
+      operationId: health
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /v1/retrieve:
+    post:
+      summary: Hybrid retrieve then mandatory rerank
+      operationId: retrieve
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RetrieveRequest"
+      responses:
+        "200":
+          description: Ranked chunks
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveResponse"
+        "400":
+          description: Bad request
+        "503":
+          description: Index unavailable
+  /v1/context_pack:
+    post:
+      summary: Context pack assembly
+      operationId: contextPack
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContextPackRequest"
+      responses:
+        "200":
+          description: Context pack
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContextPackResponse"
+  /v1/contribute_dry_run:
+    post:
+      summary: Retrieval-first contribution dry-run (REQUIREMENTS §5.8)
+      operationId: contributeDryRun
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContributeDryRunRequest"
+      responses:
+        "200":
+          description: Similar chunks and suggested action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContributeDryRunResponse"
+        "400":
+          description: Missing draft_markdown
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        index_status:
+          type: string
+          enum: [missing, building, ready, stale]
+        index_stale:
+          type: boolean
+          description: True if corpus fingerprint differed from index when health was called (may auto-rebuild)
+        index_stale_now:
+          type: boolean
+          description: True if index still stale after health handler runs
+        sync_status:
+          type: string
+        corpus_fingerprint:
+          type: string
+          description: Fingerprint last indexed (manifest)
+        corpus_fingerprint_current:
+          type: string
+        corpus_fingerprint_indexed:
+          type: string
+          nullable: true
+        local_head:
+          type: string
+          nullable: true
+        upstream_head:
+          type: string
+          nullable: true
+        embedding_model_id:
+          type: string
+        sparse_model_id:
+          type: string
+        reranker_model_id:
+          type: string
+        schema_version:
+          type: string
+        chunk_count:
+          type: integer
+          nullable: true
+        retrieval:
+          type: string
+          description: e.g. hybrid_rrf_dense_bm25
+        error:
+          type: string
+          nullable: true
+        manifest:
+          type: object
+          nullable: true
+          properties:
+            built_at:
+              type: string
+              nullable: true
+            index_dir:
+              type: string
+    RetrieveRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+        candidate_k:
+          type: integer
+          default: 24
+        pack_k:
+          type: integer
+          default: 12
+        domain:
+          type: string
+          nullable: true
+        area:
+          type: string
+          nullable: true
+        include_archived:
+          type: boolean
+          default: false
+          description: If true, include chunks with exclude_from_default_retrieval
+    RetrieveResponse:
+      type: object
+      properties:
+        query:
+          type: string
+        embedding_model_id:
+          type: string
+        sparse_model_id:
+          type: string
+        retrieval:
+          type: string
+        chunks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChunkResult"
+    ContextPackRequest:
+      allOf:
+        - $ref: "#/components/schemas/RetrieveRequest"
+      properties:
+        cap_per_doc:
+          type: integer
+          default: 2
+    ContextPackResponse:
+      type: object
+      properties:
+        query:
+          type: string
+        embedding_model_id:
+          type: string
+        sparse_model_id:
+          type: string
+        chunks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContextChunk"
+    ChunkResult:
+      type: object
+      properties:
+        chunk_id:
+          type: string
+        doc_path:
+          type: string
+        heading_path:
+          type: string
+        text:
+          type: string
+        line_start:
+          type: integer
+        line_end:
+          type: integer
+        retrieval_score:
+          type: number
+          description: Fused RRF score (dense+sparse ranks)
+        rerank_score:
+          type: number
+        dense_score:
+          type: number
+        sparse_score:
+          type: number
+        meta:
+          type: object
+    ContextChunk:
+      allOf:
+        - $ref: "#/components/schemas/ChunkResult"
+      properties:
+        inclusion_reason:
+          type: string
+          enum: [hit, related_doc]
+    ContributeDryRunRequest:
+      type: object
+      required: [draft_markdown]
+      properties:
+        draft_markdown:
+          type: string
+        text:
+          type: string
+          description: Alias for draft_markdown (optional)
+        candidate_k:
+          type: integer
+          default: 24
+        top_k:
+          type: integer
+          default: 8
+        domain:
+          type: string
+          nullable: true
+        area:
+          type: string
+          nullable: true
+    ContributeDryRunResponse:
+      type: object
+      properties:
+        suggested_action:
+          type: string
+          enum: [edit, extend, new_doc]
+        reason:
+          type: string
+        best_rerank_score:
+          type: number
+        similar:
+          type: array
+          items:
+            type: object
+        error:
+          type: string
+          nullable: true

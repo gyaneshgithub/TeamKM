@@ -1,0 +1,3649 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Grounded context infrastructure for engineering teams — git-hosted knowledge and local retrieval.">
+      
+      
+      
+        <link rel="canonical" href="https://gyaneshgithub.github.io/TeamKM/REQUIREMENTS/">
+      
+      
+        <link rel="prev" href="../BRAND/">
+      
+      
+        <link rel="next" href="../ARCHITECTURE/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Requirements - Groundline</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#groundline-requirements" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Groundline" class="md-header__button md-logo" aria-label="Groundline" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Groundline
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Requirements
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/gyaneshgithub/TeamKM" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gyaneshgithub/TeamKM
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../for-engineering/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  By role
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../PORTFOLIO/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../BRAND/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Groundline" class="md-nav__button md-logo" aria-label="Groundline" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Groundline
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/gyaneshgithub/TeamKM" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gyaneshgithub/TeamKM
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    By role
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    By role
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../for-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../for-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../for-product/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../for-quality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quality & QE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTFOLIO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Portfolio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEMO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interview demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LINKEDIN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LinkedIn copy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ADOPTION_OVERVIEW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adopting Groundline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HOW_TO_USE_GROUNDLINE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to use Groundline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LEADERSHIP_PITCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leadership brief
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BRAND/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brand & identifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requirements
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose-and-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose and problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-stakeholders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Stakeholders
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-scope-of-knowledge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Scope of knowledge
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Scope of knowledge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-domains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Domains
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-primary-formats-initial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Primary formats (initial)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-contribution-rhythm-expected-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Contribution rhythm (expected behaviour)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-rag-and-easy-to-maintain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 RAG and “easy to maintain”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-repository-and-governance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Repository and governance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Repository and governance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-git-as-source-of-truth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Git as source of truth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-what-may-be-merged-merge-criteria-draft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 What may be merged (merge criteria — draft)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-branch-protection-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Branch protection (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-conflicting-or-superseded-knowledge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Conflicting or superseded knowledge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-adopting-this-repository-as-a-team-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Adopting this repository as a team template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-multi-team-usage-corpus-growth-and-development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Multi-team usage, corpus growth, and development workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rag-architecture-ingest-index-retrieve-and-optional-generate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. RAG architecture: ingest, index, retrieve, and (optional) generate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. RAG architecture: ingest, index, retrieve, and (optional) generate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-pipeline-required-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Pipeline (required behaviour)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-run-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Run locally
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-index-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Index characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-smart-chunking-retrieval-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Smart chunking (retrieval quality)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-smart-index-construction-retrieval-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Smart index construction (retrieval + maintenance)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-agentic-api-behavioural-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 “Agentic” API (behavioural requirements)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-minimising-hallucination-in-a-rag-first-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Minimising hallucination in a RAG-first system
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#58-agent-assisted-contribution-what-is-new-vs-what-already-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 Agent-assisted contribution: what is new vs what already exists?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.8 Agent-assisted contribution: what is new vs what already exists?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-workflow-for-tools-editor-rules-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required workflow (for tools / editor rules / CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-tooling-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional tooling (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limits-honesty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits (honesty)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#59-local-hosting-and-multi-client-integration-http-mcp-agnostic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 Local hosting and multi-client integration (HTTP, MCP, agnostic)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#510-smart-context-assembly-and-relations-better-agent-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 Smart context assembly and relations (better agent outcomes)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.10 Smart context assembly and relations (better agent outcomes)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5101-relation-sources-built-at-index-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.1 Relation sources (built at index time)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5102-context-pack-assembly-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.2 Context pack assembly (behaviour)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5103-optional-hints-improve-relevance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.3 Optional hints (improve relevance)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5104-why-this-improves-downstream-agent-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.4 Why this improves downstream agent analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#511-advanced-rag-implementation-ladder-beyond-naive-embed-cosine-topk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11 Advanced RAG implementation ladder (beyond naïve embed → cosine top‑k)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.11 Advanced RAG implementation ladder (beyond naïve embed → cosine top‑k)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5111-retrieval-stack-precision-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.1 Retrieval stack (precision + recall)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5112-context-assembly-what-goes-to-the-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.2 Context assembly (what goes to the assistant)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5113-smarter-than-oneshot-retrieve-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.3 Smarter than one‑shot retrieve (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5114-operations-that-improve-quality-over-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.4 Operations that improve quality over time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5115-antipatterns-often-look-advanced-but-hurt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.5 Anti‑patterns (often look “advanced” but hurt)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-coding-assistant-agnosticism-crossagent-coding-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12 Coding-assistant agnosticism (cross–agent coding assistant)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-information-architecture-repository-layout-draft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Information architecture (repository layout — draft)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Information architecture (repository layout — draft)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-front-matter-schema-yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Front matter schema (YAML)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-local-author-profile-optional-editor-skill-not-committed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Local author profile (optional editor skill, not committed)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-non-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Non-functional requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-cicd-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. CI/CD (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-open-decisions-to-fill-in-as-you-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Open decisions (to fill in as you progress)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-product-phases-mvp-and-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Product phases (MVP and later)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-success-metrics-and-adoption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Success metrics and adoption
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-operations-who-builds-the-index-and-where-it-lives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Operations: who builds the index and where it lives
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Operations: who builds the index and where it lives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-automatic-indexing-on-checkout-and-on-coding-assistant-session-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 Automatic indexing on checkout and on coding-assistant session start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-automatic-sync-with-upstream-no-manual-git-pull-for-consumers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 Automatic sync with upstream (no manual git pull for consumers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-success-criteria-first-milestone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Success criteria (first milestone)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Revision history
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MCP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GITHUB_BRANCH_PROTECTION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Branch protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GITHUB_PAGES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing this site
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose-and-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose and problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-stakeholders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Stakeholders
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-scope-of-knowledge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Scope of knowledge
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Scope of knowledge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-domains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Domains
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-primary-formats-initial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Primary formats (initial)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-contribution-rhythm-expected-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Contribution rhythm (expected behaviour)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-rag-and-easy-to-maintain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 RAG and “easy to maintain”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-repository-and-governance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Repository and governance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Repository and governance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-git-as-source-of-truth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Git as source of truth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-what-may-be-merged-merge-criteria-draft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 What may be merged (merge criteria — draft)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-branch-protection-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Branch protection (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-conflicting-or-superseded-knowledge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Conflicting or superseded knowledge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-adopting-this-repository-as-a-team-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Adopting this repository as a team template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-multi-team-usage-corpus-growth-and-development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Multi-team usage, corpus growth, and development workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rag-architecture-ingest-index-retrieve-and-optional-generate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. RAG architecture: ingest, index, retrieve, and (optional) generate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. RAG architecture: ingest, index, retrieve, and (optional) generate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-pipeline-required-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Pipeline (required behaviour)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-run-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Run locally
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-index-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Index characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-smart-chunking-retrieval-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Smart chunking (retrieval quality)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-smart-index-construction-retrieval-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Smart index construction (retrieval + maintenance)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-agentic-api-behavioural-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 “Agentic” API (behavioural requirements)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-minimising-hallucination-in-a-rag-first-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Minimising hallucination in a RAG-first system
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#58-agent-assisted-contribution-what-is-new-vs-what-already-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 Agent-assisted contribution: what is new vs what already exists?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.8 Agent-assisted contribution: what is new vs what already exists?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-workflow-for-tools-editor-rules-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required workflow (for tools / editor rules / CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-tooling-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional tooling (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limits-honesty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits (honesty)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#59-local-hosting-and-multi-client-integration-http-mcp-agnostic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 Local hosting and multi-client integration (HTTP, MCP, agnostic)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#510-smart-context-assembly-and-relations-better-agent-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 Smart context assembly and relations (better agent outcomes)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.10 Smart context assembly and relations (better agent outcomes)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5101-relation-sources-built-at-index-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.1 Relation sources (built at index time)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5102-context-pack-assembly-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.2 Context pack assembly (behaviour)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5103-optional-hints-improve-relevance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.3 Optional hints (improve relevance)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5104-why-this-improves-downstream-agent-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.4 Why this improves downstream agent analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#511-advanced-rag-implementation-ladder-beyond-naive-embed-cosine-topk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11 Advanced RAG implementation ladder (beyond naïve embed → cosine top‑k)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.11 Advanced RAG implementation ladder (beyond naïve embed → cosine top‑k)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5111-retrieval-stack-precision-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.1 Retrieval stack (precision + recall)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5112-context-assembly-what-goes-to-the-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.2 Context assembly (what goes to the assistant)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5113-smarter-than-oneshot-retrieve-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.3 Smarter than one‑shot retrieve (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5114-operations-that-improve-quality-over-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.4 Operations that improve quality over time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5115-antipatterns-often-look-advanced-but-hurt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.5 Anti‑patterns (often look “advanced” but hurt)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-coding-assistant-agnosticism-crossagent-coding-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12 Coding-assistant agnosticism (cross–agent coding assistant)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-information-architecture-repository-layout-draft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Information architecture (repository layout — draft)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Information architecture (repository layout — draft)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-front-matter-schema-yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Front matter schema (YAML)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-local-author-profile-optional-editor-skill-not-committed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Local author profile (optional editor skill, not committed)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-non-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Non-functional requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-cicd-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. CI/CD (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-open-decisions-to-fill-in-as-you-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Open decisions (to fill in as you progress)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-product-phases-mvp-and-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Product phases (MVP and later)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-success-metrics-and-adoption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Success metrics and adoption
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-operations-who-builds-the-index-and-where-it-lives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Operations: who builds the index and where it lives
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Operations: who builds the index and where it lives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-automatic-indexing-on-checkout-and-on-coding-assistant-session-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 Automatic indexing on checkout and on coding-assistant session start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-automatic-sync-with-upstream-no-manual-git-pull-for-consumers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 Automatic sync with upstream (no manual git pull for consumers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-success-criteria-first-milestone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Success criteria (first milestone)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Revision history
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/gyaneshgithub/TeamKM/edit/main/docs/REQUIREMENTS.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="groundline-requirements">Groundline — Requirements<a class="headerlink" href="#groundline-requirements" title="Permanent link">&para;</a></h1>
+<p><strong>Project name:</strong> <strong>Groundline</strong> (repository / product name for this RAG knowledge base).<br />
+<strong>Status:</strong> Draft for review<br />
+<strong>Owner:</strong> GYANESH<br />
+<strong>Last updated:</strong> 2025-11-06</p>
+<p>This document captures the planned behaviour of <strong>Groundline</strong>: a <strong>git-hosted, RAG-based knowledge base</strong> for agent-assisted development. <strong>Retrieval-Augmented Generation (RAG)</strong> is the core pattern: knowledge lives in the repo as normal files; a <strong>local pipeline</strong> chunks, embeds, and indexes them so agents <strong>retrieve</strong> grounded passages before (or instead of) answering. The <strong>retrieval service runs locally</strong> (e.g. <code>localhost</code>); <strong>any agent coding assistant</strong> that can call <strong>HTTP</strong> or <strong>MCP</strong> can integrate—<strong>assistant-agnostic by design</strong> (§5.12). <strong>Cursor</strong>, <strong>Claude</strong>, <strong>Windsurf</strong>, <strong>GitHub Copilot</strong>, or a <strong>shell script</strong> are <strong>examples</strong>, not hard dependencies. Revise sections as the team agrees.</p>
+<p><strong>Core product idea:</strong> <strong>Knowledge compounds.</strong> Every merged contribution adds to a shared corpus. Over weeks and months the index reflects <strong>technical, delivery, testing, and product</strong> learning—so <strong>developers</strong>, <strong>QE</strong>, <strong>PMs</strong>, and the <strong>dev manager</strong> can pull <strong>the same grounded context</strong> when improving <strong>products and features</strong> they own (new builds, refactors, quality hardening, roadmap decisions), instead of re-deriving it from memory or chat.</p>
+<p><strong>What this product is for (any team):</strong> <strong>Maintain</strong> durable, reviewable knowledge in git; <strong>share</strong> it across roles via a single corpus; <strong>reuse</strong> prior decisions, analysis, and testing lore instead of rediscovering them; <strong>support analysis</strong> (human and agent) with retrieval that <strong>grounds</strong> answers in cited chunks rather than model recall alone. This repository is intended as a <strong>reusable template</strong>: a team <strong>clones</strong> it (or uses it as a <strong>GitHub template</strong> / fork), creates <strong>their own remote</strong> where they <strong>push</strong> markdown under <code>knowledge/</code> and evolve <strong>meta/</strong>, skills, and tooling to match policy—see §4.5.</p>
+<p><strong>See also:</strong> <a href="../ARCHITECTURE/">ARCHITECTURE.md</a> (systems view, data flows) — <a href="../LEADERSHIP_PITCH/">LEADERSHIP_PITCH.md</a> (executive brief: value, outcomes, adoption) — <a href="../TESTING/">TESTING.md</a> (tests and corruption guardrails).</p>
+<hr />
+<h2 id="1-purpose-and-problem">1. Purpose and problem<a class="headerlink" href="#1-purpose-and-problem" title="Permanent link">&para;</a></h2>
+<p>Teams doing agentic development produce many markdown (and related) documents: decisions, runbooks, API notes, domain language, and experiment logs. That knowledge is fragmented and hard to reuse as <strong>trusted context</strong> for tools like Cursor or Claude.</p>
+<p><strong>Goal:</strong> A single <strong>version-controlled</strong> project that is <strong>easy to maintain and extend</strong>: contributors <strong>commit</strong> markdown (and similar) like any other repo work; after merge, they (or CI) <strong>rebuild the RAG index</strong> with simple commands. The system stays <strong>accurate</strong> by tying assistant outputs to <strong>retrieved chunks with citations</strong>, not to model recall alone.</p>
+<p><strong>Cumulative value:</strong> Each PR adds or updates durable notes; the <strong>RAG index is rebuilt from the full corpus</strong> at a given commit. The <strong>whole history of contributions</strong> is what makes retrieval better over time—coverage of edge cases, test lore, product intent, and operational reality <strong>deepens</strong> as the team commits.</p>
+<hr />
+<h2 id="2-stakeholders">2. Stakeholders<a class="headerlink" href="#2-stakeholders" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Count</th>
+<th>Responsibility (high level)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Developers</td>
+<td>8</td>
+<td>Commit <strong>completed work and analysis</strong> tied to delivery (implementation notes, trade-offs, integration points, follow-ups); review peers’ PRs; <strong>use retrieval</strong> when building or maintaining features</td>
+</tr>
+<tr>
+<td>QE</td>
+<td>1</td>
+<td>Commit <strong>testing knowledge</strong>: test plans, charters, regression notes, defect patterns, environment/setup gotchas, quality risks; <strong>use retrieval</strong> for regression and quality planning</td>
+</tr>
+<tr>
+<td>Dev Manager</td>
+<td>1</td>
+<td>Governance, access, escalation; <strong>use retrieval</strong> for cross-team alignment and risk on areas the team supports</td>
+</tr>
+<tr>
+<td>Product Manager</td>
+<td>1</td>
+<td>Author/approve functional product knowledge; align functional docs with product themes; <strong>use retrieval</strong> to ground feature specs and decisions in prior engineering and QE context</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-scope-of-knowledge">3. Scope of knowledge<a class="headerlink" href="#3-scope-of-knowledge" title="Permanent link">&para;</a></h2>
+<h3 id="31-domains">3.1 Domains<a class="headerlink" href="#31-domains" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Technical:</strong> Architecture, ADRs, conventions, libraries, deployment, debugging notes, integration contracts, performance, security considerations.</li>
+<li><strong>Delivery / engineering narrative:</strong> Summaries of <strong>work completed</strong>, <strong>analysis</strong>, and <strong>discussion outcomes</strong> from the team’s delivery work (feature, fix, spike, etc.). <strong>Curated</strong> only—no dump of raw chat or external ticket threads. <strong>External work trackers are out of scope for this repo:</strong> do not store keys, links, or exports from tools such as JIRA; capture only what belongs in this knowledge base as standalone prose.</li>
+<li><strong>Functional / product:</strong> Features, user journeys, glossary, business rules, acceptance criteria summaries (not a full backlog replacement).</li>
+<li><strong>Testing / quality (QE-owned primary author):</strong> Test strategy excerpts, coverage notes, automation hooks, known flakiness, sign-off context suitable for reuse by dev and PM readers.</li>
+</ul>
+<h3 id="32-primary-formats-initial">3.2 Primary formats (initial)<a class="headerlink" href="#32-primary-formats-initial" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Markdown (<code>.md</code>) as the default interchange.</li>
+<li>Optional later: diagrams (Mermaid in-repo), structured YAML/JSON for machine-readable facts.</li>
+</ul>
+<h3 id="33-contribution-rhythm-expected-behaviour">3.3 Contribution rhythm (expected behaviour)<a class="headerlink" href="#33-contribution-rhythm-expected-behaviour" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Developers</strong> add or update knowledge when a unit of work reaches a sensible checkpoint (e.g. <strong>done</strong>, or end of a spike): what shipped, what was decided, what to watch in maintenance.</li>
+<li><strong>QE</strong> adds or updates knowledge when test phases complete or when durable testing assets deserve a <strong>canonical home</strong> in the repo (still merged via PR).</li>
+<li>Over time, <strong>cumulative commits</strong> improve the local index: newcomers and agents query <strong>prior episodes</strong> for the same subsystem, feature area, or defect class.</li>
+<li><strong>Cross-role context:</strong> The same retrieval interface supports <strong>dev</strong> (how we built it), <strong>QE</strong> (how we broke it / verified it), <strong>PM</strong> (what we intended for the product), <strong>DM</strong> (themes and risks)—so feature and maintenance work stays aligned with <strong>recorded</strong> intent and reality.</li>
+</ul>
+<p><strong>Out of scope (v1):</strong> Storing secrets, credentials, or PII. Those must never be committed. <strong>Work-tracker payloads</strong> (e.g. ticket keys, ticket URLs, or copy-pasted threads from JIRA or similar systems) are <strong>not</strong> part of this knowledge base—keep that tooling outside the repo; here we keep <strong>self-contained</strong> knowledge only. If the team later needs traceability, decide a <strong>separate policy</strong> (e.g. opaque internal refs); do not block MVP on it.</p>
+<h3 id="34-rag-and-easy-to-maintain">3.4 RAG and “easy to maintain”<a class="headerlink" href="#34-rag-and-easy-to-maintain" title="Permanent link">&para;</a></h3>
+<p>Maintenance should feel like <strong>ordinary documentation practice</strong>, not a separate product:</p>
+<ul>
+<li><strong>Source of truth = files in git.</strong> No proprietary silo; diff, review, and history are standard.</li>
+<li><strong>Contributing = add or edit markdown under <code>knowledge/</code></strong>, open a PR, get approval, merge.</li>
+<li><strong>Indexing = automated or one command</strong> after pull/merge (e.g. “rebuild RAG index”), with incremental rebuild where possible so daily work stays fast.</li>
+<li><strong>Chunking and embeddings</strong> are implementation details documented in <code>meta/</code> so the team can tune them without rewriting prose.</li>
+</ul>
+<hr />
+<h2 id="4-repository-and-governance">4. Repository and governance<a class="headerlink" href="#4-repository-and-governance" title="Permanent link">&para;</a></h2>
+<h3 id="41-git-as-source-of-truth">4.1 Git as source of truth<a class="headerlink" href="#41-git-as-source-of-truth" title="Permanent link">&para;</a></h3>
+<ul>
+<li>All knowledge lives in a dedicated git repository (monorepo for knowledge only, or a clearly named subtree if nested).</li>
+<li><strong>No direct pushes to the default branch</strong> (e.g. <code>main</code>): changes land only via <strong>Pull Request (PR)</strong>.</li>
+<li>PRs are the approval gate: at least one reviewer (policy TBD: e.g. one peer + optional domain owner).</li>
+</ul>
+<h3 id="42-what-may-be-merged-merge-criteria-draft">4.2 What may be merged (merge criteria — draft)<a class="headerlink" href="#42-what-may-be-merged-merge-criteria-draft" title="Permanent link">&para;</a></h3>
+<p>Reviewers check that contributions:</p>
+<ol>
+<li><strong>Belong</strong> in the knowledge base (not transient chat dumps without curation).</li>
+<li><strong>Are accurate</strong> and, where possible, <strong>cite</strong> sources (doc link, code path, commit date, or other references that live <strong>inside</strong> this repo or your public/private docs—<strong>not</strong> external ticket IDs unless the team explicitly allows a separate policy later).</li>
+<li><strong>Follow</strong> the repository layout and naming (see §6).</li>
+<li><strong>Avoid</strong> secrets, unreleasable data, and speculative statements presented as fact (mark uncertainty explicitly, e.g. “Open question: …”).</li>
+<li><strong>Include</strong> front matter per <strong>§6.1</strong> (validated in CI).</li>
+<li><strong>Distinguish roles:</strong> developer commits should read as <strong>engineering/delivery</strong> knowledge; QE commits as <strong>testing/quality</strong> knowledge—cross-link when the same feature or area spans both.</li>
+</ol>
+<h3 id="43-branch-protection-recommended">4.3 Branch protection (recommended)<a class="headerlink" href="#43-branch-protection-recommended" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Require PR reviews before merge.</li>
+<li>Optional: required status checks (e.g. lint, link check, index build in CI).</li>
+<li>Optional: CODEOWNERS by area (e.g. <code>functional/</code> → PM + delegate).</li>
+</ul>
+<h3 id="44-conflicting-or-superseded-knowledge">4.4 Conflicting or superseded knowledge<a class="headerlink" href="#44-conflicting-or-superseded-knowledge" title="Permanent link">&para;</a></h3>
+<p>When retrieval surfaces <strong>two passages that disagree</strong> for the <strong>same scope</strong> (product version, environment, or “current default”):</p>
+<ol>
+<li><strong>Do not</strong> silently merge contradictory facts in prose; reviewers resolve in a follow-up PR.</li>
+<li><strong>Historical knowledge must remain valid</strong> where it still applies (older stacks, older product lines). Prefer <strong><code>status: legacy_reviewed</code></strong> plus <strong><code>applies_to</code></strong> / <strong><code>doc_version</code></strong> (see §6.1) so agents and humans retrieve <strong>version-scoped</strong> truth instead of deleting old notes.</li>
+<li>Reserve <strong><code>status: deprecated</code></strong> <strong>only</strong> for <strong>canonical replacement</strong> when two answers cannot both be true for the <strong>same context</strong>; require at least one of <strong><code>supersedes</code></strong>, <strong><code>superseded_by</code></strong> so the graph is explicit. Deprecation <strong>does not</strong> mean “old”; it means <strong>replaced default</strong> for a named scope.</li>
+<li>Optional: use <strong><code>see_also</code></strong> / <strong><code>related</code></strong> for complementary (non-conflicting) views.</li>
+</ol>
+<h3 id="45-adopting-this-repository-as-a-team-template">4.5 Adopting this repository as a team template<a class="headerlink" href="#45-adopting-this-repository-as-a-team-template" title="Permanent link">&para;</a></h3>
+<p>Any team may use this project as a <strong>starting layout and requirements spec</strong> for their own knowledge base:</p>
+<ol>
+<li><strong>Clone</strong> (or <strong>use “Use this template”</strong> on the host, or <strong>fork</strong>) into a workspace you control.</li>
+<li><strong>Create a new empty repository</strong> on your git host (your org’s naming, visibility, and branch rules).</li>
+<li>Point <strong><code>origin</code></strong> at that new repo and <strong>push</strong> your initial branch (e.g. <code>main</code>), or add it as <strong><code>origin</code></strong> and push after replacing remotes—whichever matches your host’s workflow.</li>
+<li><strong>Customize</strong> for your team: <code>knowledge/</code> structure, §6 front matter, <code>meta/</code> (golden queries, policies), CI, and optional Cursor skills under <strong><code>.cursor/skills/</code></strong>—the <strong>contract</strong> stays <strong>git + markdown + PR merges + local RAG</strong> (§5, §12).</li>
+</ol>
+<p>Teams <strong>do not</strong> need to stay tied to an upstream “template” repo unless they want occasional merges from it; most adopters will treat their copy as <strong>the</strong> source of truth.</p>
+<h3 id="46-multi-team-usage-corpus-growth-and-development-workflow">4.6 Multi-team usage, corpus growth, and development workflow<a class="headerlink" href="#46-multi-team-usage-corpus-growth-and-development-workflow" title="Permanent link">&para;</a></h3>
+<p><strong>Multi-team / LoB model:</strong> The reusable <strong>engine</strong> (this repository’s tooling and conventions) is <strong>not</strong> the same as any one team’s <strong>corpus</strong>. Each team or LoB SHOULD maintain <strong>its own clone</strong> of the template with <strong>its own remote</strong>, so knowledge volume and governance stay <strong>owned</strong>—see §4.5. <strong>Cross-team read access</strong> is via <strong>HTTP/MCP</strong> or git dependencies, not by pushing unrelated prose into one shared knowledge tree without owners.</p>
+<p><strong>Branching (industry-accepted default):</strong> <strong><code>main</code> is the integration line</strong> (CI-green). Contributors use <strong>short-lived <code>feature/&lt;slug&gt;</code> branches</strong>, open <strong>Pull Requests</strong>, pass <strong>required checks</strong>, then merge to <code>main</code>. <strong>Stable releases</strong> of the engine are <strong>tagged</strong> (e.g. <code>v0.5.0</code>); adopters MAY pin those tags. Long-lived parallel <code>stable</code> branches are <strong>discouraged</strong> unless the team documents release trains (e.g. <code>release/0.5</code> patch lines).</p>
+<p><strong>Maintenance mechanics (normative for this repo):</strong></p>
+<ol>
+<li><strong>CONTRIBUTING.md</strong> documents merge criteria, naming, and merge-vs-new guidance.</li>
+<li>Optional <strong>CODEOWNERS</strong> enforces review for paths such as <code>knowledge/functional/**</code>.</li>
+<li><strong>CI</strong> runs front matter validation, tests, golden queries, and optional index dry-run as configured.</li>
+<li><strong>Auto-promote on <code>main</code>:</strong> When a PR merges to <code>main</code>, a GitHub Action may update touched <code>knowledge/**/*.md</code> files that still have <strong><code>status: draft</code></strong> to <strong><code>status: reviewed</code></strong> and set <strong><code>last_reviewed</code></strong> to the merge day (UTC). Authors can leave <strong><code>draft</code></strong> at PR time; <strong>human review stays on the PR</strong>; the promotion step is mechanical and does <strong>not</strong> replace review. Set another <code>status</code> (e.g. <code>legacy_reviewed</code>, <code>deprecated</code>) before merge if the doc should not be promoted this way.</li>
+<li><strong><code>ki contribute</code> (dry-run)</strong> implements <strong>retrieval-first</strong> duplicate detection (§5.8): contributors run it before opening a PR or call <strong><code>POST /v1/contribute_dry_run</code></strong> with draft markdown.</li>
+<li><strong>Archive / low-priority docs:</strong> authors MAY set <strong><code>exclude_from_default_retrieval: true</code></strong> on low-value or historical overflow so default retrieval stays tight; callers MAY pass <strong><code>include_archived: true</code></strong> on <code>/v1/retrieve</code> and <code>/v1/context_pack</code> to include them.</li>
+<li><strong>Opt-in git hook:</strong> <code>scripts/git-hooks/pre-commit-validate-knowledge.sh</code> may be installed via <code>scripts/install-git-hooks.sh</code> to validate staged <code>knowledge/**/*.md</code> locally.</li>
+</ol>
+<hr />
+<h2 id="5-rag-architecture-ingest-index-retrieve-and-optional-generate">5. RAG architecture: ingest, index, retrieve, and (optional) generate<a class="headerlink" href="#5-rag-architecture-ingest-index-retrieve-and-optional-generate" title="Permanent link">&para;</a></h2>
+<p>The <strong>whole project</strong> is organised around a <strong>RAG pipeline</strong> running <strong>locally</strong> (or in CI for validation). Authoring stays <strong>file-based and git-friendly</strong>; the RAG layer is the runtime that makes that content agent-ready.</p>
+<h3 id="51-pipeline-required-behaviour">5.1 Pipeline (required behaviour)<a class="headerlink" href="#51-pipeline-required-behaviour" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Ingest:</strong> Scan configured paths (e.g. <code>knowledge/**/*.md</code>).</li>
+<li><strong>Normalize:</strong> Parse front matter; strip or preserve structure consistently.</li>
+<li><strong>Chunk:</strong> Split into retrieval units (by heading, size, or hybrid rules), each with stable ids.</li>
+<li><strong>Embed:</strong> Vector embeddings per chunk (model configurable; see open decisions).</li>
+<li><strong>Store:</strong> <strong>Vector store</strong> plus optional <strong>sparse / full-text</strong> index for hybrid retrieval (recommended for exact terms and code-like tokens).</li>
+<li><strong>Serve:</strong> Local <strong>API and/or CLI</strong>: retrieve top‑<strong>N</strong> candidates (hybrid when configured), <strong>mandatorily rerank</strong> (§5.5), then assemble <strong>context packs</strong> for agents.</li>
+</ol>
+<p>On <strong>git pull</strong> or <strong>post-merge</strong>, contributors should be able to <strong>refresh the index</strong> in one step (or watch mode in dev).</p>
+<h3 id="52-run-locally">5.2 Run locally<a class="headerlink" href="#52-run-locally" title="Permanent link">&para;</a></h3>
+<p>After clone, a <strong>local tool</strong> (CLI and/or API):</p>
+<ol>
+<li>Builds or updates the RAG index from the working tree (or pinned commit).</li>
+<li>Exposes retrieval: semantic search, hybrid search, <strong>context bundle</strong> export, health (commit, embedding model id, index schema version).</li>
+</ol>
+<h3 id="53-index-characteristics">5.3 Index characteristics<a class="headerlink" href="#53-index-characteristics" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reproducible:</strong> Same commit SHA + same chunking/embedding config → same index (or explicitly versioned deltas).</li>
+<li><strong>Performant:</strong> Incremental rebuild when files change; suitable for frequent use during development.</li>
+<li><strong>Portable:</strong> Runs on macOS/Linux (Windows optional); <strong>no mandatory cloud</strong> for daily dev (local embeddings preferred if policy requires air‑gap).</li>
+</ul>
+<h3 id="54-smart-chunking-retrieval-quality">5.4 Smart chunking (retrieval quality)<a class="headerlink" href="#54-smart-chunking-retrieval-quality" title="Permanent link">&para;</a></h3>
+<p>“Smart” RAG here means <strong>chunks that match how people query and how prose is structured</strong>—not arbitrary fixed windows. Requirements and recommendations:</p>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Boundaries</strong></td>
+<td><strong>Structure-aware splitting:</strong> walk the Markdown AST; primary boundaries are <strong>headings</strong> (<code>##</code>, <code>###</code>). A section under one heading is usually one conceptual unit.</td>
+</tr>
+<tr>
+<td><strong>Oversized sections</strong></td>
+<td>If a heading block exceeds a <strong>max token length</strong>, sub-split by <strong>paragraph</strong> or <strong>list item</strong>, keeping <strong>overlap only on sub-splits</strong> so boundary sentences stay discoverable. <strong>Default overlap (tune in <code>meta/</code>):</strong> ~<strong>64–128</strong> tokens when max chunk ≈ <strong>512</strong> tokens (~12–25%); ~<strong>32–64</strong> tokens when max ≈ <strong>256</strong>; if chunking by <strong>character</strong> length, ~<strong>10–15%</strong> overlap of the window. <strong>Heading-only chunks</strong> (whole section under one heading, under max size): <strong>0</strong> overlap between sections.</td>
+</tr>
+<tr>
+<td><strong>Undersized sections</strong></td>
+<td>Merge <strong>tiny</strong> adjacent siblings (e.g. single-line <code>####</code>) up to a <strong>min</strong> size so the vector is not noise-dominated—unless they are <strong>glossary</strong> entries (keep one entry per chunk).</td>
+</tr>
+<tr>
+<td><strong>Code and tables</strong></td>
+<td><strong>Code blocks</strong> and <strong>tables</strong> are often quoted verbatim in questions: either attach them as <strong>separate chunks</strong> with <code>type: code \| table</code> metadata, or keep them inside the parent section chunk but ensure the <strong>surrounding heading</strong> is in the same chunk for context.</td>
+</tr>
+<tr>
+<td><strong>Front matter</strong></td>
+<td>Strip from body chunks but store as <strong>document-level metadata</strong> replicated on every chunk from that file (filtering, faceting: <code>area</code>, <code>domain</code>, <code>tags</code>).</td>
+</tr>
+<tr>
+<td><strong>Stable identities</strong></td>
+<td>Each chunk has a deterministic <strong>chunk id</strong> (e.g. hash of <code>file_path + heading_path + chunk_index</code>) so incremental reindex can <strong>replace</strong> embeddings for changed chunks only.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Advanced patterns (optional, improves precision/recall):</strong></p>
+<ul>
+<li><strong>Hierarchical / parent–child:</strong> Embed <strong>small child chunks</strong> for precise retrieval; at query time <strong>expand</strong> with the <strong>parent section</strong> (or preceding heading) for context in the context pack—without inflating the whole document.</li>
+<li><strong>Hypothetical questions (HyDE) or title expansion:</strong> Optional second-stage; only if validated—<strong>not</strong> required for v1.</li>
+</ul>
+<p><strong>Anti-patterns to avoid:</strong> splitting mid-sentence arbitrarily; huge chunks that dilute the embedding; tiny chunks with no semantic mass (unless glossary).</p>
+<h3 id="55-smart-index-construction-retrieval-maintenance">5.5 Smart index construction (retrieval + maintenance)<a class="headerlink" href="#55-smart-index-construction-retrieval-maintenance" title="Permanent link">&para;</a></h3>
+<p>The index is “smart” when <strong>recall</strong> (find the right passage) and <strong>precision</strong> (little junk) are both high, and when <strong>updates</strong> are cheap.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dense vectors</strong></td>
+<td>Semantic similarity: “how do we handle timeouts in service X?” matches prose that never uses the exact phrase.</td>
+</tr>
+<tr>
+<td><strong>Sparse / full-text (BM25 or equivalent)</strong></td>
+<td>Exact and rare tokens: <strong>API names, error codes, file paths, CLI flags, env vars</strong>. <strong>Hybrid retrieval</strong> (merge dense + sparse scores, e.g. RRF or weighted sum) is <strong>recommended</strong> for a technical KB.</td>
+</tr>
+<tr>
+<td><strong>Metadata filters</strong></td>
+<td>Narrow by <code>domain</code>, <code>area</code>, <code>type</code> from front matter before or after vector search to avoid cross-domain collisions.</td>
+</tr>
+<tr>
+<td><strong>Reranking (mandatory)</strong></td>
+<td>After first-stage retrieval, <strong>always</strong> run a <strong>cross-encoder</strong> or <strong>lightweight local reranker</strong> on the candidate set (e.g. retrieve <strong>20–40</strong> → rerank → take top <strong>8–12</strong> for context pack assembly). This stage is <strong>required</strong> so <strong>downstream coding assistants</strong> get <strong>optimal chunk order</strong> for analysis—not only embedding similarity. <strong>Run locally</strong> (no mandatory cloud call); if policy blocks certain models, ship an <strong>approved</strong> small reranker documented in <code>meta/</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mandatory reranking (normative):</strong></p>
+<ul>
+<li>Default pipeline: <strong>retrieve</strong> <code>candidate_k</code> (config default e.g. <strong>24</strong>) → <strong>rerank</strong> with query–passage scoring → <strong><code>context_pack_k</code></strong> (e.g. <strong>8</strong>) before §5.10 diversification rules.</li>
+<li>Persist <strong>reranker model id + version</strong> next to embedding model in the index manifest for reproducibility.</li>
+<li><strong>API:</strong> responses include <strong><code>rerank_score</code></strong> (or final rank position) per chunk where applicable; <strong><code>health</code></strong> may expose reranker id.</li>
+</ul>
+<p><strong>Operational requirements:</strong></p>
+<ul>
+<li><strong>Versioning:</strong> Persist <strong>embedding model name + version</strong>, <strong>chunking config hash</strong>, and <strong>index schema version</strong> with each build so behaviour is <strong>reproducible</strong> and debuggable.</li>
+<li><strong>Incremental rebuild:</strong> On change, only <strong>re-chunk and re-embed</strong> files that differ (content hash per file); unchanged files skip embedding work.</li>
+<li><strong>Evaluation (lightweight):</strong> Maintain a small <strong>golden query set</strong> in <code>meta/</code> (10–30 real questions + expected file paths or heading titles). On index or chunking changes, report <strong>hit rate @k</strong> in CI or a manual script—stops regressions from “tuning” blindly.</li>
+</ul>
+<h3 id="56-agentic-api-behavioural-requirements">5.6 “Agentic” API (behavioural requirements)<a class="headerlink" href="#56-agentic-api-behavioural-requirements" title="Permanent link">&para;</a></h3>
+<p>The API should be <strong>easy for agents and scripts</strong> to use:</p>
+<ul>
+<li>Clear operations: <strong>retrieve</strong> (query → ranked chunks), <strong>get chunk by id</strong>, <strong>context pack</strong> (query + max tokens + min score + optional <strong>assembly profile</strong>—see §5.10), <strong>neighbours</strong> (optional graph from <code>related:</code> links), <strong>health</strong> (index status, corpus fingerprint—§12.1).</li>
+<li><strong>Structured responses</strong> (JSON): chunk text, <strong>file path</strong>, <strong>line range</strong> (or offsets), <strong>retrieval score</strong>, <strong>rerank score</strong> (after §5.5 mandatory rerank), embedding / reranker / index version ids; context packs include <strong>why included</strong> (e.g. <code>hit</code>, <code>related</code>, <code>same_area</code>, <code>parent_section</code>) per §5.10.</li>
+<li><strong>Metadata:</strong> repo commit, index build id, schema version; <strong>health</strong> returns <strong><code>index_status</code></strong> (<code>missing</code> | <code>building</code> | <code>ready</code> | <code>stale</code>) and <strong><code>sync_status</code></strong> (e.g. <code>ok</code> | <code>blocked_dirty_tree</code> | <code>blocked_diverged</code> | <code>syncing</code>) per §12.1–§12.2.</li>
+<li>Optional: <strong>streaming</strong> assistant answers <strong>only</strong> when every factual claim can be tied to retrieved chunk ids (see §5.7).</li>
+</ul>
+<h3 id="57-minimising-hallucination-in-a-rag-first-system">5.7 Minimising hallucination in a RAG-first system<a class="headerlink" href="#57-minimising-hallucination-in-a-rag-first-system" title="Permanent link">&para;</a></h3>
+<p>RAG does <strong>not</strong> guarantee truth; it guarantees <strong>grounded retrieval</strong>. Requirements:</p>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Grounding</td>
+<td>Default path for agents: <strong>retrieved chunks + citations</strong> (path + lines).</td>
+</tr>
+<tr>
+<td>Generation</td>
+<td>If the tool <strong>generates</strong> prose (summaries, answers), output must include <strong>chunk citations</strong> for claims grounded in the corpus; unsupported claims must be absent or explicitly marked as <strong>not in knowledge base</strong>.</td>
+</tr>
+<tr>
+<td>Staleness</td>
+<td>Each chunk carries <strong>source commit / mtime</strong> so UIs can warn when context predates a change.</td>
+</tr>
+<tr>
+<td>Gaps</td>
+<td>Return <strong>empty or low-confidence</strong> results clearly; no filler from model memory.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Release alignment:</strong> See <strong>§10 Product phases</strong>. <strong>MVP</strong> ships <strong>ingest → chunk → embed → retrieve → mandatory rerank</strong> with <strong>mandatory citations</strong> on any synthesized answer path; <strong>retrieval-only</strong> endpoints remain the safest default for strict audits. <strong>Later</strong> phases add hybrid retrieval hardening, contribution tooling, PR bots—see §10.</p>
+<h3 id="58-agent-assisted-contribution-what-is-new-vs-what-already-exists">5.8 Agent-assisted contribution: what is new vs what already exists?<a class="headerlink" href="#58-agent-assisted-contribution-what-is-new-vs-what-already-exists" title="Permanent link">&para;</a></h3>
+<p>Coding assistants are <strong>not</strong> reliable if they guess from memory. <strong>Duplicate or contradictory</strong> docs hurt trust. Contribution flows must therefore be <strong>retrieval-first</strong> and <strong>review-backed</strong>.</p>
+<p><strong>Principle:</strong> “Figure out what to contribute” means <strong>compare the draft against the indexed corpus</strong> using the <strong>same RAG retrieval</strong> the team uses for reading—not an unstructured chat guess.</p>
+<h4 id="required-workflow-for-tools-editor-rules-cli">Required workflow (for tools / editor rules / CLI)<a class="headerlink" href="#required-workflow-for-tools-editor-rules-cli" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Index is current.</strong> Before a contribution, the developer runs (or the tool runs) an <strong>index refresh</strong> on the latest <code>main</code> merge base so retrieval targets current knowledge.</li>
+<li><strong>Retrieve first.</strong> From the developer’s draft (full text or a structured outline: topic, area, summary bullets), the agent <strong>queries the RAG API</strong> with <strong>hybrid search</strong> (semantic + keywords for APIs, paths, error codes).</li>
+<li><strong>Present evidence.</strong> The agent shows the <strong>top‑k similar chunks</strong> with <strong>paths, line ranges, and similarity scores</strong>—never a paraphrase without citations.</li>
+<li><strong>Classify the gap (deterministic guidance).</strong> Using retrieval scores and optional rules:</li>
+<li><strong>Near-duplicate</strong> (very high overlap with one doc): recommend <strong>editing that file</strong> (new section or revision) instead of adding a second file.</li>
+<li><strong>Extension</strong> (related doc exists but draft adds facts): recommend <strong>patch to existing</strong> doc + update front matter (<code>last-reviewed</code>, <code>related</code>).</li>
+<li><strong>New doc</strong> (low overlap or new <code>area</code>): recommend a <strong>new path</strong> under <code>knowledge/</code> per §6.</li>
+<li><strong>Human decides.</strong> The developer (or PR reviewers) <strong>confirms</strong> merge vs new file. The agent proposes a diff; <strong>PR review</strong> remains the quality gate—not model autonomy.</li>
+</ol>
+<h4 id="optional-tooling-recommended">Optional tooling (recommended)<a class="headerlink" href="#optional-tooling-recommended" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Contribution endpoint or script</strong> (e.g. <code>contribute --dry-run</code>): accepts draft markdown, returns ranked similar chunks + suggested action (<code>edit</code> | <code>merge</code> | <code>new</code>) + suggested paths. Actions are <strong>recommendations</strong>; scores are <strong>transparent</strong>.</li>
+<li><strong>PR automation:</strong> For changed files, run retrieval against the <strong>rest of the repo</strong> and post a comment listing <strong>possibly related</strong> docs (similarity above a threshold) to help reviewers spot duplication.</li>
+</ul>
+<h4 id="limits-honesty">Limits (honesty)<a class="headerlink" href="#limits-honesty" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Similarity is statistical</td>
+<td>Borderline cases need <strong>human</strong> judgment; tune thresholds in <code>meta/</code> and revisit.</td>
+</tr>
+<tr>
+<td>Corpus gaps</td>
+<td>If retrieval returns nothing, “new doc” may still overlap <strong>unindexed</strong> text—full-text grep / list by <code>area</code> in front matter still helps.</td>
+</tr>
+<tr>
+<td>Contradictions</td>
+<td>Retrieval surfaces conflicts; <strong>reviewers</strong> resolve per §4.4.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Success:</strong> The agent is “smart” because it <strong>always grounds</strong> the contribute decision in <strong>retrieved chunks</strong>, not because it infers from prior chat.</p>
+<h3 id="59-local-hosting-and-multi-client-integration-http-mcp-agnostic">5.9 Local hosting and multi-client integration (HTTP, MCP, agnostic)<a class="headerlink" href="#59-local-hosting-and-multi-client-integration-http-mcp-agnostic" title="Permanent link">&para;</a></h3>
+<p>The knowledge base is <strong>locally hosted</strong> by default: a small <strong>HTTP API</strong> (and/or CLI) runs on the contributor’s machine next to the repo and index, <strong>not</strong> as a mandatory cloud service. Integration is <strong>assistant-agnostic</strong> (§5.12).</p>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Binding</strong></td>
+<td>Default bind <strong><code>127.0.0.1</code></strong> (or <code>localhost</code>) on a <strong>documented port</strong>; optional config for LAN-only bind if the team explicitly allows it (document security implications).</td>
+</tr>
+<tr>
+<td><strong>Client workflow</strong></td>
+<td><strong>Any</strong> coding assistant that can invoke <strong>HTTP</strong> or <strong>MCP</strong> <strong>calls the API</strong> (or MCP tools) in a <strong>retrieve-first</strong> step: <em>query → ranked chunks / context pack</em> → then <strong>analysis, planning, or code changes</strong> use that grounded context with <strong>citations</strong>. Examples: Cursor, Claude Code, Copilot—<strong>not</strong> a closed list. <strong>Agentic workflows:</strong> the <strong>LLM/planning loop</strong> runs in the client; Groundline provides <strong>tools</strong> (<code>teamkm_*</code> over HTTP) or direct REST.</td>
+</tr>
+<tr>
+<td><strong>Transport</strong></td>
+<td><strong>REST + JSON</strong> as the canonical contract (versioned paths or <code>Accept-Version</code>); stable enough for scripts and IDE integrations. <strong>Discovery:</strong> with <code>ki serve</code>, <strong><code>GET /openapi.yaml</code></strong> (source file) and <strong><code>GET /openapi.json</code></strong> (same spec as JSON).</td>
+</tr>
+<tr>
+<td><strong>Authentication (local)</strong></td>
+<td>MVP: <strong>no auth</strong> on loopback, or optional shared secret in config if bind is non-loopback—document in <code>meta/</code>.</td>
+</tr>
+<tr>
+<td><strong>Multiple MCP servers</strong></td>
+<td>The system SHOULD expose the same retrieval operations via an <strong>MCP server</strong> process so clients that speak MCP (e.g. Cursor with <strong>multiple MCPs</strong> enabled) can add <strong>this</strong> knowledge MCP <strong>alongside</strong> other MCPs (browser, git-host, ticketing, etc.). <strong>No requirement</strong> that this MCP is exclusive—teams run <strong>several MCP servers</strong> concurrently. <strong>Reference implementation:</strong> <code>pip install -e ".[mcp]"</code> then <code>python3 -m ki mcp</code> (stdio); tools <strong><code>teamkm_health</code></strong>, <strong><code>teamkm_retrieve</code></strong>, <strong><code>teamkm_context_pack</code></strong>, <strong><code>teamkm_contribute_dry_run</code></strong>, prompt <strong><code>teamkm_retrieve_first</code></strong> — each tool <strong>HTTP-calls</strong> the local API (<code>TEAMKM_API_BASE</code> or <code>KI_HOST</code>+<code>KI_PORT</code>).</td>
+</tr>
+<tr>
+<td><strong>Coexistence</strong></td>
+<td>Namespace MCP tool names with a <strong>project prefix</strong> (e.g. <strong><code>teamkm_*</code></strong>) to avoid collisions with tools from other MCPs on the same host.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Implementation note:</strong> <strong>MCP is a thin adapter over the HTTP API</strong> (not a second index path): start <strong><code>ki serve</code></strong>, run <strong><code>ki mcp</code></strong> as the host’s MCP subprocess; behaviour must stay <strong>consistent</strong> between transports (same query → same ranked chunks for a given index version).</p>
+<h3 id="510-smart-context-assembly-and-relations-better-agent-outcomes">5.10 Smart context assembly and relations (better agent outcomes)<a class="headerlink" href="#510-smart-context-assembly-and-relations-better-agent-outcomes" title="Permanent link">&para;</a></h3>
+<p>Raw “top‑k similar chunks” often <strong>under-serve</strong> agents: they may be <strong>redundant</strong>, <strong>miss linked docs</strong>, or <strong>omit</strong> the complementary view (e.g. <strong>QE</strong> testing notes when the query sounds <strong>technical</strong>). <strong>Groundline</strong> implements <strong>context assembly</strong> that builds <strong>coherent bundles</strong> with <strong>explicit structure</strong> so <strong>any</strong> integrated coding assistant performs better <strong>after</strong> the retrieve step. <strong>MVP (required):</strong> cap chunks per document, expand <strong>explicit</strong> <code>related</code> links, attach <strong><code>inclusion_reason</code></strong> per chunk, group output for readability. <strong>V1+ (recommended):</strong> MMR / diversify, cross‑domain same‑<code>area</code> expansion, optional <code>intent</code> / <code>profile</code> / <code>role</code> hints—see §10.</p>
+<h4 id="5101-relation-sources-built-at-index-time">5.10.1 Relation sources (built at index time)<a class="headerlink" href="#5101-relation-sources-built-at-index-time" title="Permanent link">&para;</a></h4>
+<p>The index SHOULD derive a <strong>lightweight document graph</strong> (no need for a heavy graph DB in MVP):</p>
+<table>
+<thead>
+<tr>
+<th>Link type</th>
+<th>Source</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Explicit</strong></td>
+<td>Front matter <code>related: [...]</code>, inline links to other <code>knowledge/**/*.md</code></td>
+<td>Always expand with <strong>at least</strong> the linked doc’s title + one chunk or abstract</td>
+</tr>
+<tr>
+<td><strong>Hierarchical</strong></td>
+<td>Parent heading / doc outline (<code>##</code> path)</td>
+<td>Expand <strong>child hit</strong> with <strong>parent section</strong> for surrounding intent</td>
+</tr>
+<tr>
+<td><strong>Same thread</strong></td>
+<td>Shared <code>area</code> + <code>product</code> (and optionally <code>tags</code> overlap)</td>
+<td>Suggest <strong>cross-domain</strong> neighbours: e.g. pull <strong>testing</strong> + <strong>functional</strong> when <code>area</code> matches and query is broad</td>
+</tr>
+<tr>
+<td><strong>Supersession</strong></td>
+<td><code>supersedes</code> / <code>superseded_by</code>, <code>status: deprecated</code></td>
+<td>Prefer <strong>canonical</strong> chunk; optionally include deprecated <strong>only</strong> with a “superseded” warning</td>
+</tr>
+</tbody>
+</table>
+<h4 id="5102-context-pack-assembly-behaviour">5.10.2 Context pack assembly (behaviour)<a class="headerlink" href="#5102-context-pack-assembly-behaviour" title="Permanent link">&para;</a></h4>
+<p>A <strong>context pack</strong> is not a flat list: it is a <strong>budgeted</strong> set of chunks (by max tokens / max chunks) assembled with rules:</p>
+<ol>
+<li><strong>Retrieve</strong> top‑<code>N</code> candidates (hybrid when §10 V1+ is available; else semantic-first in MVP).</li>
+<li><strong>Rerank (mandatory, §5.5):</strong> score candidates with query–passage reranker; order by <strong><code>rerank_score</code></strong> before diversification.</li>
+<li><strong>Diversify (MVP: required):</strong> <strong>cap chunks per document</strong> so one long note does not crowd out others. <strong>V1+ (recommended):</strong> add <strong>MMR</strong> or equivalent for extra diversity (after rerank ordering).</li>
+<li><strong>Relational expansion:</strong> <strong>MVP:</strong> always follow front matter <strong><code>related:</code></strong> (and inline <code>knowledge/...md</code> links when trivially detectable). <strong>V1+:</strong> optional <strong>same-<code>area</code>, different-<code>domain</code></strong> peers when <code>profile: full</code> (or similar) requests a <strong>full picture</strong> (technical + functional + testing).</li>
+<li><strong>Ordering:</strong> group by <strong><code>domain</code></strong> or <strong>relation role</strong> in the JSON (so clients can prompt “Engineering”, “Product”, “QA”)—<strong>recommended</strong> in MVP, <strong>required</strong> in V1+ for multi-domain packs.</li>
+<li><strong>Budget:</strong> fill up to <code>max_tokens</code> with <strong>declining priority</strong>: direct hits → explicit links → optional cross-domain fillers.</li>
+<li><strong>Transparency (MVP: required):</strong> each chunk lists <code>inclusion_reason: hit \| expanded_parent \| related_doc \| same_area_peer \| deprecated_warning</code>.</li>
+</ol>
+<h4 id="5103-optional-hints-improve-relevance">5.10.3 Optional hints (improve relevance)<a class="headerlink" href="#5103-optional-hints-improve-relevance" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong><code>intent</code> or <code>profile</code> query params</strong> (e.g. <code>coding</code>, <code>testing</code>, <code>product</code>, <code>mixed</code>): nudge metadata filters and relation weights—<strong>not</strong> required for MVP but recommended for V1+.</li>
+<li><strong><code>role</code> hint</strong> (<code>dev</code> | <code>qe</code> | <code>pm</code>): slight boost to matching <code>author_role</code> / <code>domain</code>—optional.</li>
+</ul>
+<h4 id="5104-why-this-improves-downstream-agent-analysis">5.10.4 Why this improves downstream agent analysis<a class="headerlink" href="#5104-why-this-improves-downstream-agent-analysis" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Mandatory reranking (§5.5)</strong> fixes ordering where <strong>embedding similarity alone</strong> is misleading—so the <strong>best</strong> passages lead the context pack.</li>
+<li><strong>Relations</strong> supply <strong>missing halves</strong> of the story (implementation + acceptance + how we test).</li>
+<li><strong>Diversity</strong> reduces <strong>duplicate</strong> context that wastes the context window.</li>
+<li><strong>Structured grouping</strong> matches how <strong>multi-step</strong> analysis works in agent tools.</li>
+<li><strong>Citations + inclusion_reason</strong> keep outputs <strong>auditable</strong> (§5.7).</li>
+</ul>
+<h3 id="511-advanced-rag-implementation-ladder-beyond-naive-embed-cosine-topk">5.11 Advanced RAG implementation ladder (beyond naïve embed → cosine top‑k)<a class="headerlink" href="#511-advanced-rag-implementation-ladder-beyond-naive-embed-cosine-topk" title="Permanent link">&para;</a></h3>
+<p><strong>“Smart” RAG</strong> here is <strong>layered</strong>: several specialised stages, each fixing a different failure mode of naïve <strong>embed → cosine top‑k</strong>. The normative minimum for this product is already in <strong>§5.4–§5.7</strong>, <strong>§5.10</strong>, and <strong>§10</strong>; this subsection ties <strong>optional / V1+</strong> advances into one ladder.</p>
+<h4 id="5111-retrieval-stack-precision-recall">5.11.1 Retrieval stack (precision + recall)<a class="headerlink" href="#5111-retrieval-stack-precision-recall" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What it fixes</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hybrid retrieval</strong></td>
+<td>Exact tokens (paths, APIs, errors) vs fuzzy meaning</td>
+<td>Dense + <strong>BM25 / sparse</strong>; fuse (e.g. <strong>RRF</strong> or weighted sum)—<strong>V1+</strong> hardening (§10).</td>
+</tr>
+<tr>
+<td><strong>Query side</strong></td>
+<td>Vague or mismatched wording</td>
+<td><strong>Optional (measure first):</strong> light <strong>query rewrite</strong> or <strong>HyDE</strong> only where a <strong>golden set</strong> shows lift—otherwise skip (latency + risk).</td>
+</tr>
+<tr>
+<td><strong>Mandatory rerank</strong></td>
+<td>Wrong ordering in top‑k</td>
+<td><strong>Normative (§5.5):</strong> cross‑encoder or <strong>lightweight local</strong> reranker on <strong>20–40 → 8–12</strong> (typical).</td>
+</tr>
+<tr>
+<td><strong>MMR / caps per doc</strong></td>
+<td>One doc dominating the window</td>
+<td><strong>After rerank:</strong> diversify—<strong>MVP</strong> caps per doc; <strong>V1+</strong> optional <strong>MMR</strong> (§5.10).</td>
+</tr>
+</tbody>
+</table>
+<h4 id="5112-context-assembly-what-goes-to-the-assistant">5.11.2 Context assembly (what goes to the assistant)<a class="headerlink" href="#5112-context-assembly-what-goes-to-the-assistant" title="Permanent link">&para;</a></h4>
+<p>Many simple RAG systems stop too early; <strong>Groundline</strong> does not (§5.10):</p>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Graph‑light expansion</strong></td>
+<td><code>related</code>, same <code>area</code> / <code>product</code>, parent heading—<strong>deterministic rules + token budget</strong>, not a giant graph DB on day one.</td>
+</tr>
+<tr>
+<td><strong>Multi‑granularity</strong></td>
+<td><strong>Small chunks</strong> for retrieval; optional <strong>parent window</strong> for generation (retrieve child → expand to section). <strong>V1+</strong> recommended where measured.</td>
+</tr>
+<tr>
+<td><strong>Structured packs</strong></td>
+<td>Group by <strong>domain</strong> (technical / functional / testing) so downstream models attend consistently.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="5113-smarter-than-oneshot-retrieve-optional">5.11.3 Smarter than one‑shot retrieve (optional)<a class="headerlink" href="#5113-smarter-than-oneshot-retrieve-optional" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Decomposed queries</strong></td>
+<td>Complex question → <strong>2–3 sub‑queries</strong> → merge/dedup → <strong>one rerank</strong> pass.</td>
+</tr>
+<tr>
+<td><strong>Iterative / agentic retrieval</strong></td>
+<td>First pass narrows <code>area</code>/doc set; second drills into linked docs—<strong>only</strong> with <strong>logged steps</strong>, <strong>capped iterations</strong>, and <strong>citations</strong> per claim (§5.7).</td>
+</tr>
+</tbody>
+</table>
+<h4 id="5114-operations-that-improve-quality-over-time">5.11.4 Operations that improve quality over time<a class="headerlink" href="#5114-operations-that-improve-quality-over-time" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Golden query set</strong> + <strong>recall@k</strong> / <strong>nDCG</strong> after rerank—tune chunking, hybrid weights, reranker from <strong>data</strong> (§5.5, §7, §11).</li>
+<li><strong>Offline reprocessing</strong> when embedding or reranker model changes—<strong>version</strong> in manifest (§5.5, §12).</li>
+<li><strong>Stale / conflict handling</strong> (<code>deprecated</code>, <code>supersedes</code>) so retrieval does not blend contradictions silently (§4.4, §5.10).</li>
+</ul>
+<h4 id="5115-antipatterns-often-look-advanced-but-hurt">5.11.5 Anti‑patterns (often look “advanced” but hurt)<a class="headerlink" href="#5115-antipatterns-often-look-advanced-but-hurt" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Avoid</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Huge chunks</strong> “for more context”</td>
+<td>Dilutes embeddings; hurts retrieval precision.</td>
+</tr>
+<tr>
+<td><strong>Heavy HyDE on every query</strong> without eval</td>
+<td>Adds latency and hallucination surface.</td>
+</tr>
+<tr>
+<td><strong>End‑to‑end LLM chooses what to retrieve</strong> with <strong>no citation lock</strong></td>
+<td>Hard to trust in a KB product; conflicts with §5.7.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Summary ladder (aligned with this spec):</strong> <strong>hybrid retrieve (V1+)</strong> → <strong>mandatory rerank (MVP)</strong> → <strong>graph‑light / relational context pack (MVP)</strong> → <strong>citation‑locked</strong> downstream use (§5.7). Add <strong>query rewrite</strong>, <strong>multi‑hop</strong>, or <strong>iterative retrieval</strong> only when the <strong>golden set</strong> proves they help.</p>
+<h3 id="512-coding-assistant-agnosticism-crossagent-coding-assistant">5.12 Coding-assistant agnosticism (cross–agent coding assistant)<a class="headerlink" href="#512-coding-assistant-agnosticism-crossagent-coding-assistant" title="Permanent link">&para;</a></h3>
+<p><strong>Groundline</strong> MUST NOT depend on a <strong>single</strong> vendor IDE or model. The <strong>product contract</strong> is:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Role</th>
+<th>Assistant binding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Canonical</strong></td>
+<td><strong>REST + JSON</strong> (versioned) on <code>localhost</code></td>
+<td><strong>None</strong> — any client can <code>curl</code>, script, or use a generated SDK.</td>
+</tr>
+<tr>
+<td><strong>Optional</strong></td>
+<td><strong>MCP stdio server</strong> (<code>python3 -m ki mcp</code>) exposing the same operations as <strong>tools</strong> that call the REST API</td>
+<td><strong>None</strong> — any host that loads MCP can attach; optional <code>[mcp]</code> install.</td>
+</tr>
+<tr>
+<td><strong>Optional</strong></td>
+<td><strong>CLI</strong> (<code>retrieve</code>, <code>context-pack</code>, <code>health</code>)</td>
+<td><strong>None</strong> — terminal-only workflows.</td>
+</tr>
+<tr>
+<td><strong>Optional UX</strong></td>
+<td><code>.cursor/skills/*</code>, editor-specific hooks</td>
+<td><strong>Cursor</strong> (or similar)—<strong>convenience only</strong>; not required to use the knowledge base.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Requirements:</strong></p>
+<ol>
+<li><strong>No proprietary-only APIs</strong> as the only integration path—<strong>HTTP</strong> remains documented and stable.</li>
+<li><strong>Naming:</strong> user-facing docs and examples MUST list <strong>multiple</strong> assistants where relevant (“Cursor, Claude Code, …”) and state that <strong>others work</strong> via the same REST/MCP surfaces.</li>
+<li><strong>Session / trigger language:</strong> §12.1 uses <strong>“coding assistant session”</strong> as the abstract trigger; <strong>one team’s recipe</strong> (e.g. Claude in terminal + MCP) is <strong>an example</strong>, not an exclusive platform lock.</li>
+<li><strong>OpenAPI:</strong> ship <strong><code>docs/openapi.yaml</code></strong> in-repo; <strong><code>ki serve</code></strong> exposes <strong><code>GET /openapi.yaml</code></strong> and <strong><code>GET /openapi.json</code></strong> for clients and code generators.</li>
+<li><strong>Testing:</strong> golden queries and health checks run against <strong>HTTP</strong> (or CLI)—not against a single IDE plugin.</li>
+</ol>
+<p><strong>Anti-patterns:</strong> hard-coding only the Cursor SDK; requiring a single model provider for retrieval (embedding/rerank are <strong>local/configurable</strong>, not “Claude-only”).</p>
+<hr />
+<h2 id="6-information-architecture-repository-layout-draft">6. Information architecture (repository layout — draft)<a class="headerlink" href="#6-information-architecture-repository-layout-draft" title="Permanent link">&para;</a></h2>
+<p>Suggested top-level structure (adjust in review):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>knowledge/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  technical/
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    architecture/
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    runbooks/
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    decisions/          # ADR-style
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  delivery/             # Completed work, analysis, discussion summaries (organise by component, feature area, or time period — team picks convention)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  testing/              # QE-led: test plans, regression notes, quality findings
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  functional/
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    glossary/
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    features/
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  meta/                 # how to contribute, templates, golden queries, evaluated SLOs
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>.templates/             # doc templates (optional)
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>scripts/                # RAG indexer, embedding pipeline, local API server
+</code></pre></div>
+<h3 id="61-front-matter-schema-yaml">6.1 Front matter schema (YAML)<a class="headerlink" href="#61-front-matter-schema-yaml" title="Permanent link">&para;</a></h3>
+<p>Every <strong><code>knowledge/**/*.md</code></strong> file MUST include YAML front matter between <code>---</code> lines. CI validates <strong>required keys</strong> by path (see table).</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Required when</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td><strong>Always</strong></td>
+<td>string</td>
+<td>Human title for lists and UI</td>
+</tr>
+<tr>
+<td><code>domain</code></td>
+<td><strong>Always</strong> (see <strong>Domain inference</strong> below)</td>
+<td>string</td>
+<td><code>technical</code> | <code>delivery</code> | <code>testing</code> | <code>functional</code> | <code>meta</code> — RAG metadata filters; <strong>canonical value is determined by file path</strong> under <code>knowledge/</code></td>
+</tr>
+<tr>
+<td><code>area</code></td>
+<td><strong>Always</strong></td>
+<td>string</td>
+<td>Product or system area (e.g. <code>billing</code>, <code>auth</code>, <code>reports</code>) — links dev, QE, PM, DM to the same <strong>feature/product</strong> surface</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>Optional</td>
+<td>string[]</td>
+<td>Fine-grained labels</td>
+</tr>
+<tr>
+<td><code>author_role</code></td>
+<td><strong>Always</strong></td>
+<td>string</td>
+<td><code>dev</code> | <code>qe</code> | <code>pm</code> | <code>dm</code> | <code>mixed</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><strong>Always</strong></td>
+<td>string</td>
+<td>Doc kind: e.g. <code>adr</code>, <code>runbook</code>, <code>delivery-summary</code>, <code>test-plan</code>, <code>feature</code>, <code>glossary</code></td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><strong>Always</strong></td>
+<td>string</td>
+<td><code>draft</code> | <code>reviewed</code> | <code>legacy_reviewed</code> | <code>deprecated</code></td>
+</tr>
+<tr>
+<td><code>last_reviewed</code></td>
+<td><strong>When <code>status: reviewed</code> or <code>legacy_reviewed</code></strong></td>
+<td>ISO date <code>YYYY-MM-DD</code></td>
+<td>Freshness and staleness warnings</td>
+</tr>
+<tr>
+<td><code>canonical_since</code></td>
+<td>Optional when <code>legacy_reviewed</code></td>
+<td>ISO date <code>YYYY-MM-DD</code></td>
+<td>When this doc became non-default / historical for the <strong>current</strong> product line (still valid under <code>applies_to</code>)</td>
+</tr>
+<tr>
+<td><code>applies_to</code></td>
+<td>Optional</td>
+<td>string[]</td>
+<td>Version/scope tags (e.g. <code>product:acme:v1</code>, <code>stack:jdk8</code>, <code>env:prod-eu</code>) for retrieval filtering and legacy-friendly truth</td>
+</tr>
+<tr>
+<td><code>doc_version</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>Document or bundle version for humans and filters (e.g. <code>v2.1</code>)</td>
+</tr>
+<tr>
+<td><code>exclude_from_default_retrieval</code></td>
+<td>Optional</td>
+<td>boolean</td>
+<td>If <strong>true</strong>, omit from default <code>/v1/retrieve</code> and <code>/v1/context_pack</code> unless caller passes <strong><code>include_archived: true</code></strong> (use for archive overflow or low-signal notes)</td>
+</tr>
+<tr>
+<td><code>product</code></td>
+<td>Recommended under <code>functional/**</code></td>
+<td>string</td>
+<td>Product or offering the note supports (helps PM/DM queries)</td>
+</tr>
+<tr>
+<td><code>related</code></td>
+<td>Optional</td>
+<td>string[]</td>
+<td>Paths to other <code>.md</code> files in this repo</td>
+</tr>
+<tr>
+<td><code>supersedes</code> / <code>superseded_by</code></td>
+<td>When <code>status: deprecated</code> (at least one required)</td>
+<td>string</td>
+<td>Replacement graph for <strong>conflicting</strong> defaults only (§4.4)</td>
+</tr>
+<tr>
+<td><code>contributor</code></td>
+<td>Optional</td>
+<td>string</td>
+<td><strong>Display name</strong> of the person who last substantively edited the note—often pre-filled from <strong>local author profile</strong> (§6.2)</td>
+</tr>
+<tr>
+<td><code>team</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>Squad or team name—pre-filled from profile when helpful for DM/PM filters</td>
+</tr>
+<tr>
+<td><code>topics_author</code></td>
+<td>Optional</td>
+<td>string[]</td>
+<td><strong>Topics</strong> this author focuses on (may overlap <code>tags</code>)—from profile; helps retrieval when filtering “who knows what”</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Path norms:</strong></p>
+<ul>
+<li><code>knowledge/functional/**</code> → <code>domain: functional</code>; <code>author_role</code> often <code>pm</code> or <code>mixed</code>.</li>
+<li><code>knowledge/testing/**</code> → <code>domain: testing</code>; <code>author_role</code> often <code>qe</code>.</li>
+<li><code>knowledge/delivery/**</code> → <code>domain: delivery</code>; <code>author_role</code> often <code>dev</code>.</li>
+<li><code>knowledge/technical/**</code> → <code>domain: technical</code>; <code>author_role</code> often <code>dev</code>.</li>
+<li><code>knowledge/meta/**</code> (if used for indexed meta docs) → <code>domain: meta</code>.</li>
+</ul>
+<p><strong>Domain inference (canonical):</strong></p>
+<ol>
+<li>The <strong>first path segment</strong> after <code>knowledge/</code> MUST be one of: <code>technical</code>, <code>delivery</code>, <code>testing</code>, <code>functional</code>, <code>meta</code>. That segment is the <strong>canonical</strong> <code>domain</code> for the file.</li>
+<li>If front matter <strong>includes</strong> <code>domain</code>, it <strong>MUST</strong> equal the canonical value from the path; otherwise CI <strong>fails</strong> the PR (stops silent drift between path and metadata).</li>
+<li>Authors MAY <strong>omit</strong> <code>domain</code> while editing; before merge, <strong><code>scripts/validate_frontmatter.py</code></strong> (or equivalent) MUST <strong>inject</strong> <code>domain</code> from the path <strong>or</strong> fail the PR if it is missing and injection is not enabled—teams choose one policy; the default SHOULD be <strong>inject</strong> so agents only need to place the file under the right subtree.</li>
+<li>Optional later: a <strong><code>--fix</code></strong> (or <strong><code>write</code></strong>) mode on the validator <strong>writes</strong> the correct <code>domain</code> into the file locally so contributors run one command before <code>git add</code>.</li>
+</ol>
+<p><strong>Validation:</strong> PR CI runs a <strong>schema + path/domain check</strong>; invalid front matter <strong>fails</strong> the PR. Optional keys (<code>contributor</code>, <code>team</code>, <code>topics_author</code>) SHOULD be allowed by the schema when present.</p>
+<h3 id="62-local-author-profile-optional-editor-skill-not-committed">6.2 Local author profile (optional editor skill, not committed)<a class="headerlink" href="#62-local-author-profile-optional-editor-skill-not-committed" title="Permanent link">&para;</a></h3>
+<p>So each member does not re-type <strong>name, team, topics</strong>, the repo MAY ship an <strong>editor skill</strong> for Cursor (<code>.cursor/skills/knowledge-author-profile/</code>)—<strong>convenience only</strong> (§5.12)—that tells the agent to read a <strong>local YAML</strong> profile:</p>
+<ul>
+<li><strong>Canonical path:</strong> <code>meta/author-profile.local.yaml</code> (<strong>gitignored</strong>).</li>
+<li><strong>Example template:</strong> <code>meta/author-profile.example.yaml</code> (committed).</li>
+<li><strong>Machine-wide optional:</strong> <code>~/.teamkm/profile.yaml</code> — project-local file wins when present.</li>
+</ul>
+<p>The agent uses the profile to <strong>suggest</strong> §6.1 fields when committing knowledge (<code>author_role</code>, <code>tags</code>, <code>area</code>, optional <code>contributor</code>, <code>team</code>, <code>topics_author</code>). <strong>Humans still approve</strong> PR content; profile data <strong>never</strong> forces incorrect <code>area</code> on a doc.</p>
+<hr />
+<h2 id="7-non-functional-requirements">7. Non-functional requirements<a class="headerlink" href="#7-non-functional-requirements" title="Permanent link">&para;</a></h2>
+<p><strong>Corpus assumptions (adjust in <code>meta/</code>):</strong> on the order of <strong>10²–10³</strong> files and <strong>~10–50 MB</strong> raw markdown—large enough that <strong>incremental</strong> index updates matter.</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Requirement (draft SLOs — tighten as the corpus grows)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full index build</strong></td>
+<td>On a typical developer laptop, full rebuild stays <strong>under ~15 minutes</strong> at MVP; stretch <strong>under ~5 minutes</strong> with a mature incremental pipeline.</td>
+</tr>
+<tr>
+<td><strong>Incremental build</strong></td>
+<td>After a small change, <strong>p95</strong> rebuild dominated by <strong>re-embed of touched files</strong>, target <strong>under ~2 minutes</strong> (document actuals in <code>meta/</code>).</td>
+</tr>
+<tr>
+<td><strong>Retrieve / context pack API</strong></td>
+<td><strong>p95</strong> latency <strong>under ~500 ms</strong> per query locally, excluding <strong>cold start</strong> (cold start allowed if documented once).</td>
+</tr>
+<tr>
+<td><strong>Retrieval quality</strong></td>
+<td>Golden query set (§5.5): <strong>recall@5</strong> (correct doc in top 5) <strong>≥ 80%</strong> before changing default chunking without sign-off (threshold evolves with the eval set).</td>
+</tr>
+<tr>
+<td><strong>Scale</strong></td>
+<td>Document behaviour at <strong>2× and 5×</strong> reference corpus size (capacity planning).</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>No secrets in repo; pre-merge secret-pattern checks; <strong>air‑gap</strong>: no calls to unapproved embedding endpoints.</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>Log index duration, files changed, chunk/embed counts, errors; optional <strong>p95</strong> API latency.</td>
+</tr>
+<tr>
+<td>Licensing</td>
+<td>Document embedding model + vector store <strong>license</strong> in <code>meta/</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-cicd-recommended">8. CI/CD (recommended)<a class="headerlink" href="#8-cicd-recommended" title="Permanent link">&para;</a></h2>
+<ul>
+<li>On <strong>PR:</strong> markdown lint, broken-link check, <strong>front matter schema (§6.1)</strong>, optional <strong>golden-query regression</strong> on dry-run index.</li>
+<li><strong>Dry-run RAG index build</strong> in CI (or validate chunk counts + schema) so broken content fails before merge.</li>
+<li>On <strong>merge</strong> to default branch: optional <strong>versioned index artefact</strong> (§12)—not required if all consumers build locally.</li>
+</ul>
+<hr />
+<h2 id="9-open-decisions-to-fill-in-as-you-progress">9. Open decisions (to fill in as you progress)<a class="headerlink" href="#9-open-decisions-to-fill-in-as-you-progress" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] <strong>PR policy:</strong> minimum reviewers, CODEOWNERS per path.</li>
+<li>[ ] <strong>RAG tooling stack:</strong> vector store (e.g. Chroma, LanceDB, Qdrant local); optional hybrid sparse index (SQLite FTS, Tantivy, etc.).</li>
+<li>[ ] <strong>Embedding model:</strong> local vs API; dimension; offline / air-gap requirement; same model pinned in CI for reproducibility.</li>
+<li>[ ] <strong>Reranker model:</strong> cross-encoder vs lightweight ranker; <strong>approved</strong> local model list; <code>candidate_k</code> / <code>context_pack_k</code> defaults.</li>
+<li>[ ] <strong>Chunking strategy:</strong> max tokens per chunk; sub-split defaults; overlap values (starting defaults in §5.4).</li>
+<li>[ ] <strong>API surface:</strong> default port, loopback-only defaults; <strong>REST</strong> contract versioning; MCP tool naming is <strong><code>teamkm_*</code></strong> in the reference server (<code>ki mcp</code>); teams MAY alias in host config.</li>
+<li>[ ] <strong>Multiple MCPs:</strong> document how many concurrent MCP connections the team uses and <strong>example configs</strong> for major hosts (Cursor, Claude Code, …) plus generic JSON—<strong>no single-vendor lock-in</strong>.</li>
+<li>[ ] <strong>Retention:</strong> how to deprecate or archive stale docs.</li>
+<li>[ ] <strong>Naming/versioning</strong> of the repo and index schema.</li>
+<li>[ ] <strong>Delivery doc granularity:</strong> one doc per small change vs one living doc per feature area; filename and folder convention.</li>
+<li>[ ] <strong>Contribution thresholds:</strong> similarity cutoffs for "edit existing" vs "new doc"; whether PR bot posts related-doc hints.</li>
+<li>[ ] <strong>External refs:</strong> keep zero ticket linkage vs optional opaque internal ids (see §3—do not block MVP).</li>
+<li>[ ] <strong>Numeric SLOs:</strong> replace §7 placeholders with measured p95 after first production-sized corpus.</li>
+<li>[ ] <strong>Auto-index:</strong> <code>core.hooksPath</code> vs per-repo <code>.git/hooks</code>; fingerprint strategy (<code>git HEAD</code> vs content hash); lockfile location.</li>
+<li>[ ] <strong>Auto-sync:</strong> poll interval; ff-only vs merge strategy; behaviour when dirty/diverged; opt-out for active contributors.</li>
+<li>[ ] <strong>Terminal session hook:</strong> MCP loaded by the assistant vs <code>scripts/ki-session.sh</code> wrapper vs shell <code>cd</code> hook; which one the team standardizes on.</li>
+</ul>
+<hr />
+<h2 id="10-product-phases-mvp-and-later">10. Product phases (MVP and later)<a class="headerlink" href="#10-product-phases-mvp-and-later" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Goal</th>
+<th>In scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MVP</strong></td>
+<td>Compound knowledge from PRs and make it <strong>retrievable</strong></td>
+<td>Markdown under <code>knowledge/</code>; ingest → <strong>structure-aware</strong> chunk → embed → <strong>vector</strong> store; <strong>mandatory local rerank</strong> after first-stage retrieve (§5.5); <strong>locally hosted</strong> <strong>HTTP API</strong> on loopback (§5.9) so <strong>any</strong> assistant can call <strong>retrieve/context_pack</strong>; <strong>assistant-agnostic</strong> integration (§5.12); <strong>primary trigger:</strong> <strong>coding-assistant session</strong> starts MCP/API (§12.1) → <strong>auto-sync</strong> + <strong>auto-index</strong> when safe/stale; <strong>health</strong> with <code>index_status</code> and <code>sync_status</code>; <strong>context packs</strong> with per-doc caps, <strong><code>related:</code></strong> expansion, <strong><code>inclusion_reason</code></strong> (§5.10); optional <strong>MCP server</strong> exposing the same ops; <strong>citations</strong> on all passages; front matter <strong>§6.1</strong> + CI validation; <strong>author profile</strong> skill + local yaml (§6.2, optional); golden query file in <code>meta/</code> (manual or CI).</td>
+</tr>
+<tr>
+<td><strong>V1+</strong></td>
+<td>Better <strong>recall/precision</strong> and <strong>smarter context</strong></td>
+<td><strong>Hybrid</strong> retrieval (dense + sparse/BM25); <strong>MMR</strong> / richer diversification; optional <strong>cross-domain same-<code>area</code> expansion</strong> and <strong><code>intent</code>/<code>profile</code> hints</strong> (§5.10); incremental pipeline hardened; optional <strong>contribute --dry-run</strong> (§5.8); MCP tool set hardened for <strong>multi-MCP</strong> Cursor setups.</td>
+</tr>
+<tr>
+<td><strong>V2</strong></td>
+<td>Operational excellence</td>
+<td>Optional <strong>PR bot</strong> (related docs); optional <strong>published index artefacts</strong> for shared consumers (§12).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11-success-metrics-and-adoption">11. Success metrics and adoption<a class="headerlink" href="#11-success-metrics-and-adoption" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Meaning</th>
+<th>Starting target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Corpus growth</strong></td>
+<td>Markdown files + merged PRs to <code>knowledge/</code> per month</td>
+<td>Non-zero steady growth; <strong>DM/PM</strong> review trends in standups</td>
+</tr>
+<tr>
+<td><strong>Golden-set recall@k</strong></td>
+<td>Correct relevant doc in top <em>k</em></td>
+<td><strong>≥ 80% @5</strong> before changing defaults (§7)</td>
+</tr>
+<tr>
+<td><strong>Index build SLO</strong></td>
+<td>Full + incremental times</td>
+<td>Meet §7 until corpus outgrows—then re-benchmark</td>
+</tr>
+<tr>
+<td><strong>Role coverage</strong></td>
+<td>At least one <strong>reviewed</strong> doc per domain (<code>technical</code>, <code>delivery</code>, <code>testing</code>, <code>functional</code>) per major <strong>area</strong> / product</td>
+<td>Expands as products/features evolve</td>
+</tr>
+<tr>
+<td><strong>Adoption (qualitative)</strong></td>
+<td>Dev/QE/PM/DM report using context packs for <strong>new</strong> and <strong>existing</strong> feature work</td>
+<td>Periodic survey or retro note</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="12-operations-who-builds-the-index-and-where-it-lives">12. Operations: who builds the index and where it lives<a class="headerlink" href="#12-operations-who-builds-the-index-and-where-it-lives" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Source of truth</strong> is always <strong>git</strong>: every merged PR <strong>adds</strong> to the corpus; <strong>knowledge compounds</strong> with each merge.</li>
+<li><strong>Default (MVP):</strong> each contributor (or local automation) runs <strong>index build</strong> after <strong>pull</strong> or <strong>merge</strong>; generated index files live under a <strong>gitignored</strong> path (e.g. <code>.rag/index/</code>) documented in the repo README—not committed unless the team explicitly chooses artefact storage.</li>
+<li><strong>Serving:</strong> Start the <strong>local API</strong> (and optionally <strong>MCP</strong>) after the index is built; <strong>coding assistants</strong> connect to <strong><code>localhost</code></strong> (§5.9) to <strong>retrieve before analyze</strong>—no separate cloud dependency for that path.</li>
+<li><strong>CI:</strong> validates corpus + schema + optional dry-run build; may emit <strong>non-committed</strong> logs or metrics.</li>
+<li><strong>Optional (V2):</strong> publish a <strong>versioned index tarball</strong> per <code>main</code> SHA for teams that want identical local behaviour without rebuilding (still derived from the same commit).</li>
+</ul>
+<h3 id="121-automatic-indexing-on-checkout-and-on-coding-assistant-session-start">12.1 Automatic indexing on checkout and on coding-assistant session start<a class="headerlink" href="#121-automatic-indexing-on-checkout-and-on-coding-assistant-session-start" title="Permanent link">&para;</a></h3>
+<p>Goal: when a team member <strong>checks out</strong> this repo (clone, checkout, pull) or <strong>starts a coding-assistant session</strong> (terminal or IDE) with this project, <strong>indexing begins without a manual step</strong> so retrieval is warm or warming. Details are <strong>assistant-agnostic</strong> (§5.12).</p>
+<p><strong>Primary hook (MVP): assistant session starts MCP or local API.</strong> The team picks one <strong>documented</strong> entrypoint. <strong>Groundline</strong> MUST tie indexing (and optional upstream sync—§12.2) to that moment:</p>
+<table>
+<thead>
+<tr>
+<th>Trigger</th>
+<th>Required behaviour (MVP)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Coding-assistant session (primary)</strong></td>
+<td>At least one pattern MUST be documented and supported: <strong>(A)</strong> <strong>MCP</strong>: the host assistant loads <strong>Groundline</strong> MCP so <strong><code>initialize</code></strong> runs the local API or attached service → background <strong>sync</strong> (§12.2, if enabled) → background <strong>index</strong> if missing/stale (<strong>works for any MCP-capable assistant</strong>). <strong>(B)</strong> <strong>Shell wrapper</strong> (e.g. <code>scripts/ki-session.sh</code>) that the team aliases to their assistant CLI (<strong>claude</strong>, <strong>cursor</strong>, <strong>etc.</strong>), which spawns API/MCP then <strong><code>exec</code>s</strong> the real binary (non-blocking fork where possible). <strong>(C)</strong> <strong><code>direnv</code> / <code>.envrc</code> or shell function</strong> that runs <strong><code>ki ensure-index &amp;</code></strong> when <code>cwd</code> is this repo (weaker: per-shell, not per assistant invocation). <strong>(A) or (B) is preferred.</strong></td>
+</tr>
+<tr>
+<td><strong>Fresh clone / checkout / pull</strong></td>
+<td><strong>Optional (supplementary):</strong> <strong>git hooks</strong> (e.g. <code>post-checkout</code>, <code>post-merge</code>) or <strong><code>./scripts/install-hooks.sh</code></strong>. On trigger, run <strong><code>index build</code> in the background</strong> if <strong>missing or stale</strong>. <strong>Opt-in</strong> install—see caveat below. Hooks <strong>do not</strong> replace the <strong>session</strong> path.</td>
+</tr>
+<tr>
+<td><strong>MCP / local API initialize</strong></td>
+<td>Whenever the <strong>MCP server</strong> or <strong>local API</strong> starts: (1) <strong><code>/health</code></strong> with <code>index_status</code>, <code>sync_status</code> (§12.2), <code>corpus_fingerprint</code>, optional <code>progress</code>; (2) <strong>enqueue</strong> background <strong>sync</strong> (if enabled) then <strong>index</strong> if missing/stale; (3) <strong>do not block</strong> handshake on full completion—degraded retrieval until <code>ready</code> (§5.9).</td>
+</tr>
+<tr>
+<td><strong>IDE workspace open</strong></td>
+<td><strong>Recommended (V1+):</strong> editor “on folder open” or hooks—same non-blocking rules; secondary to <strong>MCP</strong> for portability across assistants.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Staleness / fingerprint:</strong> persist a small file under <code>.rag/</code> (gitignored), e.g. <code>.rag/manifest.json</code>: <code>corpus_fingerprint</code> (hash of sorted <code>(relpath, sha256 content)</code> for <code>knowledge/**</code> or <strong>git tree <code>HEAD</code></strong> + chunking config hash + embedding model id). If fingerprint mismatch → <strong>stale</strong> → rebuild (incremental when implemented).</p>
+<p><strong>Concurrency:</strong> use a <strong>single-flight lock</strong> (e.g. <code>.rag/build.lock</code> or OS lock) so overlapping triggers (pull + MCP start) <strong>do not</strong> run parallel full embeds.</p>
+<p><strong>User experience:</strong> README states: “First use may <strong>build the index in the background</strong>; wait until <code>GET /health</code> shows <code>ready</code> or watch logs.” Optionally a <strong>desktop notice</strong> is out of scope for MVP.</p>
+<p><strong>Important caveat (Git hooks):</strong> Git <strong>does not</strong> run <strong>server-side</strong> hooks on <strong><code>git clone</code></strong>. Client hooks run only after <strong>local</strong> git actions <strong>and only if</strong> installed. <strong>“Index on clone, zero steps”</strong> is <strong>not</strong> guaranteed by hooks alone. <strong>Primary path for teams:</strong> an <strong>assistant session</strong> starts <strong>MCP/API</strong> (§12.1 first row)—runs <strong>without</strong> git hook install. <strong>True “on clone with zero install”</strong> still needs the user to <strong>open a session</strong> (or configure MCP) at least once—document in README.</p>
+<h3 id="122-automatic-sync-with-upstream-no-manual-git-pull-for-consumers">12.2 Automatic sync with upstream (no manual <code>git pull</code> for consumers)<a class="headerlink" href="#122-automatic-sync-with-upstream-no-manual-git-pull-for-consumers" title="Permanent link">&para;</a></h3>
+<p>Goal: when <strong>new commits</strong> land on the tracked <strong>upstream</strong> branch (e.g. <code>origin/main</code>), local clones <strong>update automatically</strong> so the <strong>knowledge corpus and index</strong> track the latest merged PRs without the user running <strong><code>git pull</code> manually</strong>.</p>
+<p><strong>Safety (non-negotiable):</strong> automation must <strong>not</strong> clobber work. Default rules:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clean</strong> working tree and index; local branch can <strong>fast-forward</strong></td>
+<td>Run <strong><code>git fetch</code></strong> then <strong><code>git merge --ff-only</code></strong> (or equivalent <code>git pull --ff-only</code>) to the configured upstream. <strong>No rebase</strong>, <strong>no force</strong>.</td>
+</tr>
+<tr>
+<td><strong>Dirty</strong> working tree (uncommitted changes)</td>
+<td><strong>Do not</strong> pull. Surface <strong><code>sync_status: blocked_dirty_tree</code></strong> via <strong>health</strong> (§5.6) and logs; optionally notify once. User resolves or commits.</td>
+</tr>
+<tr>
+<td><strong>Diverged</strong> (local commits not on upstream, non-FF)</td>
+<td><strong>Do not</strong> auto-merge. Surface <strong><code>sync_status: blocked_diverged</code></strong>; user must integrate manually (branch, rebase, or merge as per team policy).</td>
+</tr>
+<tr>
+<td><strong>Detached HEAD</strong> or <strong>no upstream</strong></td>
+<td><strong>Do not</strong> pull unless <code>Groundline.sync.upstream</code> is explicitly set; surface <strong><code>sync_status: not_configured</code></strong>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Triggers (MVP—at least one must be implemented; all may coexist):</strong></p>
+<ol>
+<li><strong>Same as indexing—assistant session:</strong> on <strong>MCP initialize</strong> (when the coding assistant loads MCP), run <strong>fetch + ff-only</strong> (§12.2 rules) then <strong>reindex</strong> if <code>HEAD</code> changed—<strong>primary</strong> alignment with “start session = up to date when safe.”</li>
+<li><strong>Periodic timer inside MCP/API:</strong> e.g. every <strong>5–30 min</strong> (default <strong>15 min</strong>) for clones where the session stays open—catches upstream pushes <strong>without</strong> restarting the assistant.</li>
+<li><strong>Optional daemon:</strong> documented <strong><code>teamkm sync</code></strong> long-running command that <strong>only</strong> fetch/ff-only + reindex.</li>
+<li><strong>Git hooks</strong> supplement only; <strong>not</strong> sufficient when others push upstream unless combined with (1) or (2).</li>
+</ol>
+<p><strong>Configuration (documented env or config file):</strong></p>
+<ul>
+<li><code>upstream_remote</code> (default <code>origin</code>), <code>upstream_branch</code> (default <code>main</code> or tracked branch).</li>
+<li><code>sync_interval_seconds</code> (0 = only on MCP start, no periodic poll).</li>
+<li><code>sync_enabled</code> (default <strong>true</strong> for “read-only” clones; <strong>false</strong> for contributors actively committing—recommended default <strong>true</strong> with dirty-tree blocking).</li>
+</ul>
+<p><strong>Transparency:</strong> <strong><code>/health</code></strong> (or MCP tool) SHOULD include <code>sync_status</code>, <code>last_sync_at</code>, <code>local_head</code>, <code>upstream_head</code> (after fetch) so <strong>any</strong> integrated assistant can report “knowledge is current as of …” or “sync blocked—uncommitted changes”.</p>
+<p><strong>Relationship to indexing:</strong> after a <strong>successful</strong> ff-only merge, <strong>corpus fingerprint</strong> changes → §12.1 marks index <strong>stale</strong> and <strong>background rebuild</strong> runs (same lock as index build).</p>
+<hr />
+<h2 id="13-success-criteria-first-milestone">13. Success criteria (first milestone)<a class="headerlink" href="#13-success-criteria-first-milestone" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Repository exists with governance (PR-only to <code>main</code>) and documented contribution rules.</li>
+<li>Developers can <strong>clone</strong> the repo; <strong>starting a coding-assistant session</strong> (per §12.1 <strong>primary</strong> path) triggers <strong>background</strong> upstream sync (if enabled, §12.2) and <strong>index</strong> build when missing/stale; optional git hooks remain supplementary. A manual one-command full build remains available.</li>
+<li><strong>Locally hosted</strong> API (or CLI) on <strong>loopback</strong> supports <strong>retrieval</strong> with <strong>mandatory reranking</strong> (§5.5) and <strong>cited chunks</strong> (path + line range + text, <strong>retrieval + rerank scores</strong>); any <strong>generated</strong> answer path attaches citations per §5.7. Documented integration for <strong>HTTP and MCP</strong> so <strong>any</strong> supported assistant can call <strong>before</strong> analysis (§5.9, §5.12). <strong><code>/health</code></strong> exposes <strong><code>sync_status</code></strong> and <strong><code>index_status</code></strong> (§12.1, §12.2).</li>
+<li>At least one <strong>technical</strong>, one <strong>delivery</strong>, one <strong>testing (QE)</strong>, and one <strong>functional</strong> example—each with valid <strong>§6.1</strong> front matter—so <strong>dev, QE, PM, and DM</strong> can retrieve cross-role context for a shared <strong>area</strong> / product.</li>
+<li>A <strong>second</strong> merged PR in the same <strong>area</strong> proves <strong>compounding</strong>: retrieval returns both older and newer chunks so <strong>feature work and maintenance</strong> benefit from prior contributions.</li>
+<li>A <strong>contribute</strong> path (rule, script, or API) demonstrates <strong>retrieve → compare → suggest edit vs new file</strong> with <strong>cited</strong> similar chunks.</li>
+</ol>
+<hr />
+<h2 id="14-revision-history">14. Revision history<a class="headerlink" href="#14-revision-history" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>2025-11-06</td>
+<td>Initial draft</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>2025-11-06</td>
+<td>Delivery + QE testing docs, cumulative-knowledge outcomes</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>2025-11-06</td>
+<td>Explicit exclusion of JIRA/work-tracker content from the knowledge base</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>2025-11-06</td>
+<td>Whole project framed as RAG-based; maintainability via git + simple index rebuild; pipeline and grounding rules updated</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>2025-11-06</td>
+<td>Agent-assisted contribution: retrieval-first dedup, merge vs new doc, optional contrib endpoint and PR hints</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>2025-11-06</td>
+<td>Smart chunking (structure-aware) and smart index (hybrid, metadata, incremental, light evaluation)</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>2025-11-06</td>
+<td>Cumulative knowledge + cross-role (dev/QE/PM/DM); TPM fixes: §6.1 schema, phases, SLOs, metrics, operations, overlap defaults</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>2025-11-06</td>
+<td>Local hosting (localhost), Cursor/Claude retrieve-then-analyse; multi-MCP coexistence + §5.9</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>2025-11-06</td>
+<td>Project name <strong>Groundline</strong> in title and intro</td>
+</tr>
+<tr>
+<td>0.10</td>
+<td>2025-11-06</td>
+<td>§5.10 smart context assembly and relations (Cursor/Claude); §5.6 context pack fields; §10 phase alignment</td>
+</tr>
+<tr>
+<td>0.11</td>
+<td>2025-11-06</td>
+<td>§12.1 auto-index on checkout/pull + Claude/MCP start; health <code>index_status</code>; open decision on hooks/fingerprint</td>
+</tr>
+<tr>
+<td>0.12</td>
+<td>2025-11-06</td>
+<td>§12.2 auto <strong>fetch + ff-only</strong> upstream sync; dirty/diverged safety; health <code>sync_status</code>; MVP table + success criteria</td>
+</tr>
+<tr>
+<td>0.13</td>
+<td>2025-11-06</td>
+<td>§12.1 caveat: hooks not on clone without install; MCP/API as primary no-hook path</td>
+</tr>
+<tr>
+<td>0.14</td>
+<td>2025-11-06</td>
+<td>§12.1–§12.2: <strong>terminal assistant session</strong> as primary hook (MCP init or wrapper); git hooks supplementary</td>
+</tr>
+<tr>
+<td>0.15</td>
+<td>2025-11-06</td>
+<td><strong>Mandatory reranking</strong> (§5.5): local cross-encoder/light ranker; API <code>rerank_score</code>; MVP/V2 table and §5.10 step order</td>
+</tr>
+<tr>
+<td>0.16</td>
+<td>2025-11-06</td>
+<td>§6.2 local author profile skill + optional front matter <code>contributor</code>/<code>team</code>/<code>topics_author</code>; <code>meta/author-profile.example.yaml</code>; <code>.gitignore</code> for local profile</td>
+</tr>
+<tr>
+<td>0.17</td>
+<td>2025-11-06</td>
+<td>§5.12 coding-assistant agnosticism; §12.1 generic session hook; wording aligned HTTP/MCP-first</td>
+</tr>
+<tr>
+<td>0.18</td>
+<td>2025-11-06</td>
+<td>§5.11 Advanced RAG implementation ladder (layered stack; subsections 5.11.1–5.11.5); agnosticism renumbered §5.12</td>
+</tr>
+<tr>
+<td>0.19</td>
+<td>2025-11-06</td>
+<td>Intro: maintain/share/reuse/analysis + template adoption; §4.5 adopt-as-template (clone → new remote → push)</td>
+</tr>
+<tr>
+<td>0.20</td>
+<td>2025-11-06</td>
+<td>§6.1 <strong>Domain inference:</strong> path-canonical <code>domain</code>; omit-allowed + validator inject; mismatch fails; <code>knowledge/meta/**</code> path norm</td>
+</tr>
+<tr>
+<td>0.21</td>
+<td>2025-11-06</td>
+<td><strong>docs:</strong> <a href="../ARCHITECTURE/">ARCHITECTURE.md</a> (C4-style context, components, sequence flows); <a href="../LEADERSHIP_PITCH/">LEADERSHIP_PITCH.md</a>; intro links</td>
+</tr>
+<tr>
+<td>0.22</td>
+<td>2025-11-06</td>
+<td><strong>Build slice:</strong> <code>ki/</code> package, <code>scripts/validate_frontmatter.py</code>, <code>knowledge/</code> sample, <code>pytest</code>, <a href="../TESTING/">TESTING.md</a>, GitHub Actions CI</td>
+</tr>
+<tr>
+<td>0.23</td>
+<td>2025-11-06</td>
+<td><strong>MVP implementation:</strong> <code>ki index</code> / <code>ki serve</code> (HTTP <code>/v1/health</code>, <code>/v1/retrieve</code>, <code>/v1/context_pack</code>); tf-idf + mandatory rerank; <code>.rag/</code> manifest + lock; <code>meta/golden_queries.yaml</code>; <a href="scripts/ki-session.sh">scripts/ki-session.sh</a></td>
+</tr>
+<tr>
+<td>0.24</td>
+<td>2025-11-06</td>
+<td><strong>Hybrid retrieval:</strong> BM25 + dense tf‑idf → RRF; index staging dir + atomic rename; manifest only after successful swap; <a href="../openapi.yaml">docs/openapi.yaml</a>; <a href="../scripts/golden_queries.py">scripts/golden_queries.py</a>; CI golden run</td>
+</tr>
+<tr>
+<td>0.25</td>
+<td>2025-11-06</td>
+<td>§4.6 multi-team maintenance + branching; §4.4 legacy vs deprecated; §6.1 <code>legacy_reviewed</code>, <code>applies_to</code>, <code>exclude_from_default_retrieval</code>; <code>ki contribute</code>, <code>POST /v1/contribute_dry_run</code>, <code>include_archived</code>; <a href="../CONTRIBUTING.md">CONTRIBUTING.md</a>, <a href="../CHANGELOG.md">CHANGELOG.md</a>, <a href="../.github/CODEOWNERS">.github/CODEOWNERS</a>, optional git hooks</td>
+</tr>
+<tr>
+<td>0.26</td>
+<td>2025-11-06</td>
+<td><a href="../GITHUB_BRANCH_PROTECTION/">GITHUB_BRANCH_PROTECTION.md</a>: GitHub <code>main</code> protection, required check <strong><code>test</code></strong>, Pro/plan note</td>
+</tr>
+<tr>
+<td>0.27</td>
+<td>2025-11-06</td>
+<td>§5.9: MCP reference (<code>ki mcp</code>, <strong><code>teamkm_*</code></strong> tools, HTTP adapter); OpenAPI served as YAML+JSON; §5.12 MCP row; assistant loop stays in host; <a href="../MCP/">MCP.md</a> integration guide</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/gyaneshgithub/TeamKM" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
