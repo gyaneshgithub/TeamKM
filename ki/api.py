@@ -10,7 +10,6 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
-from ki.fingerprint import corpus_fingerprint
 from ki.index_model import EMBEDDING_MODEL_ID, INDEX_SCHEMA_VERSION, SPARSE_MODEL_ID
 from ki.index_runner import ensure_index, index_dir, load_index_optional, rag_root
 from ki.manifest import read_manifest as read_manifest_raw
