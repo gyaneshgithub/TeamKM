@@ -14,6 +14,7 @@ Groundline is a **template repository**: durable knowledge lives as **reviewed M
 |----------|------------|--------------|
 | **Engineer / platform** | [For engineering](for-engineering.md) | Index, HTTP API, MCP, CI, CONTRIBUTING workflow |
 | **Engineering or product leadership** | [For management](for-management.md) · [Adopting Groundline](ADOPTION_OVERVIEW.md) | Rollout, risks, policy, template adoption (§4.5) |
+| **Hiring / portfolio viewers** | [Portfolio summary](PORTFOLIO.md) | Problem, stack, demos, résumé bullets |
 | **Product / functional owner** | [For product](for-product.md) | Write intent and decisions in `knowledge/functional/` without running servers |
 | **Quality / QE** | [For quality & QE](for-quality.md) | Testing corpus, golden queries, pre-merge gates |
 | **Anyone writing docs** | [How to use Groundline](HOW_TO_USE_GROUNDLINE.md) | Plain-language PR loop and glossary |

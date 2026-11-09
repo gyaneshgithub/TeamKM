@@ -4,9 +4,13 @@
 
 *Your team’s memory, in git—searchable on your machine.*
 
-**Documentation (all roles):** [Groundline docs site](https://gyaneshgithub.github.io/TeamKM/) — engineering, management, product, quality, and reference. *(GitHub repo: [gyaneshgithub/TeamKM](https://github.com/gyaneshgithub/TeamKM) — template codename until you rename the remote.)*
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Identifiers:** [docs/BRAND.md](docs/BRAND.md) · **Adoption (free vs services):** [docs/ADOPTION_OVERVIEW.md](docs/ADOPTION_OVERVIEW.md)
+**Open source** · [MIT License](LICENSE) · **Author:** [Gyanesh Maurya](https://github.com/gyaneshgithub) · **Portfolio:** [docs/PORTFOLIO.md](docs/PORTFOLIO.md)
+
+**Documentation (all roles):** [Groundline docs site](https://gyaneshgithub.github.io/TeamKM/) — engineering, management, product, quality, and reference. *(GitHub repo: [gyaneshgithub/TeamKM](https://github.com/gyaneshgithub/TeamKM).)*
+
+**Identifiers:** [docs/BRAND.md](docs/BRAND.md) · **Adoption:** [docs/ADOPTION_OVERVIEW.md](docs/ADOPTION_OVERVIEW.md)
 
 Groundline is a **template repo** for durable engineering knowledge: Markdown lives under `knowledge/` with validated YAML front matter, merges happen through **PRs**, and a **local** retrieval pipeline turns that corpus into **grounded context** for agents and humans (hybrid search, mandatory rerank, HTTP API on loopback). Normative behaviour: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md).
 
@@ -78,6 +82,7 @@ flowchart LR
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Branches, PRs, corpus rules, draft promotion. |
 | `.cursor/skills/teamkm-*` | Agent skills: retrieve-first, run local, MCP, pre-PR; **no-secrets**, **onboard**, **golden-query-tuning**, **share-project**. |
 | [docs/GITHUB_BRANCH_PROTECTION.md](docs/GITHUB_BRANCH_PROTECTION.md) | Protecting `main` on GitHub. |
+| [docs/PORTFOLIO.md](docs/PORTFOLIO.md) | **Portfolio:** problem, stack, demo script, résumé bullets. |
 
 ---
 
@@ -93,14 +98,14 @@ pip install -e ".[dev]"
 # Optional: MCP adapter for IDEs — pip install -e ".[dev,mcp]"
 pytest
 python3 scripts/validate_frontmatter.py --root .
-python3 -m ki index --root .
-python3 -m ki serve --root . --host 127.0.0.1 --port 8765
+python3 -m ki --root . index
+python3 -m ki --root . serve --host 127.0.0.1 --port 8765
 ```
 
 **Before opening a PR**, see whether your idea overlaps existing docs (merge vs new):
 
 ```bash
-python3 -m ki contribute --root . -f path/to/draft.md
+python3 -m ki --root . contribute -f path/to/draft.md
 ```
 
 **Another terminal**—sanity-check the API:
@@ -134,4 +139,4 @@ curl -s http://127.0.0.1:8765/v1/retrieve -H 'Content-Type: application/json' \
 
 ## License
 
-Add a license file when you adopt this template for your org.
+[MIT](LICENSE) — Copyright (c) 2026 Gyanesh Maurya. You may fork, modify, and use this template for your team or portfolio; see [BRAND.md](docs/BRAND.md) for product vs repo naming.

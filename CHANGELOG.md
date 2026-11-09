@@ -4,7 +4,8 @@ All notable changes to the **Groundline engine** (this template repository) are 
 
 ## Unreleased
 
-- [docs/ADOPTION_OVERVIEW.md](docs/ADOPTION_OVERVIEW.md) — free self-serve vs optional professional services (no pricing); linked from README and MkDocs.
+- **MIT [LICENSE](LICENSE)**; [docs/PORTFOLIO.md](docs/PORTFOLIO.md) for résumé / interview narrative; README author and portfolio links.
+- [docs/ADOPTION_OVERVIEW.md](docs/ADOPTION_OVERVIEW.md) — self-serve adoption only (open source).
 
 ## 0.4.0 — 2026-11-08
 
