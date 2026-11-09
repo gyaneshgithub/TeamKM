@@ -133,12 +133,29 @@ Chunk → hybrid BM25 + tf-idf → RRF → **mandatory rerank** → pack. Detail
 
 ---
 
-## Screen recording checklist (90 s)
+## Screen recording (90 s)
 
-1. Merge narrative: `knowledge/` file on GitHub (browser)  
-2. `ki --root . index` → `serve`  
-3. One `curl` retrieve showing `doc_path`  
-4. Docs home in browser  
+**Record:** macOS **Cmd+Shift+5** → **Record Selected Portion** (terminal + browser) or full screen.
+
+**Run** (repo root, venv active):
+
+```bash
+chmod +x scripts/demo-90s-recording.sh
+./scripts/demo-90s-recording.sh
+```
+
+The script pauses ~90s total and walks the checklist:
+
+| Step | What viewers see |
+|------|------------------|
+| 1 | GitHub — [workflow-validation.md](https://github.com/gyaneshgithub/TeamKM/blob/main/knowledge/technical/meta/workflow-validation.md) (knowledge in git) |
+| 2 | `ki --root . index`, `status` (and starts `serve` if API is down) |
+| 3 | `curl /v1/retrieve` — highlight **`doc_path`** in JSON |
+| 4 | [Docs home](https://gyaneshgithub.github.io/TeamKM/) |
+
+**One-liner while recording:** *Groundline keeps reviewed markdown in git, builds a local hybrid index, and returns cited chunks — same API behind MCP and HTTP.*
+
+**Export:** trim to **≤90s**, **1080p** if possible, upload to LinkedIn **Featured** with repo link.
 
 ---
 
