@@ -4,7 +4,8 @@ All notable changes to the **Groundline engine** (this template repository) are 
 
 ## Unreleased
 
-- **MIT [LICENSE](LICENSE)**; [docs/PORTFOLIO.md](docs/PORTFOLIO.md) for résumé / interview narrative; README author and portfolio links.
+- [docs/DEMO.md](docs/DEMO.md) interview demo; [docs/LINKEDIN.md](docs/LINKEDIN.md) copy; GitHub repo About + topics (see README).
+- **MIT [LICENSE](LICENSE)**; [docs/PORTFOLIO.md](docs/PORTFOLIO.md); README author, portfolio, demo links.
 - [docs/ADOPTION_OVERVIEW.md](docs/ADOPTION_OVERVIEW.md) — self-serve adoption only (open source).
 
 ## 0.4.0 — 2026-11-08

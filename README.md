@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Open source** · [MIT License](LICENSE) · **Author:** [Gyanesh Maurya](https://github.com/gyaneshgithub) · **Portfolio:** [docs/PORTFOLIO.md](docs/PORTFOLIO.md)
+**Open source** · [MIT License](LICENSE) · **Author:** [Gyanesh Maurya](https://github.com/gyaneshgithub) · **Portfolio:** [docs/PORTFOLIO.md](docs/PORTFOLIO.md) · **Demo:** [docs/DEMO.md](docs/DEMO.md)
 
 **Documentation (all roles):** [Groundline docs site](https://gyaneshgithub.github.io/TeamKM/) — engineering, management, product, quality, and reference. *(GitHub repo: [gyaneshgithub/TeamKM](https://github.com/gyaneshgithub/TeamKM).)*
 
@@ -82,7 +82,9 @@ flowchart LR
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Branches, PRs, corpus rules, draft promotion. |
 | `.cursor/skills/teamkm-*` | Agent skills: retrieve-first, run local, MCP, pre-PR; **no-secrets**, **onboard**, **golden-query-tuning**, **share-project**. |
 | [docs/GITHUB_BRANCH_PROTECTION.md](docs/GITHUB_BRANCH_PROTECTION.md) | Protecting `main` on GitHub. |
-| [docs/PORTFOLIO.md](docs/PORTFOLIO.md) | **Portfolio:** problem, stack, demo script, résumé bullets. |
+| [docs/PORTFOLIO.md](docs/PORTFOLIO.md) | **Portfolio:** problem, stack, résumé bullets. |
+| [docs/DEMO.md](docs/DEMO.md) | **Interview demo:** step-by-step commands (~10 min). |
+| [docs/LINKEDIN.md](docs/LINKEDIN.md) | Copy-paste for LinkedIn / CV. |
 
 ---
 

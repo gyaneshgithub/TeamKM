@@ -41,11 +41,15 @@ Python 3.10+, PyYAML, pytest, GitHub Actions, MkDocs Material, optional MCP SDK,
 
 ## Demonstrations (for interviews)
 
-1. **Self-serve path** — [HOW_TO_USE_GROUNDLINE](HOW_TO_USE_GROUNDLINE.md) (non-dev writers) + [Quick start](../README.md#quick-start-tooling).
-2. **Retrieval** — `ki serve` → `curl /v1/retrieve` with citations in `doc_path`.
-3. **Quality** — `pytest`, `golden_queries.py`, front matter validation on PRs.
-4. **Agents** — `ki mcp` + retrieve-first policy ([MCP.md](MCP.md)).
-5. **Docs** — stakeholder site on GitHub Pages.
+**Follow:** [DEMO.md](DEMO.md) — timed script (~10 min), curl commands, optional MCP, screen-recording checklist.
+
+1. **Self-serve path** — [HOW_TO_USE_GROUNDLINE](HOW_TO_USE_GROUNDLINE.md) + [Quick start](../README.md#quick-start-tooling).
+2. **Retrieval** — `ki serve` → `curl /v1/retrieve` with `doc_path` citations.
+3. **Quality** — `pytest`, `golden_queries.py`, front matter validation.
+4. **Agents** — `ki mcp` + retrieve-first ([MCP.md](MCP.md)).
+5. **Docs** — https://gyaneshgithub.github.io/TeamKM/
+
+**Copy for LinkedIn / CV:** [LINKEDIN.md](LINKEDIN.md).
 
 ---
 
