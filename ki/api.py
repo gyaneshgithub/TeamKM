@@ -17,6 +17,7 @@ from ki.manifest import read_manifest as read_manifest_raw
 from ki.manifest import write_manifest
 from ki.contribute import contribute_dry_run
 from ki.retrieve import build_context_pack, retrieve_candidates, rerank
+from ki.index_status import index_freshness
 from ki.sync_status import compute_sync_status
 
 
@@ -84,24 +85,29 @@ class KiHandler(BaseHTTPRequestHandler):
     def _health(self) -> None:
         root = self.repo_root.resolve()
         rr = rag_root(root)
-        fp_now = corpus_fingerprint(root)
         sync = compute_sync_status(root)
+        was_stale = index_freshness(root)["index_stale"]
         try:
             ensure_index(root)
         except Exception:
             pass
         m = read_manifest_raw(rr) or {}
+        fresh = index_freshness(root)
         payload = {
-            "index_status": m.get("index_status", "missing"),
+            "index_status": fresh["index_status"],
+            "index_stale": was_stale,
+            "index_stale_now": fresh["index_stale"],
             "sync_status": sync.sync_status,
-            "corpus_fingerprint": m.get("corpus_fingerprint", fp_now),
+            "corpus_fingerprint": fresh["corpus_fingerprint_indexed"] or m.get("corpus_fingerprint", ""),
+            "corpus_fingerprint_current": fresh["corpus_fingerprint_current"],
+            "corpus_fingerprint_indexed": fresh["corpus_fingerprint_indexed"],
             "local_head": sync.local_head,
             "upstream_head": sync.upstream_head,
             "embedding_model_id": m.get("embedding_model_id", EMBEDDING_MODEL_ID),
             "sparse_model_id": m.get("sparse_model_id", SPARSE_MODEL_ID),
             "reranker_model_id": m.get("reranker_model_id", "mvp-pairwise-tf-idf"),
             "schema_version": m.get("schema_version", INDEX_SCHEMA_VERSION),
-            "chunk_count": m.get("chunk_count"),
+            "chunk_count": fresh.get("chunk_count") or m.get("chunk_count"),
             "retrieval": m.get("retrieval", "hybrid_rrf_dense_bm25"),
             "manifest": {
                 "built_at": m.get("built_at"),

@@ -25,10 +25,12 @@ Groundline keeps **team knowledge in git** with PR review, builds a **local inde
 ```bash
 pytest -q
 python3 scripts/validate_frontmatter.py --root .
+python3 -m ki --root . status
 python3 scripts/golden_queries.py --root .
+python3 -m ki --root . eval --report md
 ```
 
-**Say:** front matter is schema-validated; golden queries are **retrieval regression** like tests for search.
+**Say:** front matter is schema-validated; golden queries are **retrieval regression** (recall@k + MRR); `status` shows if the index lags the corpus.
 
 ---
 
@@ -46,7 +48,7 @@ Terminal B:
 curl -s http://127.0.0.1:8765/v1/health | python3 -m json.tool
 ```
 
-Point at `index_status: "ready"` and `corpus_fingerprint` in the JSON.
+Point at `index_status: "ready"`, `index_stale: false`, and matching `corpus_fingerprint_current` / `corpus_fingerprint_indexed`.
 
 ---
 

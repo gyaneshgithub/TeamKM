@@ -85,10 +85,22 @@ components:
         index_status:
           type: string
           enum: [missing, building, ready, stale]
+        index_stale:
+          type: boolean
+          description: True if corpus fingerprint differed from index when health was called (may auto-rebuild)
+        index_stale_now:
+          type: boolean
+          description: True if index still stale after health handler runs
         sync_status:
           type: string
         corpus_fingerprint:
           type: string
+          description: Fingerprint last indexed (manifest)
+        corpus_fingerprint_current:
+          type: string
+        corpus_fingerprint_indexed:
+          type: string
+          nullable: true
         local_head:
           type: string
           nullable: true

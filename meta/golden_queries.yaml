@@ -1,10 +1,26 @@
 # Golden queries for retrieval regression (REQUIREMENTS §5.5, §11)
-# Run manually or wire into CI once RAG eval harness exists.
+# Run: python3 scripts/golden_queries.py --root .
+# Report: python3 scripts/golden_queries.py --root . --report md
 #
-# Expected doc: substring match against chunk doc_path (relative path)
+# expected_doc_contains: substring match on ranked chunk doc_path (after rerank@k)
 schema_version: "0.1.0"
 recall_at_k: 5
 queries:
   - id: gq-001
-    query: Groundline template RAG
-    expected_doc_contains: knowledge/technical
+    query: Groundline template local RAG knowledge
+    expected_doc_contains: project-overview
+  - id: gq-002
+    query: ki contribute CONTRIBUTING branch workflow
+    expected_doc_contains: project-overview
+  - id: gq-003
+    query: validate_frontmatter pytest golden queries before PR
+    expected_doc_contains: workflow-validation
+  - id: gq-004
+    query: front matter section 6.1 validated YAML
+    expected_doc_contains: project-overview
+  - id: gq-005
+    query: feature branch contribute checks pull request
+    expected_doc_contains: workflow-validation
+  - id: gq-006
+    query: knowledge technical meta adr reviewed
+    expected_doc_contains: knowledge/technical/meta

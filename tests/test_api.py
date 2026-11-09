@@ -31,8 +31,10 @@ def test_health_endpoint(tmp_path: Path):
         req = urllib.request.Request(f"http://127.0.0.1:{port}/v1/health")
         with urllib.request.urlopen(req, timeout=10) as resp:
             body = json.loads(resp.read().decode())
-        assert body.get("index_status") in {"ready", "building", "missing"}
+        assert body.get("index_status") in {"ready", "building", "missing", "stale"}
         assert "corpus_fingerprint" in body
+        assert "index_stale" in body
+        assert "corpus_fingerprint_current" in body
 
         req_o = urllib.request.Request(f"http://127.0.0.1:{port}/openapi.json")
         with urllib.request.urlopen(req_o, timeout=10) as resp:

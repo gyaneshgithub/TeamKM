@@ -4,6 +4,8 @@ All notable changes to the **Groundline engine** (this template repository) are 
 
 ## Unreleased
 
+- Golden-query **eval harness**: MRR@k, `--report md|json`, expanded `meta/golden_queries.yaml`; `python3 -m ki eval` and `scripts/golden_queries.py`.
+- **Index freshness:** `index_stale` on `/v1/health`; `python3 -m ki status`.
 - [docs/DEMO.md](docs/DEMO.md) interview demo; [docs/LINKEDIN.md](docs/LINKEDIN.md) copy; GitHub repo About + topics (see README).
 - **MIT [LICENSE](LICENSE)**; [docs/PORTFOLIO.md](docs/PORTFOLIO.md); README author, portfolio, demo links.
 - [docs/ADOPTION_OVERVIEW.md](docs/ADOPTION_OVERVIEW.md) — self-serve adoption only (open source).

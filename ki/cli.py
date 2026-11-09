@@ -9,7 +9,9 @@ import sys
 from pathlib import Path
 
 from ki.contribute import contribute_dry_run
-from ki.index_runner import ensure_index
+from ki.golden_eval import load_golden_file, run_eval, summarize
+from ki.index_runner import ensure_index, load_index_optional
+from ki.index_status import index_freshness
 from ki.api import run_server
 
 
@@ -58,6 +60,61 @@ def cmd_mcp(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_status(args: argparse.Namespace) -> int:
+    root = _repo_root(args)
+    fresh = index_freshness(root)
+    sync = __import__("ki.sync_status", fromlist=["compute_sync_status"]).compute_sync_status(root)
+    out = {**fresh, "sync_status": sync.sync_status}
+    if args.json:
+        print(json.dumps(out, indent=2, ensure_ascii=False))
+    else:
+        stale = "STALE — run: python3 -m ki --root . index" if fresh["index_stale"] else "fresh"
+        print(f"index_status: {fresh['index_status']} ({stale})")
+        print(f"corpus_fingerprint_current:  {fresh['corpus_fingerprint_current']}")
+        idx_fp = fresh.get("corpus_fingerprint_indexed") or "(none)"
+        print(f"corpus_fingerprint_indexed:  {idx_fp}")
+        print(f"chunk_count: {fresh.get('chunk_count')}")
+        print(f"sync_status: {sync.sync_status}")
+    return 0
+
+
+def cmd_eval(args: argparse.Namespace) -> int:
+    import yaml
+    from pathlib import Path as P
+
+    root = _repo_root(args)
+    gfile = P(args.file) if args.file else root / "meta" / "golden_queries.yaml"
+    if not gfile.is_file():
+        print("eval: golden_queries file not found:", gfile, file=sys.stderr)
+        return 2
+    data = yaml.safe_load(gfile.read_text(encoding="utf-8"))
+    at_k, specs = load_golden_file(data)
+    if not args.no_index:
+        ensure_index(root)
+    idx = load_index_optional(root)
+    if idx is None:
+        print("eval: index unavailable", file=sys.stderr)
+        return 1
+    results = run_eval(idx, specs, at_k=at_k)
+    summary = summarize(results)
+    if args.report == "json":
+        print(
+            json.dumps(
+                {"recall_at_k": at_k, "summary": summary, "failed": summary["recall_at_k_fail"]},
+                indent=2,
+            )
+        )
+    elif args.report == "md":
+        from ki.golden_eval import emit_markdown_report
+
+        emit_markdown_report(results, summary, at_k=at_k)
+    else:
+        from ki.golden_eval import emit_text_report
+
+        emit_text_report(results, summary, at_k=at_k)
+    return 1 if summary["recall_at_k_fail"] else 0
+
+
 def cmd_contribute(args: argparse.Namespace) -> int:
     root = _repo_root(args)
     draft = Path(args.file).read_text(encoding="utf-8") if args.file else sys.stdin.read()
@@ -81,6 +138,16 @@ def main(argv: list[str] | None = None) -> int:
 
     pi = sub.add_parser("index", help="Build or refresh .rag/index")
     pi.set_defaults(func=cmd_index)
+
+    pst = sub.add_parser("status", help="Index freshness vs corpus (no server)")
+    pst.add_argument("--json", action="store_true", help="Print JSON")
+    pst.set_defaults(func=cmd_status)
+
+    pe = sub.add_parser("eval", help="Golden-query retrieval regression report")
+    pe.add_argument("--file", type=Path, default=None, help="meta/golden_queries.yaml")
+    pe.add_argument("--report", choices=("text", "md", "json"), default="text")
+    pe.add_argument("--no-index", action="store_true", help="Skip index rebuild")
+    pe.set_defaults(func=cmd_eval)
 
     ps = sub.add_parser("serve", help="Run local HTTP API on loopback")
     ps.add_argument("--host", default="127.0.0.1")

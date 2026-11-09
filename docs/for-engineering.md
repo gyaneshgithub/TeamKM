@@ -57,7 +57,9 @@ Details: [MCP integration](MCP.md). Policy: **retrieve first**, cite `doc_path` 
 ```bash
 pytest -q
 python3 scripts/validate_frontmatter.py --root .
+python3 -m ki --root . status
 python3 scripts/golden_queries.py --root .
+python3 -m ki --root . eval --report md
 ```
 
 ---
